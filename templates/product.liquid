@@ -1,0 +1,553 @@
+{%- comment -%}
+  Product page — matches Kinetic Motorcycles layout:
+    Breadcrumb → 2-col (gallery | info) → accordion details →
+    3-card trust strip → Innovation Meets Passion → Customer Reviews →
+    You May Also Like → Trending Products
+{%- endcomment -%}
+
+<section class="km-product-page">
+  <div class="km-container">
+
+    {%- comment -%} BREADCRUMB {%- endcomment -%}
+    <nav class="km-pp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="{{ routes.all_products_collection_url }}">Products</a>
+      <span aria-hidden="true">›</span>
+      <span class="km-pp__crumb-current">{{ product.title | upcase }}</span>
+    </nav>
+
+    {%- comment -%} TOP GRID — gallery | info {%- endcomment -%}
+    <div class="km-pp__top">
+
+      {%- comment -%} LEFT: gallery {%- endcomment -%}
+      <div class="km-pp__gallery">
+        <div class="km-pp__hero">
+          {%- if product.featured_image != blank -%}
+            {{ product.featured_image | image_url: width: 1200 | image_tag:
+               width: 800, height: 800, loading: 'eager', fetchpriority: 'high',
+               alt: product.featured_image.alt | default: product.title, class: 'km-pp__hero-img' }}
+          {%- else -%}
+            <div class="km-pp__hero-placeholder" aria-hidden="true"></div>
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="km-pp__thumbs">
+            {%- for img in product.images limit: 6 -%}
+              <button type="button" class="km-pp__thumb{% if forloop.first %} is-active{% endif %}" data-km-thumb="{{ img | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
+                {{ img | image_url: width: 240 | image_tag: width: 120, height: 120, loading: 'lazy', alt: product.title }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="km-pp__thumbs-empty">No items found</div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} RIGHT: info {%- endcomment -%}
+      <div class="km-pp__info">
+        <div class="km-pp__rating-row">
+          <div class="km-pp__stars" aria-label="5 out of 5 stars">
+            {%- for i in (1..5) -%}<span>{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
+          </div>
+          <span class="km-pp__review-count">5.0 · {{ product.metafields.reviews.count | default: 24 }} reviews</span>
+        </div>
+
+        <h1 class="km-pp__title">{{ product.title | default: 'Product Title' }}</h1>
+
+        {%- if product.tags.size > 0 -%}
+          <div class="km-pp__sub">{{ product.tags | first | upcase }}</div>
+        {%- endif -%}
+
+        <div class="km-pp__pricerow">
+          <span class="km-pp__price">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="km-pp__compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="km-pp__short-desc">{{ product.description | strip_html | truncate: 240 }}</div>
+        {%- else -%}
+          <div class="km-pp__short-desc">A precision-machined upgrade engineered for exact factory fitment, durable sealing, and long-term reliability. Designed in-house and manufactured in the United States.</div>
+        {%- endif -%}
+
+        <div class="km-pp__meta">
+          {%- if product.vendor != blank -%}
+            <span class="km-pp__meta-tag">
+              <img src="{{ 'icon-motor.png' | asset_url }}" width="14" height="14" alt="" loading="lazy">
+              {{ product.vendor }}
+            </span>
+          {%- endif -%}
+          {%- if product.type != blank -%}
+            <span class="km-pp__meta-tag">
+              {%- render 'icon', icon: 'arrow-up-right' -%}
+              {{ product.type }}
+            </span>
+          {%- endif -%}
+        </div>
+
+        <form method="post" action="/cart/add" class="km-pp__form" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- if product.has_only_default_variant == false and product.variants.size > 1 -%}
+            {%- for option in product.options_with_values -%}
+              <div class="km-pp__option">
+                <label class="km-pp__option-label">{{ option.name }}</label>
+                <div class="km-pp__option-values">
+                  {%- for value in option.values -%}
+                    <button type="button" class="km-pp__option-value{% if option.selected_value == value %} is-active{% endif %}" data-option-index="{{ forloop.parentloop.index0 }}" data-option-value="{{ value | escape }}">{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+
+          <div class="km-pp__qty-row">
+            <div class="km-pp__qty">
+              <button type="button" class="km-pp__qty-btn" data-km-qty-dec aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" value="1" min="1" class="km-pp__qty-input" data-km-qty-input>
+              <button type="button" class="km-pp__qty-btn" data-km-qty-inc aria-label="Increase quantity">+</button>
+            </div>
+            <button type="submit" name="add" class="km-pp__add">
+              Add to Cart
+              {%- render 'icon', icon: 'arrow-right' -%}
+            </button>
+          </div>
+
+          {%- if product.selected_or_first_available_variant.available -%}
+            <button type="submit" name="checkout" formaction="/checkout" class="km-pp__buy-now">Buy Now</button>
+          {%- endif -%}
+        </form>
+
+        <div class="km-pp__badges">
+          <div class="km-pp__badge">
+            <span class="km-pp__badge-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            USA Designed &amp; Made
+          </div>
+          <div class="km-pp__badge">
+            <span class="km-pp__badge-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            </span>
+            Worldwide Shipping
+          </div>
+          <div class="km-pp__badge">
+            <span class="km-pp__badge-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m10 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/></svg>
+            </span>
+            High Precision Motorcycle Parts
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {%- comment -%} ACCORDION: Product Information, Specs, Features, Fitment, Why Choose, FAQs {%- endcomment -%}
+    <div class="km-pp__accordion">
+      <details class="km-pp__acc-item" open>
+        <summary class="km-pp__acc-q">
+          <span>Product Information</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          {%- if product.description != blank -%}
+            <div class="km-rte">{{ product.description }}</div>
+          {%- else -%}
+            <p>Designed as a superior alternative to traditional paper intake gaskets, this component is machined from a special die-silicone-like composite. It combines flexibility with added structural stiffness to maintain sealing integrity during installation and long-term use.</p>
+            <p>Rated for temperatures up to <strong>475°F</strong>, it tolerates raw engine heat and does not absorb oil, fuel, or vapors — common causes of gasket failure. Its tear-resistant construction allows repeated installation without ripping, making it ideal for frequent air-cleaner or throttle-body servicing.</p>
+            <p>Precision-cut for exact factory throttle-body dimensions, it delivers a consistent, leak-free seal across all supported models.</p>
+          {%- endif -%}
+        </div>
+      </details>
+
+      <details class="km-pp__acc-item">
+        <summary class="km-pp__acc-q">
+          <span>Specifications</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          <ul class="km-pp__spec-list">
+            <li><strong>Material:</strong> composite silicone blend</li>
+            <li><strong>Temp rating:</strong> up to 475°F / 246°C</li>
+            <li><strong>Thickness:</strong> precision-cut for factory fit</li>
+            <li><strong>Reusability:</strong> yes — tear-resistant for repeat installs</li>
+            <li><strong>Country of origin:</strong> United States</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="km-pp__acc-item">
+        <summary class="km-pp__acc-q">
+          <span>Features</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          <ul class="km-pp__spec-list">
+            <li>Bolt-on with factory hardware — no flange kit required</li>
+            <li>High-temperature composite resists heat, fuel, and vapor</li>
+            <li>Consistent, leak-free seal across Milwaukee-8 Softail models</li>
+            <li>Designed and manufactured in-house in Houston, Texas</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="km-pp__acc-item">
+        <summary class="km-pp__acc-q">
+          <span>Fitment</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          <p>Engineered for Harley-Davidson Softail with Milwaukee-8 engine platforms. Uses factory mounting hardware and torque specs. Confirm your exact year and model with our support team before ordering if you’re unsure.</p>
+        </div>
+      </details>
+
+      <details class="km-pp__acc-item">
+        <summary class="km-pp__acc-q">
+          <span>Why Choose</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          <p>We design in-house, manufacture in the United States, and test on real bikes we ride. Our parts are built around factory mounting points and proven materials — no guesswork, no shim stacks, no “close enough.”</p>
+        </div>
+      </details>
+
+      <details class="km-pp__acc-item">
+        <summary class="km-pp__acc-q">
+          <span>FAQs</span>
+          <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
+        </summary>
+        <div class="km-pp__acc-a">
+          <p><strong>Is this reusable?</strong> Yes — tear-resistant composite allows multiple install cycles.</p>
+          <p><strong>Do I need extra hardware?</strong> No — it uses your factory mounting bolts and gasket surface.</p>
+          <p><strong>How fast does it ship?</strong> Most orders leave our Houston warehouse same day or within 48 hours.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} TRUST STRIP — 3 cards {%- endcomment -%}
+<section class="km-pp-trust">
+  <div class="km-container km-pp-trust__grid">
+    <div class="km-pp-trust__card">
+      <span class="km-pp-trust__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M2 3h6l2 5H4z"/><path d="M14 3h8l-2 5h-6z"/><path d="M8 8h8l-2 13h-4z"/></svg>
+      </span>
+      <h3>Designed &amp; Built in the USA</h3>
+      <p>Every Kinetic product is designed and manufactured in the United States. Keeping our work in-house allows us to control quality, refine fitment, and stand behind every part we make.</p>
+    </div>
+    <div class="km-pp-trust__card">
+      <span class="km-pp-trust__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </span>
+      <h3>A Decade of Hands-On Experience</h3>
+      <p>Founded in 2013. A decade of machining, installing, riding and refining components on real bikes — not just in a lab. That experience shows in the quality of every part we ship.</p>
+    </div>
+    <div class="km-pp-trust__card">
+      <span class="km-pp-trust__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </span>
+      <h3>Designed by Riders &amp; Builders</h3>
+      <p>Every product is shaped by hands-on building and riding experience, with practical decisions made where it matters most.</p>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} INNOVATION MEETS PASSION {%- endcomment -%}
+<section class="km-pp-innov">
+  <div class="km-container km-pp-innov__grid">
+    <div class="km-pp-innov__copy">
+      <h2 class="km-pp-innov__h2">Innovation Meets Passion</h2>
+      <h3 class="km-pp-innov__sub">Made in the USA</h3>
+      <p>Founded in 2013 by Mike Le, Kinetic Motorcycles was built on a simple belief: motorcycle parts aren’t generic hardware — they’re personal. Every product begins as an original idea, designed by Mike and developed entirely in-house.</p>
+      <p>We don’t rely on templates or outsourced shortcuts. Each part is shipped by hands-on fabrication experience and time spent riding, testing, and refining. Whether you’re dialing in a daily rider or building something truly your own, our focus is the same — create parts that feel intentional, functional, and worthy of your motorcycle.</p>
+    </div>
+    <div class="km-pp-innov__media">
+      <img src="{{ 'cta-bike.avif' | asset_url }}" loading="lazy" alt="Kinetic Motorcycles in Houston" width="600" height="400" class="km-pp-innov__img">
+    </div>
+  </div>
+</section>
+
+{%- comment -%} CUSTOMER REVIEWS (carousel-style 2-col) {%- endcomment -%}
+<section class="km-pp-reviews">
+  <div class="km-container">
+    <div class="km-pp-reviews__top">
+      <h2 class="km-pp-reviews__h2">What Our Customers Say</h2>
+      <div class="km-pp-reviews__nav">
+        <button type="button" class="km-pp-reviews__arrow" data-km-pp-prev aria-label="Previous">{%- render 'icon', icon: 'arrow-right' -%}</button>
+        <button type="button" class="km-pp-reviews__arrow" data-km-pp-next aria-label="Next">{%- render 'icon', icon: 'arrow-right' -%}</button>
+      </div>
+    </div>
+    <div class="km-pp-reviews__grid" data-km-pp-rev-track>
+      {%- assign pp_reviews = 'Really happy with the product. Took a while to get my order but they were out of the spark plug cables I ordered. I had to email and inquire what the deal was. They were super helpful once I initiated communication. Would have been cool to get some swag or something since they took so long. But the relocator is great. I really love it. And they responded promptly once I reached out to them. Their customer service is truly fantastic.|Brian Hopkins|Ignition Coils Relocator (L.E.) Relocator for Harley-Davidson Sportster|5||I had some questions on some bars, so I DMd them on Instagram. The dude I talked to was super helpful. I purchased the shirt because of his response. I’ll rep the brand due to the customer service.|Chet Michaelsen|Bolt Ikons|5||Precision-machined and bolt-on perfect. Took 30 minutes to install and the difference is night and day.|Samuel P.|Milwaukee-8 Throttle Body Gasket|5||Customer support answered my DMs within an hour. Shipping was on point, packaging was premium.|Alex G.|Composite Grips + Shifter Peg|5' | split: '||' -%}
+      {%- for entry in pp_reviews -%}
+        {%- assign p = entry | split: '|' -%}
+        <article class="km-pp-reviews__card">
+          <div class="km-pp-reviews__stars" aria-label="5 out of 5 stars">
+            {%- for i in (1..5) -%}<span>{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
+          </div>
+          <p class="km-pp-reviews__quote">{{ p[0] }}</p>
+          <div class="km-pp-reviews__meta">
+            <div class="km-pp-reviews__author">{{ p[1] }}</div>
+            <div class="km-pp-reviews__product">{{ p[2] }}</div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} YOU MAY ALSO LIKE {%- endcomment -%}
+<section class="km-pp-related">
+  <div class="km-container">
+    <h2 class="km-pp-related__h2">You May Also Like</h2>
+    {%- if product.collections.first.products.size > 0 -%}
+      {%- assign rel = product.collections.first.products -%}
+      <div class="km-pp-related__grid">
+        {%- for p in rel limit: 4 -%}
+          {%- if p.id != product.id -%}
+            <a href="{{ p.url }}" class="km-pp-related__card">
+              <div class="km-pp-related__media">
+                {%- if p.featured_image != blank -%}
+                  {{ p.featured_image | image_url: width: 500 | image_tag: width: 250, height: 250, loading: 'lazy', alt: p.title, class: 'km-pp-related__img' }}
+                {%- endif -%}
+              </div>
+              <div class="km-pp-related__info">
+                <h3>{{ p.title | truncate: 60 }}</h3>
+                <div class="km-pp-related__price">{{ p.price | money }}</div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- render 'products-row',
+         heading: '',
+         products: 'Bike Grip — Surplus T-shirt from Our Exclusive Collection|Sportster|$ 25.00 USD|product-2.avif|4||X Footpegs — Carbon Fiber Footpegs for Harley Sportster|Sportster|$ 140.00 USD|product-4.avif|4||Light Bar: Compact 3-inch LED Light Bar for Harley-Davidson Sportster|Sportster|$ 165.00 USD|product-5.avif|4||Extended Rear Tail Hoop for Honda CB/CB450/CB550|Honda CB|$ 80.00 USD|product-6.avif|4'
+      -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} TRENDING PRODUCTS {%- endcomment -%}
+<section class="km-pp-trending">
+  <div class="km-container">
+    <h2 class="km-pp-related__h2">Trending Products</h2>
+    {%- render 'products-row',
+       heading: '',
+       products: 'Harley-Davidson Forty-Eight Forks|Sportster|$ 1,200.00 USD|product-1.webp|5||Triumph Rectifier &amp; Horn Relocation Bracket|Triumph|$ 40.00 USD|product-6.avif|4||S&amp;S Late-model Moment 2-into-2 Exhaust for Harley-Davidson|Dyna|$ 750.00 USD|product-7.avif|4||10&quot; Rigid Rear Struts for Harley-Davidson Sportster (Hardtail Style)|Sportster|$ 80.00 USD|product-8.avif|4'
+    -%}
+  </div>
+</section>
+
+<style>
+  .km-product-page { padding: 36px 0 72px; background: var(--km-body-bg, #EDEDED); }
+  .km-pp__crumbs { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--km-text, #4B5563); margin-bottom: 32px; }
+  .km-pp__crumbs a { color: inherit; text-decoration: none; }
+  .km-pp__crumbs a:hover { color: var(--km-accent, #FBB03D); }
+  .km-pp__crumb-current { color: #000; font-weight: 700; }
+
+  .km-pp__top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: flex-start; }
+
+  .km-pp__gallery { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 24px; }
+  .km-pp__hero {
+    aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD);
+    border-radius: 20px; overflow: hidden;
+  }
+  .km-pp__hero-img { width: 100%; height: 100%; object-fit: contain; padding: 32px; }
+  .km-pp__hero-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }
+  .km-pp__thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .km-pp__thumb {
+    aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD);
+    border-radius: 10px; overflow: hidden; cursor: pointer; padding: 6px;
+    transition: border-color .2s ease;
+  }
+  .km-pp__thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .km-pp__thumb:hover { border-color: #000; }
+  .km-pp__thumb.is-active { border-color: var(--km-accent, #FBB03D); border-width: 2px; }
+  .km-pp__thumbs-empty { font-size: 12px; color: #9ca3af; font-style: italic; text-align: center; padding: 16px 0 0; }
+
+  .km-pp__info { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+  .km-pp__rating-row { display: flex; align-items: center; gap: 10px; }
+  .km-pp__stars { display: inline-flex; gap: 2px; color: var(--km-accent, #FBB03D); }
+  .km-pp__stars svg { width: 14px; height: 14px; }
+  .km-pp__review-count { font-size: 12px; font-weight: 700; color: var(--km-text, #4B5563); letter-spacing: .04em; text-transform: uppercase; }
+
+  .km-pp__title { font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.015em; line-height: 1.15; color: #000; margin: 0; text-transform: uppercase; }
+  .km-pp__sub { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--km-text, #4B5563); margin-top: -4px; }
+
+  .km-pp__pricerow { display: flex; align-items: baseline; gap: 12px; padding: 14px 0; border-top: 1px solid var(--km-border, #DDDDDD); border-bottom: 1px solid var(--km-border, #DDDDDD); margin: 6px 0; }
+  .km-pp__price { font-size: 26px; font-weight: 800; color: #000; letter-spacing: -.01em; }
+  .km-pp__compare { font-size: 16px; color: #9ca3af; text-decoration: line-through; }
+
+  .km-pp__short-desc { font-size: 14px; line-height: 1.65; color: var(--km-text, #4B5563); }
+
+  .km-pp__meta { display: flex; gap: 10px; flex-wrap: wrap; }
+  .km-pp__meta-tag {
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+    background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px;
+    font-size: 12px; font-weight: 600; color: var(--km-text, #4B5563);
+  }
+  .km-pp__meta-tag svg { width: 12px; height: 12px; }
+
+  .km-pp__form { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .km-pp__option-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #000; margin-bottom: 8px; }
+  .km-pp__option-values { display: flex; gap: 8px; flex-wrap: wrap; }
+  .km-pp__option-value { padding: 8px 14px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .km-pp__option-value.is-active { background: #000; color: #fff; border-color: #000; }
+
+  .km-pp__qty-row { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
+  .km-pp__qty {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; background: #fff; padding: 4px;
+  }
+  .km-pp__qty-btn {
+    width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
+    font-size: 18px; font-weight: 700; color: #000; cursor: pointer; font-family: inherit;
+    transition: background .2s ease;
+  }
+  .km-pp__qty-btn:hover { background: var(--km-body-bg, #EDEDED); }
+  .km-pp__qty-input {
+    width: 48px; text-align: center; border: 0; background: transparent;
+    font-size: 15px; font-weight: 700; color: #000; font-family: inherit;
+    -moz-appearance: textfield;
+  }
+  .km-pp__qty-input::-webkit-outer-spin-button,
+  .km-pp__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .km-pp__add {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 24px; background: #000; color: #fff; border: 0; border-radius: 9999px;
+    font-weight: 800; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer; font-family: inherit; transition: background .2s ease;
+  }
+  .km-pp__add:hover { background: var(--km-accent, #FBB03D); color: #000; }
+
+  .km-pp__buy-now {
+    width: 100%; padding: 16px 24px; background: var(--km-accent, #FBB03D); color: #000;
+    border: 0; border-radius: 9999px; font-weight: 800; font-size: 13px; letter-spacing: .14em;
+    text-transform: uppercase; cursor: pointer; font-family: inherit; transition: background .2s ease;
+  }
+  .km-pp__buy-now:hover { background: #e69a2b; }
+
+  .km-pp__badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; padding-top: 18px; border-top: 1px solid var(--km-border, #DDDDDD); }
+  .km-pp__badge { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--km-text, #4B5563); line-height: 1.3; }
+  .km-pp__badge-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--km-body-bg, #EDEDED); display: inline-flex; align-items: center; justify-content: center; color: #000; }
+
+  .km-pp__accordion { margin-top: 56px; display: flex; flex-direction: column; gap: 10px; }
+  .km-pp__acc-item { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 14px; padding: 0 24px; transition: border-color .2s ease; }
+  .km-pp__acc-item[open] { border-color: #000; }
+  .km-pp__acc-q { list-style: none; cursor: pointer; padding: 18px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: #000; }
+  .km-pp__acc-q::-webkit-details-marker { display: none; }
+  .km-pp__acc-toggle { width: 28px; height: 28px; border-radius: 50%; background: var(--km-body-bg, #EDEDED); display: inline-flex; align-items: center; justify-content: center; color: #000; transition: background .2s ease, color .2s ease; }
+  .km-pp__acc-toggle svg { width: 14px; height: 14px; }
+  .km-pp__acc-toggle svg:last-child { display: none; }
+  .km-pp__acc-item[open] .km-pp__acc-toggle { background: #000; color: #fff; }
+  .km-pp__acc-item[open] .km-pp__acc-toggle svg:first-child { display: none; }
+  .km-pp__acc-item[open] .km-pp__acc-toggle svg:last-child { display: inline-flex; }
+  .km-pp__acc-a { padding: 10px 0 24px; border-top: 1px solid var(--km-border, #DDDDDD); font-size: 14px; line-height: 1.7; color: var(--km-text, #4B5563); }
+  .km-pp__acc-a p { margin: 0 0 12px; }
+  .km-pp__acc-a p:last-child { margin-bottom: 0; }
+  .km-pp__spec-list { padding-left: 18px; margin: 0; }
+  .km-pp__spec-list li { margin-bottom: 6px; }
+
+  /* TRUST STRIP */
+  .km-pp-trust { padding: 72px 0; background: #fff; }
+  .km-pp-trust__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .km-pp-trust__card { text-align: center; padding: 16px; }
+  .km-pp-trust__icon { width: 56px; height: 56px; border-radius: 50%; background: var(--km-body-bg, #EDEDED); display: inline-flex; align-items: center; justify-content: center; color: #000; margin-bottom: 16px; }
+  .km-pp-trust__card h3 { font-size: 14px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #000; margin: 0 0 10px; }
+  .km-pp-trust__card p { font-size: 14px; line-height: 1.65; color: var(--km-text, #4B5563); margin: 0; max-width: 320px; margin: 0 auto; }
+
+  /* INNOVATION */
+  .km-pp-innov { padding: 72px 0; background: #fff; border-top: 1px solid var(--km-border, #DDDDDD); }
+  .km-pp-innov__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .km-pp-innov__h2 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; color: #000; margin: 0 0 6px; line-height: 1.1; }
+  .km-pp-innov__sub { font-size: 20px; font-weight: 700; color: var(--km-accent, #FBB03D); margin: 0 0 24px; }
+  .km-pp-innov p { font-size: 15px; line-height: 1.7; color: var(--km-text, #4B5563); margin: 0 0 14px; }
+  .km-pp-innov__media { aspect-ratio: 4/3; border-radius: 20px; overflow: hidden; background: #000; }
+  .km-pp-innov__img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* PP REVIEWS */
+  .km-pp-reviews { padding: 64px 0; background: var(--km-body-bg, #EDEDED); }
+  .km-pp-reviews__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; gap: 20px; flex-wrap: wrap; }
+  .km-pp-reviews__h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: #000; margin: 0; letter-spacing: -.01em; }
+  .km-pp-reviews__nav { display: flex; gap: 8px; }
+  .km-pp-reviews__arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--km-border, #DDDDDD); background: #fff; color: #000; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+  .km-pp-reviews__arrow:hover { background: #000; color: #fff; }
+  .km-pp-reviews__arrow:first-child svg { transform: rotate(180deg); }
+  .km-pp-reviews__grid {
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(48%, 1fr);
+    gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .km-pp-reviews__grid::-webkit-scrollbar { display: none; }
+  .km-pp-reviews__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 16px; padding: 28px; scroll-snap-align: start; display: flex; flex-direction: column; gap: 12px; }
+  .km-pp-reviews__stars { display: inline-flex; gap: 2px; color: var(--km-accent, #FBB03D); }
+  .km-pp-reviews__quote { font-size: 14px; line-height: 1.65; color: var(--km-text, #4B5563); margin: 0; }
+  .km-pp-reviews__meta { padding-top: 14px; border-top: 1px solid var(--km-border, #DDDDDD); }
+  .km-pp-reviews__author { font-weight: 700; font-size: 14px; color: #000; }
+  .km-pp-reviews__product { font-size: 12px; color: var(--km-text, #4B5563); margin-top: 4px; }
+
+  /* RELATED + TRENDING */
+  .km-pp-related { padding: 64px 0; background: #fff; }
+  .km-pp-trending { padding: 64px 0 96px; background: #fff; }
+  .km-pp-related__h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: #000; margin: 0 0 28px; letter-spacing: -.01em; }
+  .km-pp-related__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .km-pp-related__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s ease, box-shadow .25s ease; }
+  .km-pp-related__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
+  .km-pp-related__media { aspect-ratio: 1/1; background: #f9fafb; padding: 12px; }
+  .km-pp-related__img { width: 100%; height: 100%; object-fit: contain; }
+  .km-pp-related__info { padding: 14px 16px 18px; }
+  .km-pp-related__info h3 { font-size: 13px; font-weight: 600; color: #000; margin: 0 0 6px; line-height: 1.4; }
+  .km-pp-related__price { font-size: 14px; font-weight: 700; color: #000; }
+
+  @media (max-width: 1000px) {
+    .km-pp__top { grid-template-columns: 1fr; }
+    .km-pp__gallery { position: static; }
+    .km-pp-innov__grid, .km-pp-trust__grid { grid-template-columns: 1fr; gap: 24px; }
+    .km-pp-related__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .km-pp__badges { grid-template-columns: 1fr 1fr; }
+    .km-pp-reviews__grid { grid-auto-columns: minmax(85%, 1fr); }
+  }
+</style>
+
+<script>
+(() => {
+  // Thumbnail swap
+  const hero = document.querySelector('.km-pp__hero-img');
+  document.querySelectorAll('[data-km-thumb]').forEach((t) => {
+    t.addEventListener('click', () => {
+      const src = t.getAttribute('data-km-thumb');
+      if (hero && src) {
+        hero.src = src;
+        hero.srcset = src;
+      }
+      document.querySelectorAll('[data-km-thumb]').forEach((x) => x.classList.toggle('is-active', x === t));
+    });
+  });
+
+  // Quantity stepper
+  const qty = document.querySelector('[data-km-qty-input]');
+  const dec = document.querySelector('[data-km-qty-dec]');
+  const inc = document.querySelector('[data-km-qty-inc]');
+  if (qty && dec && inc) {
+    dec.addEventListener('click', () => { qty.value = Math.max(1, parseInt(qty.value || '1', 10) - 1); });
+    inc.addEventListener('click', () => { qty.value = Math.max(1, parseInt(qty.value || '1', 10) + 1); });
+  }
+
+  // Reviews carousel scroll
+  const track = document.querySelector('[data-km-pp-rev-track]');
+  const prev = document.querySelector('[data-km-pp-prev]');
+  const next = document.querySelector('[data-km-pp-next]');
+  if (track && prev && next) {
+    const step = () => track.clientWidth * 0.6;
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  }
+})();
+</script>

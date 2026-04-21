@@ -1,0 +1,81 @@
+{%- comment -%}
+  Blog index — matches kinetic-motorcycles.webflow.io/motorcycle-blog
+  Hero intro + 3-col grid of articles.
+{%- endcomment -%}
+<section class="km-section km-blog-index">
+  <div class="km-container">
+    <header class="km-blog-index__hero">
+      <h1 class="km-blog-index__h1">{{ blog.title | default: 'Motorcycle Blogs' }}</h1>
+      <p class="km-blog-index__lede">This is where we share what matters to riders and builders. From technical insights and build perspectives to practical guides and industry news — every article is written to help you ride better, build smarter, and get more from your machine.</p>
+    </header>
+
+    {%- paginate blog.articles by 9 -%}
+      {%- if blog.articles.size > 0 -%}
+        <div class="km-blog-index__grid">
+          {%- for article in blog.articles -%}
+            <article class="km-blog-index__card">
+              <a href="{{ article.url }}" class="km-blog-index__media">
+                {%- if article.image != blank -%}
+                  {{ article.image | image_url: width: 800 | image_tag:
+                     width: 400, height: 260, loading: 'lazy',
+                     alt: article.title, class: 'km-blog-index__img' }}
+                {%- endif -%}
+              </a>
+              <div class="km-blog-index__body">
+                <div class="km-blog-index__date">{{ article.published_at | date: '%b %d, %Y' }}</div>
+                <h2 class="km-blog-index__t"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                <a href="{{ article.url }}" class="km-blog-index__more">
+                  Read More
+                  {%- render 'icon', icon: 'arrow-right' -%}
+                </a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        {%- comment -%} Empty state with the real Kinetic posts as preview {%- endcomment -%}
+        <div class="km-blog-index__grid">
+          {%- assign posts = 'The “Forever Bike” Philosophy: Customizing for Longevity,blog-1.png|Unleashing Your Inner Biker: Your One-Stop Shop for Customizing Motorcycles,blog-2.jpeg|Tips on Motorcycle Customization: A Complete Guide,blog-3.jpeg|Revving Up Your Ride: A Comprehensive Guide to Motorcycle Exhausts,blog-1.png|Essential Skills to Build a Custom Motorcycle: From Rusty Frame to Dream Ride,blog-2.jpeg|Is Building a Custom Motorcycle Worth It? A Complete Breakdown,blog-3.jpeg' | split: '|' -%}
+          {%- for post in posts -%}
+            {%- assign p = post | split: ',' -%}
+            <article class="km-blog-index__card">
+              <a href="/blogs" class="km-blog-index__media">
+                <img src="{{ p[1] | asset_url }}" width="400" height="260" loading="lazy" alt="{{ p[0] }}" class="km-blog-index__img">
+              </a>
+              <div class="km-blog-index__body">
+                <div class="km-blog-index__date">Feb 28, 2026</div>
+                <h2 class="km-blog-index__t"><a href="/blogs">{{ p[0] }}</a></h2>
+                <a href="/blogs" class="km-blog-index__more">Read More {%- render 'icon', icon: 'arrow-right' -%}</a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="km-blog-index__pagination">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+<style>
+  .km-blog-index { padding: 80px 0; background: #fff; }
+  .km-blog-index__hero { text-align: center; max-width: 820px; margin: 0 auto 56px; }
+  .km-blog-index__h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -.02em; color: #000; margin: 0 0 18px; }
+  .km-blog-index__lede { font-size: 17px; line-height: 1.7; color: var(--km-text, #4B5563); margin: 0; }
+  .km-blog-index__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .km-blog-index__card { display: flex; flex-direction: column; gap: 16px; transition: transform .25s ease; }
+  .km-blog-index__card:hover { transform: translateY(-3px); }
+  .km-blog-index__media { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 20px; background: var(--km-body-bg, #EDEDED); }
+  .km-blog-index__img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .km-blog-index__card:hover .km-blog-index__img { transform: scale(1.04); }
+  .km-blog-index__body { padding: 0 4px; display: flex; flex-direction: column; gap: 12px; }
+  .km-blog-index__date { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--km-accent, #FBB03D); }
+  .km-blog-index__t { font-size: 20px; font-weight: 700; line-height: 1.25; color: #000; margin: 0; }
+  .km-blog-index__t a { color: inherit; text-decoration: none; }
+  .km-blog-index__t a:hover { color: var(--km-accent, #FBB03D); }
+  .km-blog-index__more { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #000; text-decoration: none; }
+  .km-blog-index__pagination { margin-top: 48px; display: flex; justify-content: center; }
+  @media (max-width: 900px) { .km-blog-index__grid { grid-template-columns: 1fr; } }
+</style>
