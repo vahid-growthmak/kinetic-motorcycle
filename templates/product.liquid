@@ -67,7 +67,7 @@
         </div>
 
         {%- if product.description != blank -%}
-          <div class="km-pp__short-desc">{{ product.description | strip_html | truncate: 240 }}</div>
+          <div class="km-pp__short-desc">{{ product.description | strip_html | truncate: 1000 }}</div>
         {%- else -%}
           <div class="km-pp__short-desc">A precision-machined upgrade engineered for exact factory fitment, durable sealing, and long-term reliability. Designed in-house and manufactured in the United States.</div>
         {%- endif -%}
