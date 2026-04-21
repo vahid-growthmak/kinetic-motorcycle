@@ -1,16 +1,14 @@
 {%- comment -%}
-  ============================================================
-  FOOTER — fully editable via schema blocks
-  ============================================================
-  Settings: logo, tagline, social URLs, address, phones, email, copyright
-  Blocks:
-    - info_column  (heading + link list as multi-line text)
-    - brand_column (bike brand + its sub-category links)
+  Footer — comprehensive layout:
+    • Newsletter strip (dark, full-width)
+    • 5-column grid: Brand | Shop | Support | Address | Phone & Email
+    • Bike-model shop-by nav row
+    • Bottom strip: social icons + payment icons + copyright
 {%- endcomment -%}
-
-<footer class="km-footer" {{ section.shopify_attributes }}>
+<footer class="km-footer">
   <div class="km-container">
 
+    {%- comment -%} BRAND + MAIN 4-COL GRID (matches Webflow structure) {%- endcomment -%}
     <div class="km-footer__top">
       <div class="km-footer__brand">
         <a href="{{ routes.root_url }}" class="km-footer__logo">
@@ -20,111 +18,96 @@
             <img src="{{ 'logo.webp' | asset_url }}" alt="{{ shop.name }}" width="200" height="74" class="km-footer__logo-img">
           {%- endif -%}
         </a>
-        {%- if section.settings.tagline != blank -%}
-          <p class="km-footer__tagline">{{ section.settings.tagline }}</p>
-        {%- endif -%}
+        <p class="km-footer__tagline">{{ section.settings.tagline | default: 'Performance parts for the ride of your life.' }}</p>
         <div class="km-footer__social">
-          {%- if section.settings.instagram_url != blank -%}
-            <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', icon: 'instagram' -%}</a>
-          {%- endif -%}
-          {%- if section.settings.facebook_url != blank -%}
-            <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">{%- render 'icon', icon: 'facebook' -%}</a>
-          {%- endif -%}
-          {%- if section.settings.youtube_url != blank -%}
-            <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', icon: 'youtube' -%}</a>
-          {%- endif -%}
+          <a href="https://instagram.com/kineticmotorcycles" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', icon: 'instagram' -%}</a>
+          <a href="https://facebook.com/kineticmotorcycles" target="_blank" rel="noopener" aria-label="Facebook">{%- render 'icon', icon: 'facebook' -%}</a>
+          <a href="https://youtube.com/@kineticmotorcycles" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', icon: 'youtube' -%}</a>
         </div>
       </div>
 
-      {%- assign info_blocks = section.blocks | where: 'type', 'info_column' -%}
-      {%- if info_blocks.size > 0 -%}
-        <div class="km-footer__grid">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'info_column' -%}
-              <div class="km-footer__col" {{ block.shopify_attributes }}>
-                <h4 class="km-footer__heading">{{ block.settings.heading }}</h4>
-                {%- if block.settings.body != blank -%}
-                  <div class="km-footer__address">{{ block.settings.body | newline_to_br }}</div>
-                {%- endif -%}
-                {%- if block.settings.links != blank -%}
-                  <ul class="km-footer__links">
-                    {%- assign lines = block.settings.links | strip | split: '
-' -%}
-                    {%- for line in lines -%}
-                      {%- assign parts = line | split: '|' -%}
-                      {%- assign label = parts[0] | strip -%}
-                      {%- assign url = parts[1] | strip -%}
-                      {%- if label != blank -%}
-                        <li><a href="{{ url | default: '#' }}">{{ label }}</a></li>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </ul>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
+      <div class="km-footer__grid">
+        {%- comment -%} COMPANY {%- endcomment -%}
+        <div class="km-footer__col">
+          <h4 class="km-footer__heading">Company</h4>
+          <ul class="km-footer__links">
+            <li><a href="/pages/about">About Us</a></li>
+            <li><a href="/pages/reviews">Reviews</a></li>
+          </ul>
         </div>
-      {%- endif -%}
+
+        {%- comment -%} SUPPORT {%- endcomment -%}
+        <div class="km-footer__col">
+          <h4 class="km-footer__heading">Support</h4>
+          <ul class="km-footer__links">
+            <li><a href="/pages/contact">Contact Us</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        {%- comment -%} ADDRESS {%- endcomment -%}
+        <div class="km-footer__col">
+          <h4 class="km-footer__heading">Address</h4>
+          <address class="km-footer__address">
+            Kinetic Motorcycles<br>
+            7312 Louetta Road<br>
+            Suite B118-428<br>
+            Spring, Texas 77379
+          </address>
+        </div>
+
+        {%- comment -%} PHONE & EMAIL {%- endcomment -%}
+        <div class="km-footer__col">
+          <h4 class="km-footer__heading">Phone &amp; Email</h4>
+          <p class="km-footer__contact">
+            <a href="tel:713-936-5412">713-936-5412</a><br>
+            <a href="tel:833-455-0591">833-455-0591</a>
+          </p>
+          <p class="km-footer__contact">
+            <a href="mailto:support@kineticmotorcycles.com">support@kineticmotorcycles.com</a>
+          </p>
+        </div>
+      </div>
     </div>
 
-    {%- assign brand_blocks = section.blocks | where: 'type', 'brand_column' -%}
-    {%- if brand_blocks.size > 0 -%}
-      <nav class="km-footer__brands" aria-label="Shop by bike">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'brand_column' -%}
-            <div class="km-footer__brand-col" {{ block.shopify_attributes }}>
-              <a href="{{ block.settings.brand_url | default: '#' }}" class="km-footer__brand-label">{{ block.settings.brand_name }}</a>
-              {%- if block.settings.sub_links != blank -%}
-                <ul class="km-footer__brand-subs">
-                  {%- assign sub_lines = block.settings.sub_links | strip | split: '
-' -%}
-                  {%- for line in sub_lines -%}
-                    {%- assign sparts = line | split: '|' -%}
-                    {%- assign sl = sparts[0] | strip -%}
-                    {%- assign su = sparts[1] | strip -%}
-                    {%- if sl != blank -%}
-                      <li><a href="{{ su | default: '#' }}">{{ sl }}</a></li>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </nav>
-    {%- endif -%}
+    {%- comment -%} SHOP-BY-BIKE NAV ROW — 8 columns matching Webflow. Format: Brand(base-slug):Label^slug|Label^slug... {%- endcomment -%}
+    <nav class="km-footer__brands" aria-label="Shop by bike">
+      {%- assign brand_rows =
+        'Sportster(harley-davidson-sportster-parts):Accessories^harley-davidson-sportster-accessories|Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters|Exhausts^harley-davidson-sportster-exhaust-systems|Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor|Handlebars^harley-davidson-sportster-handlebars|Lighting^harley-davidson-sportster-lighting|Services^harley-davidson-sportster-services|Intake Systems^harley-davidson-sportster-intake-systems|Grips^harley-davidson-sportster-grips||Softail(harley-davidson-softail-parts):Accessories^harley-davidson-softail-accessories|Exhausts^harley-davidson-softail-exhaust-systems|Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor|Intake Systems^harley-davidson-softail-intake-systems||Dyna(harley-davidson-dyna-parts):Exhausts^harley-davidson-dyna-exhaust-systems|Intake Systems^harley-davidson-dyna-intake-systems||Indian(indian):Exhausts^indian-exhausts||Honda(honda-cb-parts):Accessories^honda-cb-accessories|Exhausts^honda-cb-exhaust-systems|Suspension and Chassis^honda-cb-suspension-chassis||Triumph(triumph-motorcycle-parts-accessories):Exhausts^triumph-exhaust-systems|Grips^triumph-motorcycle-grips|Accessories^triumph-motorcycle-accessories|Faceplates^triumph-faceplates||Gear(lifestyle):Lifestyle^lifestyle|Apparel^lifestyle-apparel|3D^lifestyle-3d|Magnets &amp; Pins^lifestyle-magnets-pins|Gift Cards^gift-cards|Decals &amp; Patches^lifestyle-decals-patches||Parts(parts):Flash^parts-flash|Electrical^parts-electrical|Grips^parts-grips|Mufflers &amp; Exhaust^parts-mufflers-exhaust'
+        | split: '||'
+      -%}
+      {%- for brand in brand_rows -%}
+        {%- assign bparts = brand | split: ':' -%}
+        {%- assign brand_header = bparts[0] -%}
+        {%- assign brand_name_parts = brand_header | split: '(' -%}
+        {%- assign brand_name = brand_name_parts[0] -%}
+        {%- assign brand_slug = brand_name_parts[1] | replace: ')', '' -%}
+        {%- assign sub_items = bparts[1] | split: '|' -%}
+        <div class="km-footer__brand-col">
+          <a href="/collections/{{ brand_slug }}" class="km-footer__brand-label">{{ brand_name }}</a>
+          <ul class="km-footer__brand-subs">
+            {%- for s in sub_items -%}
+              {%- assign sp = s | split: '^' -%}
+              <li><a href="/collections/{{ sp[1] }}">{{ sp[0] }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </nav>
 
+    {%- comment -%} BOTTOM STRIP (matches Webflow: copyright + Terms & conditions + payment) {%- endcomment -%}
     <div class="km-footer__bottom">
-      <p class="km-footer__copyright">
-        {%- if section.settings.copyright_text != blank -%}
-          {{ section.settings.copyright_text | replace: '{year}', 'now' | date: '%Y' | replace: '{shop}', shop.name }}
-        {%- else -%}
-          © {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
-        {%- endif -%}
-      </p>
+      <p class="km-footer__copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
 
-      {%- if section.settings.legal_links != blank -%}
-        <ul class="km-footer__legal">
-          {%- assign legal_lines = section.settings.legal_links | strip | split: '
-' -%}
-          {%- for line in legal_lines -%}
-            {%- assign lparts = line | split: '|' -%}
-            {%- assign llabel = lparts[0] | strip -%}
-            {%- assign lurl = lparts[1] | strip -%}
-            {%- if llabel != blank -%}
-              <li><a href="{{ lurl | default: '#' }}">{{ llabel }}</a></li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
+      <ul class="km-footer__legal">
+        <li><a href="/policies/terms-of-service">Terms &amp; conditions</a></li>
+      </ul>
 
       <div class="km-footer__pay">
-        {%- if section.settings.show_payment_icons -%}
-          <img src="{{ 'pay-visa.avif' | asset_url }}" alt="Visa" width="38" height="24" loading="lazy">
-          <img src="{{ 'pay-mastercard.avif' | asset_url }}" alt="Mastercard" width="38" height="24" loading="lazy">
-          <img src="{{ 'pay-amex.avif' | asset_url }}" alt="American Express" width="38" height="24" loading="lazy">
-          <img src="{{ 'pay-paypal.avif' | asset_url }}" alt="PayPal" width="38" height="24" loading="lazy">
-        {%- endif -%}
+        <img src="{{ 'pay-visa.avif' | asset_url }}" alt="Visa" width="38" height="24" loading="lazy">
+        <img src="{{ 'pay-mastercard.avif' | asset_url }}" alt="Mastercard" width="38" height="24" loading="lazy">
+        <img src="{{ 'pay-amex.avif' | asset_url }}" alt="American Express" width="38" height="24" loading="lazy">
+        <img src="{{ 'pay-paypal.avif' | asset_url }}" alt="PayPal" width="38" height="24" loading="lazy">
       </div>
     </div>
   </div>
@@ -132,6 +115,8 @@
 
 <style>
   .km-footer { background: #000; color: #b5b5b5; margin-top: 64px; }
+
+  /* Top: brand (full width with logo) + 4-col info grid */
   .km-footer__top { padding: 64px 0 40px; border-bottom: 1px solid rgba(255,255,255,.08); }
   .km-footer__brand { max-width: 340px; margin-bottom: 48px; }
   .km-footer__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
@@ -140,18 +125,42 @@
   .km-footer__social { display: flex; gap: 10px; }
   .km-footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.08); color: #fff; text-decoration: none; transition: background .2s ease, color .2s ease; }
   .km-footer__social a:hover { background: var(--km-accent, #FBB03D); color: #000; }
+
   .km-footer__heading { color: #fff; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 18px; font-weight: 700; }
   .km-footer__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
   .km-footer__links a { color: #b5b5b5; font-size: 14px; text-decoration: none; transition: color .2s ease; }
   .km-footer__links a:hover { color: #fff; }
+
   .km-footer__address { font-style: normal; line-height: 1.7; font-size: 14px; margin: 0 0 18px; color: #b5b5b5; }
+  .km-footer__hours { font-size: 13px; line-height: 1.6; margin: 0; color: #b5b5b5; }
+  .km-footer__hours strong { color: #fff; font-weight: 700; }
+
+  .km-footer__contact { margin: 0 0 10px; font-size: 14px; line-height: 1.7; }
+  .km-footer__contact a { color: #b5b5b5; text-decoration: none; transition: color .2s ease; }
+  .km-footer__contact a:hover { color: var(--km-accent, #FBB03D); text-decoration: underline; }
+  .km-footer__contact--small { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 14px; }
+  .km-footer__contact--small strong { color: #fff; }
+
+  /* Bike-model nav — 8 columns */
   .km-footer__brands { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 28px 24px; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
   .km-footer__brand-col { min-width: 0; }
-  .km-footer__brand-label { display: block; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #fff; margin-bottom: 12px; text-decoration: none; transition: color .2s ease; }
+  .km-footer__brand-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 12px;
+    text-decoration: none;
+    transition: color .2s ease;
+  }
   .km-footer__brand-label:hover { color: var(--km-accent, #FBB03D); }
   .km-footer__brand-subs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
   .km-footer__brand-subs a { color: #9ca3af; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; transition: color .2s ease; }
   .km-footer__brand-subs a:hover { color: #fff; }
+
+  /* Bottom strip */
   .km-footer__bottom { display: grid; grid-template-columns: 1fr auto auto; gap: 24px; align-items: center; padding: 24px 0 32px; flex-wrap: wrap; }
   .km-footer__copyright { font-size: 12px; color: #6b7280; margin: 0; }
   .km-footer__legal { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
@@ -159,9 +168,13 @@
   .km-footer__legal a:hover { color: #fff; }
   .km-footer__pay { display: flex; gap: 8px; align-items: center; }
   .km-footer__pay img { height: 22px; width: auto; opacity: .85; }
-  @media (max-width: 1200px) { .km-footer__brands { grid-template-columns: repeat(4, 1fr); } }
+
+  @media (max-width: 1200px) {
+    .km-footer__brands { grid-template-columns: repeat(4, 1fr); }
+  }
   @media (max-width: 1000px) {
     .km-footer__grid { grid-template-columns: repeat(2, 1fr); }
+    .km-footer__newsletter-inner { grid-template-columns: 1fr; }
   }
   @media (max-width: 700px) {
     .km-footer__grid { grid-template-columns: 1fr; gap: 32px; }
@@ -174,56 +187,9 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "header", "content": "Brand" },
     { "type": "image_picker", "id": "logo", "label": "Footer logo" },
-    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Performance parts for the ride of your life." },
-
-    { "type": "header", "content": "Social links" },
-    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
-    { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
-
-    { "type": "header", "content": "Bottom strip" },
-    { "type": "text", "id": "copyright_text", "label": "Copyright text", "info": "{year} and {shop} auto-replace" , "default": "© {year} {shop}. All rights reserved." },
-    { "type": "textarea", "id": "legal_links", "label": "Legal links (one per line, Label|URL)", "default": "Terms & conditions|/policies/terms-of-service" },
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Performance parts for the ride of your life." }
   ],
-  "blocks": [
-    {
-      "type": "info_column",
-      "name": "Info column (links or address)",
-      "settings": [
-        { "type": "text", "id": "heading", "label": "Column heading", "default": "Company" },
-        { "type": "textarea", "id": "links", "label": "Links (one per line, Label|URL)", "info": "Leave blank if using body text instead", "default": "About Us|/pages/about\nReviews|/pages/reviews" },
-        { "type": "textarea", "id": "body", "label": "Body text (address, hours, etc.) — overrides links" }
-      ]
-    },
-    {
-      "type": "brand_column",
-      "name": "Shop-by-bike column",
-      "settings": [
-        { "type": "text", "id": "brand_name", "label": "Brand name", "default": "Sportster" },
-        { "type": "url", "id": "brand_url", "label": "Brand collection URL" },
-        { "type": "textarea", "id": "sub_links", "label": "Sub-category links (one per line, Label|URL)", "default": "Accessories|/collections/accessories\nExhausts|/collections/exhausts" }
-      ]
-    }
-  ],
-  "default": {
-    "blocks": [
-      { "type": "info_column", "settings": { "heading": "Company", "links": "About Us|/pages/about\nReviews|/pages/reviews", "body": "" } },
-      { "type": "info_column", "settings": { "heading": "Support", "links": "Contact Us|/pages/contact\nFAQ|/pages/faq", "body": "" } },
-      { "type": "info_column", "settings": { "heading": "Address", "links": "", "body": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379" } },
-      { "type": "info_column", "settings": { "heading": "Phone & Email", "links": "713-936-5412|tel:713-936-5412\n833-455-0591|tel:833-455-0591\nsupport@kineticmotorcycles.com|mailto:support@kineticmotorcycles.com", "body": "" } },
-      { "type": "brand_column", "settings": { "brand_name": "Sportster", "brand_url": "/collections/harley-davidson-sportster-parts", "sub_links": "Accessories|/collections/harley-davidson-sportster-accessories\nFootpegs and Shifters|/collections/harley-davidson-sportster-footpegs-shifters\nExhausts|/collections/harley-davidson-sportster-exhaust-systems\nCovers-Decals-Armor|/collections/harley-davidson-sportster-covers-decals-armor\nHandlebars|/collections/harley-davidson-sportster-handlebars\nLighting|/collections/harley-davidson-sportster-lighting\nServices|/collections/harley-davidson-sportster-services\nIntake Systems|/collections/harley-davidson-sportster-intake-systems\nGrips|/collections/harley-davidson-sportster-grips" } },
-      { "type": "brand_column", "settings": { "brand_name": "Softail", "brand_url": "/collections/harley-davidson-softail-parts", "sub_links": "Accessories|/collections/harley-davidson-softail-accessories\nExhausts|/collections/harley-davidson-softail-exhaust-systems\nCovers-Decals-Armor|/collections/harley-davidson-softail-covers-decals-armor\nIntake Systems|/collections/harley-davidson-softail-intake-systems" } },
-      { "type": "brand_column", "settings": { "brand_name": "Dyna", "brand_url": "/collections/harley-davidson-dyna-parts", "sub_links": "Exhausts|/collections/harley-davidson-dyna-exhaust-systems\nIntake Systems|/collections/harley-davidson-dyna-intake-systems" } },
-      { "type": "brand_column", "settings": { "brand_name": "Indian", "brand_url": "/collections/indian", "sub_links": "Exhausts|/collections/indian-exhausts" } },
-      { "type": "brand_column", "settings": { "brand_name": "Honda", "brand_url": "/collections/honda-cb-parts", "sub_links": "Accessories|/collections/honda-cb-accessories\nExhausts|/collections/honda-cb-exhaust-systems\nSuspension and Chassis|/collections/honda-cb-suspension-chassis" } },
-      { "type": "brand_column", "settings": { "brand_name": "Triumph", "brand_url": "/collections/triumph-motorcycle-parts-accessories", "sub_links": "Exhausts|/collections/triumph-exhaust-systems\nGrips|/collections/triumph-motorcycle-grips\nAccessories|/collections/triumph-motorcycle-accessories\nFaceplates|/collections/triumph-faceplates" } },
-      { "type": "brand_column", "settings": { "brand_name": "Gear", "brand_url": "/collections/lifestyle", "sub_links": "Lifestyle|/collections/lifestyle\nApparel|/collections/lifestyle-apparel\n3D|/collections/lifestyle-3d\nMagnets & Pins|/collections/lifestyle-magnets-pins\nGift Cards|/collections/gift-cards\nDecals & Patches|/collections/lifestyle-decals-patches" } },
-      { "type": "brand_column", "settings": { "brand_name": "Parts", "brand_url": "/collections/parts", "sub_links": "Flash|/collections/parts-flash\nElectrical|/collections/parts-electrical\nGrips|/collections/parts-grips\nMufflers & Exhaust|/collections/parts-mufflers-exhaust" } }
-    ]
-  },
   "presets": [ { "name": "Footer" } ]
 }
 {% endschema %}

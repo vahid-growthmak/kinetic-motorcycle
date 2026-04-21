@@ -1,23 +1,23 @@
 {%- comment -%}
-  404 — JS-based URL router.
-  Renders editable SECTIONS (not snippets), so each page can be customized via Theme Editor.
-  Even without admin-created Pages, visitors to /pages/faq, /pages/about, etc. see the right content.
+  404 — bulletproof JS-based URL router.
+  Renders ALL page snippets hidden, then JS shows the right one based on location.pathname.
+  Works regardless of Liquid request.path quirks or theme caching.
 {%- endcomment -%}
 
 <div data-km-page="faq" hidden>
-  {% section 'page-faq' %}
+  {% render 'page-faq' %}
 </div>
 
 <div data-km-page="about" hidden>
-  {% section 'page-about' %}
+  {% render 'page-about' %}
 </div>
 
 <div data-km-page="reviews" hidden>
-  {% section 'page-reviews' %}
+  {% render 'page-reviews' %}
 </div>
 
 <div data-km-page="blogs" hidden>
-  {% section 'page-blogs' %}
+  {% render 'page-blogs' %}
 </div>
 
 <div data-km-page="collection" hidden>
@@ -85,6 +85,7 @@
     document.title = pretty + ' – Kinetic Motorcycles';
   }
 
+  // Show the matched page, hide the rest
   document.querySelectorAll('[data-km-page]').forEach(function (el) {
     if (el.getAttribute('data-km-page') === key) {
       el.removeAttribute('hidden');
