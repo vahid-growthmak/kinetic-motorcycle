@@ -152,13 +152,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          {%- if product.description != blank -%}
-            <div class="km-rte">{{ product.description }}</div>
-          {%- else -%}
-            <p>Designed as a superior alternative to traditional paper intake gaskets, this component is machined from a special die-silicone-like composite. It combines flexibility with added structural stiffness to maintain sealing integrity during installation and long-term use.</p>
-            <p>Rated for temperatures up to <strong>475°F</strong>, it tolerates raw engine heat and does not absorb oil, fuel, or vapors — common causes of gasket failure. Its tear-resistant construction allows repeated installation without ripping, making it ideal for frequent air-cleaner or throttle-body servicing.</p>
-            <p>Precision-cut for exact factory throttle-body dimensions, it delivers a consistent, leak-free seal across all supported models.</p>
-          {%- endif -%}
+                {{ product.metafields.custom.product_information.value }}
         </div>
       </details>
 
@@ -168,13 +162,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          <ul class="km-pp__spec-list">
-            <li><strong>Material:</strong> composite silicone blend</li>
-            <li><strong>Temp rating:</strong> up to 475°F / 246°C</li>
-            <li><strong>Thickness:</strong> precision-cut for factory fit</li>
-            <li><strong>Reusability:</strong> yes — tear-resistant for repeat installs</li>
-            <li><strong>Country of origin:</strong> United States</li>
-          </ul>
+          {{ product.metafields.custom.specifications.value }}
         </div>
       </details>
 
@@ -184,12 +172,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          <ul class="km-pp__spec-list">
-            <li>Bolt-on with factory hardware — no flange kit required</li>
-            <li>High-temperature composite resists heat, fuel, and vapor</li>
-            <li>Consistent, leak-free seal across Milwaukee-8 Softail models</li>
-            <li>Designed and manufactured in-house in Houston, Texas</li>
-          </ul>
+          {{ product.metafields.custom.features.value }}
         </div>
       </details>
 
@@ -199,7 +182,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          <p>Engineered for Harley-Davidson Softail with Milwaukee-8 engine platforms. Uses factory mounting hardware and torque specs. Confirm your exact year and model with our support team before ordering if you’re unsure.</p>
+                {{ product.metafields.custom.fitment.value }}
         </div>
       </details>
 
@@ -209,7 +192,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          <p>We design in-house, manufacture in the United States, and test on real bikes we ride. Our parts are built around factory mounting points and proven materials — no guesswork, no shim stacks, no “close enough.”</p>
+                {{ product.metafields.custom.why_choose_this.value }}
         </div>
       </details>
 
@@ -219,9 +202,7 @@
           <span class="km-pp__acc-toggle">{%- render 'icon', icon: 'plus' -%}{%- render 'icon', icon: 'minus' -%}</span>
         </summary>
         <div class="km-pp__acc-a">
-          <p><strong>Is this reusable?</strong> Yes — tear-resistant composite allows multiple install cycles.</p>
-          <p><strong>Do I need extra hardware?</strong> No — it uses your factory mounting bolts and gasket surface.</p>
-          <p><strong>How fast does it ship?</strong> Most orders leave our Houston warehouse same day or within 48 hours.</p>
+                {{ product.metafields.custom.faqs.value }}
         </div>
       </details>
     </div>
