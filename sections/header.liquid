@@ -72,16 +72,10 @@
         <ul class="km-header__menu">
 
           <li class="km-header__menu-item km-header__menu-item--mega">
-            {%- comment -%} Desktop: hover-driven dropdown. Mobile: tap expands accordion below. {%- endcomment -%}
             <a href="/collections" class="km-header__menu-link km-header__menu-link--has-dropdown">
-              <span>COLLECTIONS</span>
+              COLLECTIONS
               {%- render 'icon', icon: 'chevron-down' -%}
             </a>
-            <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 6l4 4 4-4"/>
-              </svg>
-            </button>
             {% render 'header-megamenu' %}
           </li>
 

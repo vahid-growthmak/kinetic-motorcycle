@@ -1,72 +1,103 @@
 {%- comment -%}
-  Mega menu — renders TWO versions from one data source:
-    1. Desktop: `.km-mega` full-width hover dropdown with 8 columns
-    2. Mobile: `.km-mega-mobile` accordion-style inside drawer nav
-  Both share the same Liquid data for brand + sub-category links.
+  Mega menu — hover-driven dropdown matching kinetic-motorcycles.webflow.io COLLECTIONS structure.
+  8 brand columns (Sportster, Softail, Dyna, Indian, Triumph, Honda, Parts, Lifestyle)
+  with category sub-links under each.
 {%- endcomment -%}
-
-{%- comment -%} Data definition: brand|slug|sub-link labels/slugs (separated by ^) {%- endcomment -%}
-{%- capture mega_data -%}
-Sportster|harley-davidson-sportster-parts|Accessories^harley-davidson-sportster-accessories~Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters~Exhausts^harley-davidson-sportster-exhaust-systems~Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor~Handlebars^harley-davidson-sportster-handlebars~Lighting^harley-davidson-sportster-lighting~Services^harley-davidson-sportster-services~Intake Systems^harley-davidson-sportster-intake-systems~Grips^harley-davidson-sportster-grips
-Softail|harley-davidson-softail-parts|Accessories^harley-davidson-softail-accessories~Exhausts^harley-davidson-softail-exhaust-systems~Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor~Intake Systems^harley-davidson-softail-intake-systems
-Dyna|harley-davidson-dyna-parts|Exhausts^harley-davidson-dyna-exhaust-systems~Intake Systems^harley-davidson-dyna-intake-systems
-Indian|indian|Exhausts^indian-exhausts
-Triumph|triumph-motorcycle-parts-accessories|Exhausts^triumph-exhaust-systems~Grips^triumph-motorcycle-grips~Accessories^triumph-motorcycle-accessories~Faceplates^triumph-faceplates
-Honda|honda-cb-parts|Accessories^honda-cb-accessories~Exhausts^honda-cb-exhaust-systems~Suspension and Chassis^honda-cb-suspension-chassis
-Parts|parts|Flash^parts-flash~Accessories^parts-accessories~Electrical^parts-electrical~Grips^parts-grips~Mufflers &amp; Exhaust^parts-mufflers-exhaust
-Lifestyle|lifestyle|3D^lifestyle-3d~Apparel^lifestyle-apparel~Magnets &amp; Pins^lifestyle-magnets-pins~Gift Cards^gift-cards~Decals &amp; Patches^lifestyle-decals-patches~Gear^lifestyle-gear
-{%- endcapture -%}
-{%- assign mega_rows = mega_data | strip | newline_to_br | split: '<br />' -%}
-
-{%- comment -%} ================== DESKTOP MEGA MENU ================== {%- endcomment -%}
 <div class="km-mega" role="menu" aria-label="Collections menu">
   <div class="km-container km-mega__inner">
     <div class="km-mega__grid">
-      {%- for row in mega_rows -%}
-        {%- assign r = row | strip | split: '|' -%}
-        {%- if r[0] != blank -%}
-          <div class="km-mega__col">
-            <a href="/collections/{{ r[1] }}" class="km-mega__brand">{{ r[0] }}</a>
-            <ul class="km-mega__list">
-              {%- assign subs = r[2] | split: '~' -%}
-              {%- for s in subs -%}
-                {%- assign sp = s | split: '^' -%}
-                <li><a href="/collections/{{ sp[1] }}">{{ sp[0] }}</a></li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
+
+      {%- comment -%} Sportster {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/harley-davidson-sportster-parts" class="km-mega__brand">Sportster</a>
+        <ul class="km-mega__list">
+          {%- assign sport = 'Accessories|harley-davidson-sportster-accessories,Footpegs and Shifters|harley-davidson-sportster-footpegs-shifters,Exhausts|harley-davidson-sportster-exhaust-systems,Covers-Decals-Armor|harley-davidson-sportster-covers-decals-armor,Handlebars|harley-davidson-sportster-handlebars,Lighting|harley-davidson-sportster-lighting,Services|harley-davidson-sportster-services,Intake Systems|harley-davidson-sportster-intake-systems,Grips|harley-davidson-sportster-grips' | split: ',' -%}
+          {%- for it in sport -%}
+            {%- assign p = it | split: '|' -%}
+            <li><a href="/collections/{{ p[1] }}">{{ p[0] }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Softail {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/harley-davidson-softail-parts" class="km-mega__brand">Softail</a>
+        <ul class="km-mega__list">
+          {%- assign soft = 'Accessories|harley-davidson-softail-accessories,Exhausts|harley-davidson-softail-exhaust-systems,Covers-Decals-Armor|harley-davidson-softail-covers-decals-armor,Intake Systems|harley-davidson-softail-intake-systems' | split: ',' -%}
+          {%- for it in soft -%}
+            {%- assign p = it | split: '|' -%}
+            <li><a href="/collections/{{ p[1] }}">{{ p[0] }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Dyna {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/harley-davidson-dyna-parts" class="km-mega__brand">Dyna</a>
+        <ul class="km-mega__list">
+          <li><a href="/collections/harley-davidson-dyna-exhaust-systems">Exhausts</a></li>
+          <li><a href="/collections/harley-davidson-dyna-intake-systems">Intake Systems</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Indian {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/indian" class="km-mega__brand">Indian</a>
+        <ul class="km-mega__list">
+          <li><a href="/collections/indian-exhausts">Exhausts</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Triumph {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/triumph-motorcycle-parts-accessories" class="km-mega__brand">Triumph</a>
+        <ul class="km-mega__list">
+          {%- assign tri = 'Exhausts|triumph-exhaust-systems,Grips|triumph-motorcycle-grips,Accessories|triumph-motorcycle-accessories,Faceplates|triumph-faceplates' | split: ',' -%}
+          {%- for it in tri -%}
+            {%- assign p = it | split: '|' -%}
+            <li><a href="/collections/{{ p[1] }}">{{ p[0] }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Honda {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/honda-cb-parts" class="km-mega__brand">Honda</a>
+        <ul class="km-mega__list">
+          <li><a href="/collections/honda-cb-accessories">Accessories</a></li>
+          <li><a href="/collections/honda-cb-exhaust-systems">Exhausts</a></li>
+          <li><a href="/collections/honda-cb-suspension-chassis">Suspension and Chassis</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Parts {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/parts" class="km-mega__brand">Parts</a>
+        <ul class="km-mega__list">
+          {%- assign parts = 'Flash|parts-flash,Accessories|parts-accessories,Electrical|parts-electrical,Grips|parts-grips,Mufflers &amp; Exhaust|parts-mufflers-exhaust' | split: ',' -%}
+          {%- for it in parts -%}
+            {%- assign p = it | split: '|' -%}
+            <li><a href="/collections/{{ p[1] }}">{{ p[0] }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Lifestyle {%- endcomment -%}
+      <div class="km-mega__col">
+        <a href="/collections/lifestyle" class="km-mega__brand">Lifestyle</a>
+        <ul class="km-mega__list">
+          {%- assign life = '3D|lifestyle-3d,Apparel|lifestyle-apparel,Magnets &amp; Pins|lifestyle-magnets-pins,Gift Cards|gift-cards,Decals &amp; Patches|lifestyle-decals-patches,Gear|lifestyle-gear' | split: ',' -%}
+          {%- for it in life -%}
+            {%- assign p = it | split: '|' -%}
+            <li><a href="/collections/{{ p[1] }}">{{ p[0] }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
     </div>
+
     <div class="km-mega__footer">
       <a href="/collections" class="km-mega__view-all">View all collections {%- render 'icon', icon: 'arrow-right' -%}</a>
     </div>
   </div>
-</div>
-
-{%- comment -%} ================== MOBILE MEGA MENU (accordion) ================== {%- endcomment -%}
-<div class="km-mega-mobile" data-km-mobile-mega>
-  {%- for row in mega_rows -%}
-    {%- assign r = row | strip | split: '|' -%}
-    {%- if r[0] != blank -%}
-      <details class="km-mega-mobile__item">
-        <summary class="km-mega-mobile__summary">
-          <span class="km-mega-mobile__brand-name">{{ r[0] }}</span>
-          <span class="km-mega-mobile__chev" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 6l4 4 4-4"/>
-            </svg>
-          </span>
-        </summary>
-        <ul class="km-mega-mobile__list">
-          <li><a href="/collections/{{ r[1] }}" class="km-mega-mobile__shop-all">Shop all {{ r[0] }} {%- render 'icon', icon: 'arrow-right' -%}</a></li>
-          {%- assign subs = r[2] | split: '~' -%}
-          {%- for s in subs -%}
-            {%- assign sp = s | split: '^' -%}
-            <li><a href="/collections/{{ sp[1] }}">{{ sp[0] }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </details>
-    {%- endif -%}
-  {%- endfor -%}
 </div>

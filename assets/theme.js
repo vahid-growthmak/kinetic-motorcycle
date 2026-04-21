@@ -15,63 +15,14 @@
     onScroll();
   }
 
-  // --------- Mobile menu toggle (drawer + backdrop + mega menu) ---------
+  // --------- Mobile menu toggle ---------
   const menuToggle = document.querySelector('[data-km-menu-toggle]');
   const menuPanel = document.querySelector('[data-km-menu]');
   if (menuToggle && menuPanel) {
-    const closeMenu = () => {
-      menuPanel.classList.remove('is-open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('km-menu-open');
-      document.body.style.overflow = '';
-    };
-    const openMenu = () => {
-      menuPanel.classList.add('is-open');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      document.body.classList.add('km-menu-open');
-      document.body.style.overflow = 'hidden';
-    };
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (menuPanel.classList.contains('is-open')) closeMenu();
-      else openMenu();
-    });
-    // Click the close ✕ in top-right of drawer (rendered via ::before)
-    menuPanel.addEventListener('click', (e) => {
-      if (!menuPanel.classList.contains('is-open')) return;
-      const rect = menuPanel.getBoundingClientRect();
-      if (e.clientY < rect.top + 56 && e.clientX > rect.right - 60) closeMenu();
-    });
-    // Click backdrop (outside drawer) closes too
-    document.addEventListener('click', (e) => {
-      if (!menuPanel.classList.contains('is-open')) return;
-      if (menuPanel.contains(e.target) || menuToggle.contains(e.target)) return;
-      closeMenu();
-    });
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menuPanel.classList.contains('is-open')) closeMenu();
-    });
-    // Close when any regular link inside the drawer is clicked — EXCEPT:
-    //   - the COLLECTIONS link (toggles accordion instead of navigating, on mobile)
-    //   - links inside the mobile mega-menu accordion (navigate normally)
-    //   - <summary> elements inside <details> accordion
-    const megaItem = menuPanel.querySelector('.km-header__menu-item--mega');
-    const megaLink = megaItem ? megaItem.querySelector('.km-header__menu-link--has-dropdown') : null;
-
-    menuPanel.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        // If it's the COLLECTIONS link and we're on mobile (drawer-open), toggle accordion instead of navigating
-        if (link === megaLink && menuPanel.classList.contains('is-open')) {
-          e.preventDefault();
-          e.stopPropagation();
-          const open = megaItem.classList.toggle('is-mega-open');
-          megaLink.setAttribute('aria-expanded', open ? 'true' : 'false');
-          return;
-        }
-        // Normal link inside drawer — close the drawer as it navigates
-        if (menuPanel.classList.contains('is-open')) closeMenu();
-      });
+    menuToggle.addEventListener('click', () => {
+      const open = menuPanel.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
   }
 
