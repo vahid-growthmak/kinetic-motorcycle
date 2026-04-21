@@ -87,7 +87,7 @@
           {%- endif -%}
         </div>
 
-        <form method="post" action="/cart/add" class="km-pp__form" enctype="multipart/form-data">
+        <form method="post" action="/cart/add" class="km-pp__form" data-km-product-form enctype="multipart/form-data">
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                     <script type="application/json" data-km-variants>{{ product.variants | json }}</script>
 
