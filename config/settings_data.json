@@ -1,0 +1,44 @@
+{
+  "current": {
+    "color_body_bg": "#EDEDED",
+    "color_surface": "#FFFFFF",
+    "color_text": "#4B5563",
+    "color_heading": "#000000",
+    "color_primary": "#000000",
+    "color_primary_contrast": "#FFFFFF",
+    "color_accent": "#FBB03D",
+    "color_sale": "#FFDEDE",
+    "color_border": "#DDDDDD",
+    "color_header_bar": "#000000",
+    "font_heading": "manrope_n7",
+    "font_body": "manrope_n4",
+    "heading_scale": 100,
+    "body_scale": 100,
+    "page_width": 1440,
+    "section_radius": 12,
+    "social_instagram": "https://instagram.com/kineticmotorcycles",
+    "social_facebook": "https://facebook.com/kineticmotorcycles",
+    "social_youtube": "https://youtube.com/@kineticmotorcycles",
+    "social_twitter": ""
+  },
+  "presets": {
+    "Default": {
+      "color_body_bg": "#EDEDED",
+      "color_surface": "#FFFFFF",
+      "color_text": "#4B5563",
+      "color_heading": "#000000",
+      "color_primary": "#000000",
+      "color_primary_contrast": "#FFFFFF",
+      "color_accent": "#FBB03D",
+      "color_sale": "#FFDEDE",
+      "color_border": "#DDDDDD",
+      "color_header_bar": "#000000",
+      "font_heading": "manrope_n7",
+      "font_body": "manrope_n4",
+      "heading_scale": 100,
+      "body_scale": 100,
+      "page_width": 1440,
+      "section_radius": 12
+    }
+  }
+}
