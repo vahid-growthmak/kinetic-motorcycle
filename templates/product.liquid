@@ -89,6 +89,7 @@
 
         <form method="post" action="/cart/add" class="km-pp__form" enctype="multipart/form-data">
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <script type="application/json" data-km-variants>{{ product.variants | json }}</script>
 
           {%- if product.has_only_default_variant == false and product.variants.size > 1 -%}
             {%- for option in product.options_with_values -%}
@@ -377,7 +378,8 @@
   .km-pp__form { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
   .km-pp__option-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #000; margin-bottom: 8px; }
   .km-pp__option-values { display: flex; gap: 8px; flex-wrap: wrap; }
-  .km-pp__option-value { padding: 8px 14px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .km-pp__data-option-value
+   { padding: 8px 14px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
   .km-pp__option-value.is-active { background: #000; color: #fff; border-color: #000; }
 
   .km-pp__qty-row { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
