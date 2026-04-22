@@ -33,7 +33,7 @@
         <div class="km-coll__side-group">
           <h3 class="km-coll__side-h">Shop by model</h3>
           <ul class="km-coll__side-list">
-            {%- assign brands = 'Sportster|harley-davidson-sportster-parts,Softail|harley-davidson-softail-parts,Dyna|harley-davidson-dyna-parts,Triumph|triumph-motorcycle-parts-accessories,Honda CB|honda-cb-parts,Indian|indian' | split: ',' -%}
+            {%- assign brands = 'Sportster|sportster,Softail|softail,Dyna|dyna,Triumph|triumph,Honda CB|honda-cb,Indian|indian' | split: ',' -%}
             {%- for b in brands -%}
               {%- assign p = b | split: '|' -%}
               <li><a href="/collections/{{ p[1] }}" class="{% if collection.handle == p[1] %}is-active{% endif %}">{{ p[0] }}</a></li>
@@ -42,7 +42,7 @@
         </div>
 
         {%- comment -%} DYNAMIC CATEGORY LOGIC {%- endcomment -%}
-        {%- assign model_handles = "Sportster,harley-davidson-sportster-parts|Softail,harley-davidson-softail-parts|Dyna,harley-davidson-dyna-parts|Indian,indian|Triumph,triumph-motorcycle-parts-accessories|Honda,honda-cb-parts" | split: "|" -%}
+        {%- assign model_handles = "Sportster,sportster|Softail,softail|Dyna,dyna|Indian,indian|Triumph,triumph|Honda,honda-cb" | split: "|" -%}
         {%- assign current_model_name = "" -%}
         {%- assign current_model_base = "" -%}
 
