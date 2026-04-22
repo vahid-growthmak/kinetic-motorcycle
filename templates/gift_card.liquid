@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money, shop: shop.name }}</title>
+    <title>{{ shop.name }} Gift Card</title>
     <meta name="robots" content="noindex,nofollow">
 
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
         <div class="km-gc__balance">{{ gift_card.balance | money }}</div>
         <p class="km-gc__label">Balance as of {{ 'now' | date: '%b %d, %Y' }}</p>
 
-        <div class="km-gc__qr">{{ gift_card.qr_identifier | rjust: 0 }}</div>
+        <div class="km-gc__qr">{{ gift_card.qr_identifier }}</div>
 
         <div>
           <code class="km-gc__code">{{ gift_card.code | format_code }}</code>
