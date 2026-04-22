@@ -179,7 +179,7 @@
 {
   "name": "Blog posts",
   "settings": [
-    { "type": "text", "id": "eyebrow",        "label": "Eyebrow",        "default": "" },
+    { "type": "text", "id": "eyebrow",        "label": "Eyebrow" },
     { "type": "text", "id": "heading",        "label": "Heading",        "default": "Our Blogs" },
     { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View All" },
     { "type": "url",  "id": "view_all_url",   "label": "View all URL" }
@@ -202,14 +202,16 @@
     }
   ],
   "max_blocks": 6,
-  "default": {
-    "blocks": [
-      { "type": "post", "settings": { "title": "The \"Forever Bike\" Philosophy: Customizing for Longevity", "category": "",   "asset_name": "blog-1.png",  "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } },
-      { "type": "post", "settings": { "title": "Unleashing Your Inner Biker: Your One-Stop Shop for Customizing Motorcycles", "category": "", "asset_name": "blog-2.jpeg", "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } },
-      { "type": "post", "settings": { "title": "Tips on Motorcycle Customization: A Complete Guide", "category": "",  "asset_name": "blog-3.jpeg", "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } }
-    ]
-  },
-  "presets": [ { "name": "Blog posts" } ]
+  "presets": [
+    {
+      "name": "Blog posts",
+      "blocks": [
+        { "type": "post", "settings": { "title": "The \"Forever Bike\" Philosophy: Customizing for Longevity", "category": "",   "asset_name": "blog-1.png",  "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } },
+        { "type": "post", "settings": { "title": "Unleashing Your Inner Biker: Your One-Stop Shop for Customizing Motorcycles", "category": "", "asset_name": "blog-2.jpeg", "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } },
+        { "type": "post", "settings": { "title": "Tips on Motorcycle Customization: A Complete Guide", "category": "",  "asset_name": "blog-3.jpeg", "excerpt": "", "author": "", "date": "", "read_time": "Read Articles" } }
+      ]
+    }
+  ]
 }
 {% endschema %}
 {% comment %} Sync: Wed Apr 22 14:49:52 IST 2026 {% endcomment %}
