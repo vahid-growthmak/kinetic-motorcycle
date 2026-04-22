@@ -20,7 +20,7 @@
   <div class="km-hero__chips">
     <div class="km-container km-hero__chips-row">
       <span class="km-hero__chips-label">Shop by models :</span>
-      {%- assign chips = 'Sportster,harley-davidson-sportster-parts|Softail,harley-davidson-softail-parts|Dyna,harley-davidson-dyna-parts|Triumph,triumph-motorcycle-parts-accessories|Honda,honda-cb-parts|Indian,indian' | split: '|' -%}
+      {%- assign chips = 'Sportster,sportster|Softail,softail|Dyna,dyna|Triumph,triumph|Honda,honda|Indian,indian' | split: '|' -%}
       {%- for c in chips -%}
         {%- assign p = c | split: ',' -%}
         <a href="/collections/{{ p[1] }}" class="km-hero__chip">{{ p[0] }}</a>
