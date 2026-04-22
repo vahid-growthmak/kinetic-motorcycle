@@ -41,13 +41,55 @@
           </ul>
         </div>
 
+        {%- comment -%} DYNAMIC CATEGORY LOGIC {%- endcomment -%}
+        {%- assign model_handles = "Sportster,harley-davidson-sportster-parts|Softail,harley-davidson-softail-parts|Dyna,harley-davidson-dyna-parts|Indian,indian|Triumph,triumph-motorcycle-parts-accessories|Honda,honda-cb-parts" | split: "|" -%}
+        {%- assign current_model_name = "" -%}
+        {%- assign current_model_base = "" -%}
+
+        {%- for m in model_handles -%}
+          {%- assign mp = m | split: "," -%}
+          {%- if collection.handle contains mp[1] or collection.handle contains mp[0] | downcase -%}
+            {%- assign current_model_name = mp[0] -%}
+            {%- assign current_model_base = mp[1] -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- capture model_cats_data -%}
+          Sportster:Accessories^harley-davidson-sportster-accessories|Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters|Exhausts^harley-davidson-sportster-exhaust-systems|Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor|Handlebars^harley-davidson-sportster-handlebars|Lighting^harley-davidson-sportster-lighting|Services^harley-davidson-sportster-services|Intake Systems^harley-davidson-sportster-intake-systems|Grips^harley-davidson-sportster-grips
+          ||Softail:Accessories^harley-davidson-softail-accessories|Exhausts^harley-davidson-softail-exhaust-systems|Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor|Intake Systems^harley-davidson-softail-intake-systems
+          ||Dyna:Exhausts^harley-davidson-dyna-exhaust-systems|Intake Systems^harley-davidson-dyna-intake-systems
+          ||Indian:Exhausts^indian-exhausts
+          ||Honda:Accessories^honda-cb-accessories|Exhausts^honda-cb-exhaust-systems|Suspension and Chassis^honda-cb-suspension-chassis
+          ||Triumph:Exhausts^triumph-exhaust-systems|Grips^triumph-motorcycle-grips|Accessories^triumph-motorcycle-accessories|Faceplates^triumph-faceplates
+        {%- endcapture -%}
+        {%- assign model_cat_rows = model_cats_data | strip | split: '||' -%}
+
         <div class="km-coll__side-group">
           <h3 class="km-coll__side-h">Shop by category</h3>
           <ul class="km-coll__side-list">
-            {%- assign cats = 'Accessories,Exhausts,Handlebars,Footpegs &amp; Shifters,Covers-Decals-Armor,Grips,Lighting,Intake Systems,Services,Seats' | split: ',' -%}
-            {%- for c in cats -%}
-              <li><a href="/collections/{{ c | downcase | replace: ' ', '-' | replace: '&amp;', 'and' }}">{{ c }}</a></li>
-            {%- endfor -%}
+            {%- assign found_cats = false -%}
+            {%- if current_model_name != blank -%}
+              {%- for row in model_cat_rows -%}
+                {%- assign rp = row | split: ':' -%}
+                {%- if rp[0] contains current_model_name -%}
+                  {%- assign cat_items = rp[1] | split: '|' -%}
+                  {%- for item in cat_items -%}
+                    {%- assign ip = item | split: '^' -%}
+                    <li><a href="/collections/{{ ip[1] }}" class="{% if collection.handle == ip[1] %}is-active{% endif %}">{{ ip[0] }}</a></li>
+                  {%- endfor -%}
+                  {%- assign found_cats = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- unless found_cats -%}
+              {%- assign cats = 'Accessories,Exhausts,Handlebars,Footpegs &amp; Shifters,Covers-Decals-Armor,Grips,Lighting,Intake Systems,Services,Seats' | split: ',' -%}
+              {%- for c in cats -%}
+                <li><a href="/collections/{{ c | downcase | replace: ' ', '-' | replace: '&amp;', 'and' }}">{{ c }}</a></li>
+              {%- endfor -%}
+            {%- endunless -%}
           </ul>
         </div>
 
