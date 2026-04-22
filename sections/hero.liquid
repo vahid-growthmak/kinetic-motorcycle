@@ -55,9 +55,10 @@
           {%- endif -%}
         {%- endfor -%}
       {%- else -%}
-        {%- assign fallback_chips = 'Sportster|Softail|Dyna|Triumph|Honda|Indian' | split: '|' -%}
-        {%- for label in fallback_chips -%}
-          <a href="#" class="km-hero__chip">{{ label }}</a>
+        {%- assign fallback_chips = 'Sportster,sportster|Softail,softail|Dyna,dyna|Triumph,triumph|Honda,honda|Indian,indian' | split: '|' -%}
+        {%- for chip in fallback_chips -%}
+          {%- assign p = chip | split: ',' -%}
+          <a href="/collections/{{ p[1] }}" class="km-hero__chip">{{ p[0] }}</a>
         {%- endfor -%}
       {%- endif -%}
     </div>
