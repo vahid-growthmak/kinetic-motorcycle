@@ -276,13 +276,13 @@
 {
   "name": "Banner promo",
   "settings": [
-    { "type": "text",     "id": "eyebrow",         "label": "Eyebrow",             "default": "" },
-    { "type": "text",     "id": "heading",         "label": "Heading",             "default": "" },
-    { "type": "textarea", "id": "subheading",      "label": "Subheading",          "default": "" },
+    { "type": "text",     "id": "eyebrow",         "label": "Eyebrow" },
+    { "type": "text",     "id": "heading",         "label": "Heading" },
+    { "type": "textarea", "id": "subheading",      "label": "Subheading" },
     { "type": "header",   "content": "Feature tile (left)" },
     { "type": "text",     "id": "feature_tag",     "label": "Tag",                 "default": "Get 45% Off" },
     { "type": "text",     "id": "feature_heading", "label": "Heading",             "default": "Instrument cluster" },
-    { "type": "textarea", "id": "feature_subtext", "label": "Subtext",             "default": "" },
+    { "type": "textarea", "id": "feature_subtext", "label": "Subtext" },
     { "type": "text",     "id": "feature_cta",     "label": "CTA label",           "default": "Shop Now" },
     { "type": "url",      "id": "feature_url",     "label": "Link" },
     { "type": "image_picker", "id": "feature_image", "label": "Image" },
@@ -306,13 +306,15 @@
     }
   ],
   "max_blocks": 2,
-  "default": {
-    "blocks": [
-      { "type": "offer", "settings": { "tag": "New Product",  "heading": "Fuel pressure regulator", "subtext": "",                                                                                                                 "cta_label": "Shop Now", "asset_name": "banner-offer-1.avif", "bg_color": "#F2F2F2" } },
-      { "type": "offer", "settings": { "tag": "New Arrivals", "heading": "Fuel pressure regulator", "subtext": "The regulator ensures proper fuel atomization and distribution, optimizing engine performance. Starting From $89.40 USD", "cta_label": "Shop Now", "asset_name": "banner-offer-2.avif", "bg_color": "#E6EEF7" } }
-    ]
-  },
-  "presets": [ { "name": "Banner promo" } ]
+  "presets": [
+    {
+      "name": "Banner promo",
+      "blocks": [
+        { "type": "offer", "settings": { "tag": "New Product",  "heading": "Fuel pressure regulator", "subtext": "",                                                                                                                 "cta_label": "Shop Now", "asset_name": "banner-offer-1.avif", "bg_color": "#F2F2F2" } },
+        { "type": "offer", "settings": { "tag": "New Arrivals", "heading": "Fuel pressure regulator", "subtext": "The regulator ensures proper fuel atomization and distribution, optimizing engine performance. Starting From $89.40 USD", "cta_label": "Shop Now", "asset_name": "banner-offer-2.avif", "bg_color": "#E6EEF7" } }
+      ]
+    }
+  ]
 }
 {% endschema %}
 {% comment %} Sync: Wed Apr 22 14:49:52 IST 2026 {% endcomment %}
