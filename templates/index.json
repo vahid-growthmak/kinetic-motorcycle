@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero"
+    },
+    "ticker": {
+      "type": "ticker"
+    },
+    "model-chooser": {
+      "type": "model-chooser"
+    },
+    "carousel-1": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Sellers"
+      }
+    },
+    "carousel-2": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Selling Exhausts"
+      }
+    },
+    "carousel-3": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Selling Handlebars"
+      }
+    },
+    "features": {
+      "type": "features"
+    },
+    "reviews": {
+      "type": "reviews"
+    },
+    "blogs": {
+      "type": "blogs"
+    },
+    "cta": {
+      "type": "cta"
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "model-chooser",
+    "carousel-1",
+    "carousel-2",
+    "carousel-3",
+    "features",
+    "reviews",
+    "blogs",
+    "cta"
+  ]
+}

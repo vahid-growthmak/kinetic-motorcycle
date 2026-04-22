@@ -1,51 +1,28 @@
 {%- comment -%}
-  404 — bulletproof JS-based URL router.
-  Renders ALL page snippets hidden, then JS shows the right one based on location.pathname.
-  Works regardless of Liquid request.path quirks or theme caching.
+  Standard 404 template.
+  The JS router was removed in favor of proper OS 2.0 JSON templates.
 {%- endcomment -%}
 
-<div data-km-page="faq" hidden>
-  {% render 'page-faq' %}
-</div>
-
-<div data-km-page="about" hidden>
-  {% render 'page-about' %}
-</div>
-
-<div data-km-page="reviews" hidden>
-  {% render 'page-reviews' %}
-</div>
-
-<div data-km-page="blogs" hidden>
-  {% render 'page-blogs' %}
-</div>
-
-<div data-km-page="collection" hidden>
-  {% render 'page-collection-fallback' %}
-</div>
-
-<div data-km-page="404">
-  <section class="km-section km-404">
-    <div class="km-container km-container--narrow">
-      <div class="km-404__inner">
-        <span class="km-404__eyebrow">Error 404</span>
-        <h1 class="km-404__title">This page took a wrong turn.</h1>
-        <p class="km-404__subtext">
-          The page you're looking for doesn't exist — or maybe it moved. Let's get you back on the road.
-        </p>
-        <div class="km-404__actions">
-          <a href="{{ routes.root_url }}" class="km-btn km-btn-primary">
-            Back to homepage
-            {%- render 'icon', icon: 'arrow-right' -%}
-          </a>
-          <a href="{{ routes.all_products_collection_url }}" class="km-btn km-btn-ghost">
-            Browse the shop
-          </a>
-        </div>
+<section class="km-section km-404">
+  <div class="km-container km-container--narrow">
+    <div class="km-404__inner">
+      <span class="km-404__eyebrow">Error 404</span>
+      <h1 class="km-404__title">This page took a wrong turn.</h1>
+      <p class="km-404__subtext">
+        The page you're looking for doesn't exist — or maybe it moved. Let's get you back on the road.
+      </p>
+      <div class="km-404__actions">
+        <a href="{{ routes.root_url }}" class="km-btn km-btn-primary">
+          Back to homepage
+          {%- render 'icon', icon: 'arrow-right' -%}
+        </a>
+        <a href="{{ routes.all_products_collection_url }}" class="km-btn km-btn-ghost">
+          Browse the shop
+        </a>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
 <style>
   .km-section.km-404 { background: var(--km-body-bg, #EDEDED); min-height: 60vh; display: flex; align-items: center; padding: 80px 0; }
@@ -60,38 +37,3 @@
   .km-btn-primary:hover { background: var(--km-accent, #FBB03D); color: #000; }
   .km-btn-ghost { background: transparent; color: #000; border: 1px solid var(--km-border, #DDDDDD); }
 </style>
-
-<script>
-(function () {
-  var path = (window.location.pathname || '').toLowerCase();
-  var key = '404';
-
-  if (/^\/pages\/(faq|faqs|frequently-asked-questions)/.test(path)) {
-    key = 'faq';
-    document.title = 'FAQs – Kinetic Motorcycles';
-  } else if (/^\/pages\/(about|about-us|about-kinetic-motorcycles)/.test(path)) {
-    key = 'about';
-    document.title = 'About – Kinetic Motorcycles';
-  } else if (/^\/pages\/(reviews|customer-reviews)/.test(path)) {
-    key = 'reviews';
-    document.title = 'Customer Reviews – Kinetic Motorcycles';
-  } else if (path === '/blogs' || path === '/blog' || /^\/blogs\//.test(path)) {
-    key = 'blogs';
-    document.title = 'Motorcycle Blogs – Kinetic Motorcycles';
-  } else if (/^\/collections\//.test(path)) {
-    key = 'collection';
-    var slug = path.replace('/collections/', '').replace(/\/$/, '');
-    var pretty = slug.replace(/-/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-    document.title = pretty + ' – Kinetic Motorcycles';
-  }
-
-  // Show the matched page, hide the rest
-  document.querySelectorAll('[data-km-page]').forEach(function (el) {
-    if (el.getAttribute('data-km-page') === key) {
-      el.removeAttribute('hidden');
-    } else {
-      el.setAttribute('hidden', '');
-    }
-  });
-})();
-</script>
