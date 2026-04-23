@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "model_hero": {
+      "type": "model-hero",
+      "settings": {
+        "heading": "Shop Harley-Davidson Softail Motorcycle Parts Online",
+        "description": "<p>The Harley-Davidson Softail stands as a legacy of innovation, combining vintage aesthetics with hidden rear suspension for unmatched comfort and style. Our custom parts are meticulously crafted to amplify its iconic look and performance, from precision-engineered exhausts to unique accessories. Transform your Softail into a true reflection of your passion for the open road.<\/p>"
+      }
+    },
+    "model_categories": {
+      "type": "model-categories",
+      "settings": {
+        "heading": "Softail Categories"
+      },
+      "blocks": {
+        "accessories": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "description": "Personalize your Harley-Davidson Softail with accessories designed to improve comfort, usability, and finishing details. These components complement stock and custom setups while maintaining the bike's balance and classic lines.",
+            "btn_label": "View Accessories",
+            "url": "shopify:\/\/collections\/harley-davidson-softail-accessories"
+          }
+        },
+        "exhausts": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "description": "Browse Harley-Davidson Softail exhaust systems, including dual exhaust and 2-into-1 options commonly used on bobber and performance builds. These exhausts are designed for proper clearance, consistent performance, and a controlled exhaust note suitable for daily riding.",
+            "btn_label": "View Exhausts",
+            "url": "shopify:\/\/collections\/harley-davidson-softail-exhaust-systems"
+          }
+        },
+        "covers": {
+          "type": "category",
+          "settings": {
+            "title": "Covers-Decals-Armor",
+            "description": "Protect key components while refining the overall look of your Softail with covers, decals, and armor designed for durability and proper fitment. These parts add protection without compromising access or appearance.",
+            "btn_label": "View Covers - Decals - Armor",
+            "url": "shopify:\/\/collections\/harley-davidson-softail-covers-decals-armor"
+          }
+        },
+        "intake": {
+          "type": "category",
+          "settings": {
+            "title": "Intake Systems",
+            "description": "Improve airflow consistency and throttle response with Softail intake systems and air cleaners designed to install cleanly and support both stock and aftermarket exhaust setups.",
+            "btn_label": "View Intake Systems",
+            "url": "shopify:\/\/collections\/harley-davidson-softail-intake-systems"
+          }
+        }
+      },
+      "block_order": [
+        "accessories",
+        "exhausts",
+        "covers",
+        "intake"
+      ]
+    }
+  },
+  "order": [
+    "model_hero",
+    "model_categories"
+  ]
+}
