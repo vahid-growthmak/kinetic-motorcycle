@@ -17,67 +17,81 @@
         "menu_1": {
           "type": "menu",
           "settings": {
-            "title": "Company"
+            "title": "Company",
+            "menu": "company"
           }
         },
         "menu_2": {
           "type": "menu",
           "settings": {
-            "title": "Support"
+            "title": "Support",
+            "menu": "support"
           }
         },
         "contact_1": {
           "type": "contact",
           "settings": {
-            "title": "Address"
+            "title": "Address",
+            "address": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379",
+            "phone": "713-936-5412",
+            "email": "support@kineticmotorcycles.com"
           }
         },
         "contact_2": {
           "type": "contact",
           "settings": {
-            "title": "Phone & Email"
+            "title": "Phone & Email",
+            "address": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379",
+            "phone": "713-936-5412",
+            "email": "support@kineticmotorcycles.com"
           }
         },
         "brand_1": {
           "type": "brand_menu",
           "settings": {
             "title": "Sportster",
-            "url": "shopify:\/\/collections\/sportster"
+            "url": "shopify://collections/sportster",
+            "menu": "sportster"
           }
         },
         "brand_2": {
           "type": "brand_menu",
           "settings": {
             "title": "Softail",
-            "url": "shopify:\/\/collections\/softail"
+            "url": "shopify://collections/softail",
+            "menu": "softail"
           }
         },
         "brand_3": {
           "type": "brand_menu",
           "settings": {
             "title": "Dyna",
-            "url": "shopify:\/\/collections\/dyna"
+            "url": "shopify://collections/dyna",
+            "menu": "dyna"
           }
         },
         "brand_4": {
           "type": "brand_menu",
           "settings": {
             "title": "Indian",
-            "url": "shopify:\/\/collections\/indian"
+            "url": "shopify://collections/indian",
+            "menu": "indian"
           }
         },
         "brand_5": {
           "type": "brand_menu",
           "settings": {
             "title": "Honda",
-            "url": "shopify:\/\/collections\/honda"
+            "url": "shopify://collections/honda",
+            "menu": "honda"
           }
         },
         "brand_6": {
           "type": "brand_menu",
           "settings": {
             "title": "Triumph",
-            "url": "shopify:\/\/collections\/triumph"
+            "url": "shopify://collections/triumph",
+            "menu": "triumph"
           }
         }
       },
@@ -93,8 +107,17 @@
         "brand_5",
         "brand_6"
       ],
-      "settings": {}
+      "settings": {
+        "tagline": "Performance parts for the ride of your life.",
+        "instagram_url": "",
+        "facebook_url": "",
+        "youtube_url": "",
+        "twitter_url": "",
+        "legal_menu": ""
+      }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
