@@ -23,7 +23,7 @@
             <div class="km-models__compare" data-km-compare>
               <div class="km-models__compare-before">
                 {%- if block.settings.before_image != blank -%}
-                  {{ block.settings.before_image | image_url: width: 1800 | image_tag: loading: 'lazy', width: 900, height: 563, alt: block.settings.name | append: ' before' }}
+                  <img src="{{ block.settings.before_image | image_url: width: 1800 }}" alt="{{ block.settings.name }} before" loading="lazy" width="900" height="563">
                 {%- else -%}
                   <img src="{{ block.settings.before_asset | default: 'model-sportster-before.png' | asset_url }}" alt="{{ block.settings.name }} before" loading="lazy" width="900" height="563">
                 {%- endif -%}
@@ -31,7 +31,7 @@
               </div>
               <div class="km-models__compare-after" data-km-compare-after>
                 {%- if block.settings.after_image != blank -%}
-                  {{ block.settings.after_image | image_url: width: 1800 | image_tag: loading: 'lazy', width: 900, height: 563, alt: block.settings.name | append: ' after' }}
+                  <img src="{{ block.settings.after_image | image_url: width: 1800 }}" alt="{{ block.settings.name }} after" loading="lazy" width="900" height="563">
                 {%- else -%}
                   <img src="{{ block.settings.after_asset | default: 'model-sportster-after.png' | asset_url }}" alt="{{ block.settings.name }} after" loading="lazy" width="900" height="563">
                 {%- endif -%}
