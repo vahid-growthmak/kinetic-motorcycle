@@ -30,96 +30,7 @@
 
     <div class="km-coll__layout">
       {%- comment -%} Sidebar — filters + related collections {%- endcomment -%}
-      <aside class="km-coll__side" aria-label="Filters">
-        <div class="km-coll__side-group">
-          <h3 class="km-coll__side-h">{{ section.settings.model_heading | default: 'Shop by model' }}</h3>
-          <ul class="km-coll__side-list">
-            {%- if section.settings.model_menu != blank -%}
-              {%- for link in linklists[section.settings.model_menu].links -%}
-                <li><a href="{{ link.url }}" class="{% if request.path == link.url %}is-active{% endif %}">{{ link.title }}</a></li>
-              {%- endfor -%}
-            {%- else -%}
-              {%- assign brands = 'Sportster|sportster,Softail|softail,Dyna|dyna,Triumph|triumph,Honda|honda,Indian|indian' | split: ',' -%}
-              {%- for b in brands -%}
-                {%- assign p = b | split: '|' -%}
-                <li><a href="/collections/{{ p[1] }}" class="{% if collection.handle == p[1] %}is-active{% endif %}">{{ p[0] }}</a></li>
-              {%- endfor -%}
-            {%- endif -%}
-          </ul>
-        </div>
 
-        {%- comment -%} DYNAMIC CATEGORY LOGIC {%- endcomment -%}
-        {%- assign model_handles = "Sportster,sportster|Softail,softail|Dyna,dyna|Indian,indian|Triumph,triumph|Honda,honda" | split: "|" -%}
-        {%- assign current_model_name = "" -%}
-        {%- assign current_model_base = "" -%}
-
-        {%- for m in model_handles -%}
-          {%- assign mp = m | split: "," -%}
-          {%- assign mp0_down = mp[0] | downcase -%}
-          {%- if collection.handle contains mp[1] or collection.handle contains mp0_down -%}
-            {%- assign current_model_name = mp[0] -%}
-            {%- assign current_model_base = mp[1] -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- capture model_cats_data -%}
-          Sportster:Accessories^harley-davidson-sportster-accessories|Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters|Exhausts^harley-davidson-sportster-exhaust-systems|Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor|Handlebars^harley-davidson-sportster-handlebars|Lighting^harley-davidson-sportster-lighting|Services^harley-davidson-sportster-services|Intake Systems^harley-davidson-sportster-intake-systems|Grips^harley-davidson-sportster-grips
-          ||Softail:Accessories^harley-davidson-softail-accessories|Exhausts^harley-davidson-softail-exhaust-systems|Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor|Intake Systems^harley-davidson-softail-intake-systems
-          ||Dyna:Exhausts^harley-davidson-dyna-exhaust-systems|Intake Systems^harley-davidson-dyna-intake-systems
-          ||Indian:Exhausts^indian-exhausts
-          ||Honda:Accessories^honda-cb-accessories|Exhausts^honda-cb-exhaust-systems|Suspension and Chassis^honda-cb-suspension-chassis
-          ||Triumph:Exhausts^triumph-exhaust-systems|Grips^triumph-motorcycle-grips|Accessories^triumph-motorcycle-accessories|Faceplates^triumph-faceplates
-        {%- endcapture -%}
-        {%- assign model_cat_rows = model_cats_data | strip | split: '||' -%}
-
-        <div class="km-coll__side-group">
-          <h3 class="km-coll__side-h">{{ section.settings.category_heading | default: 'Shop by category' }}</h3>
-          <ul class="km-coll__side-list">
-            {%- assign found_cats = false -%}
-            {%- if current_model_name != blank -%}
-              {%- for row in model_cat_rows -%}
-                {%- assign rp = row | split: ':' -%}
-                {%- if rp[0] contains current_model_name -%}
-                  {%- assign cat_items = rp[1] | split: '|' -%}
-                  {%- for item in cat_items -%}
-                    {%- assign ip = item | split: '^' -%}
-                    <li><a href="/collections/{{ ip[1] }}" class="{% if collection.handle == ip[1] %}is-active{% endif %}">{{ ip[0] }}</a></li>
-                  {%- endfor -%}
-                  {%- assign found_cats = true -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endfor -%}
-            {%- endif -%}
-
-            {%- unless found_cats -%}
-              {%- if section.settings.category_menu != blank -%}
-                {%- for link in linklists[section.settings.category_menu].links -%}
-                  <li><a href="{{ link.url }}" class="{% if request.path == link.url %}is-active{% endif %}">{{ link.title }}</a></li>
-                {%- endfor -%}
-              {%- else -%}
-                {%- assign cats = 'Accessories,Exhausts,Handlebars,Footpegs & Shifters,Covers-Decals-Armor,Grips,Lighting,Intake Systems,Services,Seats' | split: ',' -%}
-                {%- for c in cats -%}
-                  <li><a href="/collections/{{ c | downcase | replace: ' ', '-' | replace: '&', 'and' }}">{{ c }}</a></li>
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endunless -%}
-          </ul>
-        </div>
-
-        {%- if section.settings.show_price_filter -%}
-          <div class="km-coll__side-group">
-            <h3 class="km-coll__side-h">Price</h3>
-            <ul class="km-coll__side-list">
-              <li><a href="?price=0-100">Under $100</a></li>
-              <li><a href="?price=100-250">$100 – $250</a></li>
-              <li><a href="?price=250-500">$250 – $500</a></li>
-              <li><a href="?price=500-1000">$500 – $1,000</a></li>
-              <li><a href="?price=1000+">$1,000+</a></li>
-            </ul>
-          </div>
-        {%- endif -%}
-      </aside>
 
       <div class="km-coll__main">
         <div class="km-coll__toolbar">
@@ -200,14 +111,7 @@
   .km-coll__desc { font-size: 15px; line-height: 1.7; color: var(--km-text, #4B5563); margin-bottom: 12px; }
   .km-coll__count { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--km-accent, #FBB03D); }
 
-  .km-coll__layout { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: flex-start; }
-  .km-coll__side { position: sticky; top: 24px; }
-  .km-coll__side-group { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 16px; padding: 22px; margin-bottom: 16px; }
-  .km-coll__side-h { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #000; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--km-border, #DDDDDD); }
-  .km-coll__side-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .km-coll__side-list a { color: var(--km-text, #4B5563); text-decoration: none; font-size: 13px; line-height: 1.5; transition: color .2s ease; }
-  .km-coll__side-list a:hover { color: #000; }
-  .km-coll__side-list a.is-active { color: #000; font-weight: 700; }
+  .km-coll__layout { display: block; }
 
   .km-coll__toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-bottom: 20px; padding: 12px 16px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 12px; }
   .km-coll__sort-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--km-text, #4B5563); }
@@ -233,7 +137,7 @@
   .km-coll__empty { padding: 80px 20px; text-align: center; background: #fff; border-radius: 16px; }
   .km-coll__pagination { margin-top: 48px; display: flex; justify-content: center; gap: 8px; }
 
-  @media (max-width: 1000px) { .km-coll__layout { grid-template-columns: 1fr; } .km-coll__side { position: static; } .km-coll__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 1000px) { .km-coll__grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 760px)  { .km-coll__grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 480px)  { .km-coll__grid { grid-template-columns: 1fr; } }
 </style>
@@ -242,12 +146,7 @@
 {
   "name": "Collection Page",
   "settings": [
-    { "type": "header", "content": "Sidebar" },
-    { "type": "text", "id": "model_heading", "label": "Model filter heading", "default": "Shop by model" },
-    { "type": "link_list", "id": "model_menu", "label": "Model menu (optional)", "info": "If set, overrides the hardcoded model list." },
-    { "type": "text", "id": "category_heading", "label": "Category filter heading", "default": "Shop by category" },
-    { "type": "link_list", "id": "category_menu", "label": "Default category menu (optional)", "info": "Used when no model-specific categories apply." },
-    { "type": "checkbox", "id": "show_price_filter", "label": "Show price filter", "default": true },
+
     { "type": "header", "content": "Grid" },
     { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 24, "step": 3, "default": 12 },
     { "type": "text", "id": "empty_message", "label": "Empty collection message", "default": "No products in this collection yet." }
