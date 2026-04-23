@@ -1,12 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "model_hero": {
       "type": "model-hero",
-      "settings": {}
+      "settings": {
+        "heading": "{{ collection.title }}",
+        "before_image": "{{ collection.metafields.custom.before_image.value }}",
+        "after_image": "{{ collection.image }}",
+        "description": "{{ collection.description }}"
+      }
     },
     "model_categories": {
       "type": "model-categories",
-      "settings": {}
+      "settings": {
+        "heading": "",
+        "collection": ""
+      }
     }
   },
   "order": [
