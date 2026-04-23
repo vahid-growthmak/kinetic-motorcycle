@@ -156,13 +156,18 @@
     user-select: none;
     background: #000;
   }
+  .km-models__compare-before,
+  .km-models__compare-after {
+    position: absolute;
+    inset: 0;
+  }
   .km-models__compare img {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
   }
   .km-models__compare-after {
-    clip-path: inset(0 50% 0 0);
+    clip-path: inset(0 0 0 50%);
     will-change: clip-path;
   }
   .km-models__compare-label {
@@ -282,7 +287,7 @@
       const rect = root.getBoundingClientRect();
       let pct = ((clientX - rect.left) / rect.width) * 100;
       pct = Math.max(0, Math.min(100, pct));
-      afterEl.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      afterEl.style.clipPath = `inset(0 0 0 ${pct}%)`;
       handle.style.left = pct + '%';
     };
 
