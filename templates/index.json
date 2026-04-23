@@ -133,9 +133,9 @@
         "heading": "Best Sellers",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-sellers",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "carousel-2": {
@@ -144,7 +144,7 @@
         "heading": "Best Selling Exhausts",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-selling-exhausts",
         "filter_tag": "",
         "limit": 8
       }
@@ -155,7 +155,7 @@
         "heading": "Best Selling Handlebars",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-selling-handlebars",
         "filter_tag": "",
         "limit": 8
       }
