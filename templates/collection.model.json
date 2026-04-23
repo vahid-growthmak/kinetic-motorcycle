@@ -11,19 +11,11 @@
   "sections": {
     "model_hero": {
       "type": "model-hero",
-      "settings": {
-        "heading": "{{ collection.title }}",
-        "before_image": "{{ collection.metafields.custom.before_image.value }}",
-        "after_image": "{{ collection.image }}",
-        "description": "{{ collection.description }}"
-      }
+      "settings": {}
     },
     "model_categories": {
       "type": "model-categories",
-      "settings": {
-        "heading": "",
-        "collection": ""
-      }
+      "settings": {}
     }
   },
   "order": [
