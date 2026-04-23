@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "contact_hero": {
+      "type": "contact-hero",
+      "settings": {
+        "breadcrumb_current": "Contact Kinetic Motorcycles",
+        "heading": "Contact Kinetic Motorcycles",
+        "subheading": "Have a question about fitment, an order, or a product? Our team is here to help. Reach out using the option that works best for you, and we'll make sure you get the right support."
+      }
+    },
+    "contact_form": {
+      "type": "contact-form-split",
+      "settings": {
+        "heading": "Get in Touch With Kinetic Motorcycles",
+        "description": "Use the form below to send us a message, and our team will get back to you as soon as possible. We answer emails around the clock, 7 days a week!"
+      }
+    },
+    "contact_info_map": {
+      "type": "contact-info-map",
+      "settings": {
+        "info_heading": "Contact Information",
+        "address": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379\nUnited States",
+        "service_info": "For quick questions or order related assistance, contact our customer service team. You will be talking to humans, no bots here!",
+        "phone": "713-936-5412",
+        "text_number": "833-455-0591",
+        "hours": "Available during business hours: 10 AM-5 PM M-F Central Standard Time.",
+        "email_heading": "Email Support",
+        "email_info": "For detailed inquiries, product questions, or order support, email us directly.",
+        "email": "support@kineticmotorcycles.com",
+        "map_url": "https://www.google.com/maps/place/7312+Louetta+Rd+B118-428,+Spring,+TX+77379"
+      }
+    },
+    "cta": {
+      "type": "cta",
+      "settings": {
+        "left_heading": "Advancing Motorcycle Design",
+        "left_subtext": "We build original, in-house components focused on fitment, function, and reliability — pushing thoughtful design forward with every product we make.",
+        "left_link_label": "Explore by Collections",
+        "right_eyebrow": "Join The Kinetic Community",
+        "right_heading": "Get exclusive offers, new product alerts & expert riding tips"
+      }
+    }
+  },
+  "order": [
+    "contact_hero",
+    "contact_form",
+    "contact_info_map",
+    "cta"
+  ]
+}
