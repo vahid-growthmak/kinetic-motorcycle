@@ -70,29 +70,30 @@
     <div class="km-container">
       <nav class="km-header__nav" role="navigation" aria-label="Primary" data-km-menu>
         <ul class="km-header__menu">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'link' -%}
-              {%- assign is_mega = false -%}
-              {%- if block.settings.label == 'COLLECTIONS' or block.settings.label == 'Collections' -%}
-                {%- assign is_mega = true -%}
-              {%- endif -%}
-
-              <li class="km-header__menu-item {% if is_mega %}km-header__menu-item--mega{% endif %}" {{ block.shopify_attributes }}>
-                <a href="{{ block.settings.url | default: '#' }}" class="km-header__menu-link {% if is_mega %}km-header__menu-link--has-dropdown{% endif %}">
-                  <span>{{ block.settings.label }}</span>
-                  {%- if is_mega -%}{%- render 'icon', icon: 'chevron-down' -%}{%- endif -%}
-                </a>
-                {%- if is_mega -%}
-                  <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 6l4 4 4-4"/>
-                    </svg>
-                  </button>
-                  {% render 'header-megamenu' %}
-                {%- endif -%}
-              </li>
+          {%- assign main_menu = section.settings.menu -%}
+          {%- if main_menu != blank -%}
+            {%- for link in main_menu.links -%}
+            {%- assign is_mega = false -%}
+            {%- if link.title == 'COLLECTIONS' or link.title == 'Collections' or link.title == 'Shop' -%}
+              {%- assign is_mega = true -%}
             {%- endif -%}
+
+            <li class="km-header__menu-item {% if is_mega %}km-header__menu-item--mega{% endif %}">
+              <a href="{{ link.url | default: '#' }}" class="km-header__menu-link {% if is_mega %}km-header__menu-link--has-dropdown{% endif %}">
+                <span>{{ link.title }}</span>
+                {%- if is_mega -%}{%- render 'icon', icon: 'chevron-down' -%}{%- endif -%}
+              </a>
+              {%- if is_mega -%}
+                <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6l4 4 4-4"/>
+                  </svg>
+                </button>
+                {% render 'header-megamenu' %}
+              {%- endif -%}
+            </li>
           {%- endfor -%}
+          {%- endif -%}
         </ul>
       </nav>
     </div>
@@ -552,36 +553,14 @@
       "id": "show_account",
       "label": "Show account icon",
       "default": false
-    }
-  ],
-  "blocks": [
+    },
     {
-      "type": "link",
-      "name": "Menu link",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Collections"
-        },
-        {
-          "type": "url",
-          "id": "url",
-          "label": "Link"
-        }
-      ]
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
     }
-  ],
-  "default": {
-    "blocks": [
-      { "type": "link", "settings": { "label": "COLLECTIONS", "url": "/collections" } },
-      { "type": "link", "settings": { "label": "REVIEW", "url": "/pages/reviews" } },
-      { "type": "link", "settings": { "label": "FAQ", "url": "/pages/faq" } },
-      { "type": "link", "settings": { "label": "BLOGS", "url": "/blogs/news" } },
-      { "type": "link", "settings": { "label": "ABOUT", "url": "/pages/about" } }
-    ]
-  }
+  ]
 }
 {% endschema %}
 {% comment %} Sync: Wed Apr 22 14:49:52 IST 2026 {% endcomment %}

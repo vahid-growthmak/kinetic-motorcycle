@@ -13,6 +13,86 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "menu_1": {
+          "type": "menu",
+          "settings": {
+            "title": "Company"
+          }
+        },
+        "menu_2": {
+          "type": "menu",
+          "settings": {
+            "title": "Support"
+          }
+        },
+        "contact_1": {
+          "type": "contact",
+          "settings": {
+            "title": "Address"
+          }
+        },
+        "contact_2": {
+          "type": "contact",
+          "settings": {
+            "title": "Phone & Email"
+          }
+        },
+        "brand_1": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Sportster",
+            "url": "shopify:\/\/collections\/sportster"
+          }
+        },
+        "brand_2": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Softail",
+            "url": "shopify:\/\/collections\/softail"
+          }
+        },
+        "brand_3": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Dyna",
+            "url": "shopify:\/\/collections\/dyna"
+          }
+        },
+        "brand_4": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Indian",
+            "url": "shopify:\/\/collections\/indian"
+          }
+        },
+        "brand_5": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Honda",
+            "url": "shopify:\/\/collections\/honda"
+          }
+        },
+        "brand_6": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Triumph",
+            "url": "shopify:\/\/collections\/triumph"
+          }
+        }
+      },
+      "block_order": [
+        "menu_1",
+        "menu_2",
+        "contact_1",
+        "contact_2",
+        "brand_1",
+        "brand_2",
+        "brand_3",
+        "brand_4",
+        "brand_5",
+        "brand_6"
+      ],
       "settings": {}
     }
   },
