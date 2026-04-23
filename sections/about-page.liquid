@@ -62,21 +62,50 @@
   {%- comment -%} VISION / MISSION / INNOVATION TABS {%- endcomment -%}
   <div class="km-about-page__vmi-wrap">
     <div class="km-container">
-      <div class="km-about-page__vmi-tabs" role="tablist" data-km-vmi-tabs>
-        <button type="button" class="km-about-page__vmi-tab" role="tab" aria-selected="false" data-vmi="vision">Our Vision</button>
-        <button type="button" class="km-about-page__vmi-tab" role="tab" aria-selected="false" data-vmi="mission">Our Mission</button>
-        <button type="button" class="km-about-page__vmi-tab is-active" role="tab" aria-selected="true" data-vmi="innovation">Our Innovation</button>
+      <div class="km-about-page__vmi-tabs" role="tablist">
+        {%- assign tab_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tab' -%}
+            <button type="button" 
+                    class="km-about-page__vmi-tab {% if tab_count == 0 %}is-active{% endif %}" 
+                    role="tab" 
+                    aria-selected="{% if tab_count == 0 %}true{% else %}false{% endif %}" 
+                    data-vmi-tab="{{ block.id }}"
+                    {{ block.shopify_attributes }}>
+              {{ block.settings.title }}
+            </button>
+            {%- assign tab_count = tab_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
-      <div class="km-about-page__vmi-panel" data-vmi-panel>
-        <div class="km-about-page__vmi-media">
-          <img src="{{ 'cta-bike.avif' | asset_url }}" alt="Kinetic custom bike on the road" loading="lazy">
-        </div>
-        <article class="km-about-page__vmi-card">
-          <h3 data-vmi-h>Our Innovation</h3>
-          <p data-vmi-p>We are shaping the future of automotive innovation &amp; leading the way towards a more innovative, rider-first approach to motorcycle parts. Every component is engineered from scratch in-house — no templates, no outsourced shortcuts.</p>
-          <a href="/collections" class="km-about-page__vmi-btn">View Collection {%- render 'icon', icon: 'arrow-right' -%}</a>
-        </article>
+      <div class="km-about-page__vmi-panels">
+        {%- assign panel_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tab' -%}
+            <div class="km-about-page__vmi-panel {% if panel_count == 0 %}is-active{% endif %}" 
+                 id="Panel-{{ block.id }}" 
+                 {% if panel_count > 0 %}style="display:none;"{% endif %}>
+              <div class="km-about-page__vmi-media">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+                {%- else -%}
+                  <img src="{{ 'cta-bike.avif' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                {%- endif -%}
+              </div>
+              <article class="km-about-page__vmi-card">
+                <h3>{{ block.settings.heading }}</h3>
+                <div class="km-about-page__vmi-text">{{ block.settings.content }}</div>
+                {%- if block.settings.button_label != blank -%}
+                  <a href="{{ block.settings.button_url | default: '/collections' }}" class="km-about-page__vmi-btn">
+                    {{ block.settings.button_label }} {%- render 'icon', icon: 'arrow-right' -%}
+                  </a>
+                {%- endif -%}
+              </article>
+            </div>
+            {%- assign panel_count = panel_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
   </div>
@@ -139,12 +168,13 @@
   .km-about-page__vmi-tab { padding: 10px 22px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--km-text, #4B5563); background: transparent; border: 0; border-radius: 9999px; cursor: pointer; font-family: inherit; transition: background .25s ease, color .25s ease; }
   .km-about-page__vmi-tab:hover { color: #000; }
   .km-about-page__vmi-tab.is-active { background: #000; color: #fff; }
-  .km-about-page__vmi-panel { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16/6; min-height: 320px; background: #000; }
+  .km-about-page__vmi-panel { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16/6; min-height: 320px; background: #000; display: none; }
+  .km-about-page__vmi-panel.is-active { display: block; }
   .km-about-page__vmi-media { position: absolute; inset: 0; z-index: 0; }
   .km-about-page__vmi-media img { width: 100%; height: 100%; object-fit: cover; }
   .km-about-page__vmi-card { position: absolute; right: 32px; top: 50%; transform: translateY(-50%); background: #fff; border-radius: 14px; padding: 28px; width: 340px; max-width: 42%; z-index: 2; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
   .km-about-page__vmi-card h3 { font-size: 18px; font-weight: 700; color: #000; margin: 0 0 10px; letter-spacing: -.005em; }
-  .km-about-page__vmi-card p { font-size: 13px; line-height: 1.6; color: var(--km-text, #4B5563); margin: 0 0 18px; }
+  .km-about-page__vmi-text { font-size: 13px; line-height: 1.6; color: var(--km-text, #4B5563); margin: 0 0 18px; }
   .km-about-page__vmi-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--km-accent, #FBB03D); color: #000; border-radius: 9999px; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .04em; transition: background .2s ease; }
   .km-about-page__vmi-btn:hover { background: #e69a2b; }
   .km-about-page__vmi-btn svg { width: 12px; height: 12px; }
@@ -161,7 +191,7 @@
     .km-about-page__hero-grid { grid-template-columns: 1fr; }
     .km-about-page__stats-strip { grid-template-columns: 1fr; }
     .km-about-page__stats-grid { border-left: 0; padding-left: 0; border-top: 1px solid var(--km-border, #DDDDDD); padding-top: 20px; }
-    .km-about-page__vmi-panel { aspect-ratio: auto; min-height: 0; display: flex; flex-direction: column; }
+    .km-about-page__vmi-panel.is-active { display: flex; }
     .km-about-page__vmi-media { position: static; aspect-ratio: 16/9; }
     .km-about-page__vmi-card { position: static; transform: none; width: 100%; max-width: none; border-radius: 0; box-shadow: none; }
     .km-about-page__why-grid { grid-template-columns: 1fr; }
@@ -170,37 +200,30 @@
 
 <script>
 (() => {
-  const tabs = document.querySelectorAll('[data-vmi]');
-  const h = document.querySelector('[data-vmi-h]');
-  const p = document.querySelector('[data-vmi-p]');
-  if (!tabs.length || !h || !p) return;
+  const tabButtons = document.querySelectorAll('[data-vmi-tab]');
+  const panels = document.querySelectorAll('.km-about-page__vmi-panel');
+  if (!tabButtons.length || !panels.length) return;
 
-  const content = {
-    vision: {
-      h: 'Our Vision',
-      p: 'We aim to set a higher standard in the motorcycle parts industry — a future where riders can confidently find the right parts for their bikes without confusion, delays, or uncertainty.'
-    },
-    mission: {
-      h: 'Our Mission',
-      p: 'Deliver motorcycle solutions that meet real-world riding needs. By focusing on trust, innovation, and consistent quality, we make sure every product and every interaction adds value to your experience as a rider.'
-    },
-    innovation: {
-      h: 'Our Innovation',
-      p: 'We are shaping the future of automotive innovation & leading the way towards a more innovative, rider-first approach to motorcycle parts. Every component is engineered from scratch in-house — no templates, no outsourced shortcuts.'
-    }
-  };
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const key = tab.getAttribute('data-vmi');
-      tabs.forEach((t) => {
-        t.classList.toggle('is-active', t === tab);
-        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = 'Panel-' + btn.getAttribute('data-vmi-tab');
+      
+      // Update buttons
+      tabButtons.forEach(b => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
       });
-      const c = content[key];
-      if (!c) return;
-      h.textContent = c.h;
-      p.textContent = c.p;
+
+      // Update panels
+      panels.forEach(p => {
+        if (p.id === targetId) {
+          p.style.display = '';
+          p.classList.add('is-active');
+        } else {
+          p.style.display = 'none';
+          p.classList.remove('is-active');
+        }
+      });
     });
   });
 })();
@@ -237,6 +260,19 @@
       ]
     },
     {
+      "type": "tab",
+      "name": "VMI Tab",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Tab Title", "default": "Our Vision" },
+        { "type": "image_picker", "id": "image", "label": "Panel Image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Our Vision" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>We aim to set a higher standard in the motorcycle parts industry.</p>" },
+        { "type": "text", "id": "button_label", "label": "Button Label", "default": "View Collection" },
+        { "type": "url", "id": "button_url", "label": "Button Link" }
+      ]
+    },
+    {
       "type": "why_card",
       "name": "Why Choose Card",
       "limit": 3,
@@ -250,6 +286,9 @@
   ],
   "default": {
     "blocks": [
+      { "type": "tab", "settings": { "title": "Our Vision", "heading": "Our Vision", "content": "<p>We aim to set a higher standard in the motorcycle parts industry — a future where riders can confidently find the right parts for their bikes without confusion, delays, or uncertainty.</p>" } },
+      { "type": "tab", "settings": { "title": "Our Mission", "heading": "Our Mission", "content": "<p>Deliver motorcycle solutions that meet real-world riding needs. By focusing on trust, innovation, and consistent quality, we make sure every product and every interaction adds value to your experience as a rider.</p>" } },
+      { "type": "tab", "settings": { "title": "Our Innovation", "heading": "Our Innovation", "content": "<p>We are shaping the future of automotive innovation & leading the way towards a more innovative, rider-first approach to motorcycle parts. Every component is engineered from scratch in-house — no templates, no outsourced shortcuts.</p>" } },
       { "type": "stat", "settings": { "number": "10+", "label": "Years", "sublabel": "Designing & Manufacturing" } },
       { "type": "stat", "settings": { "number": "11,900+", "label": "Parts delivered", "sublabel": "" } },
       { "type": "stat", "settings": { "number": "$2.3M+", "label": "Inventory shipped", "sublabel": "" } },

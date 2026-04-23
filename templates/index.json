@@ -24,19 +24,25 @@
     "carousel-1": {
       "type": "product-carousel",
       "settings": {
-        "heading": "Best Sellers"
+        "heading": "Best Sellers",
+        "view_all_url": "/collections/all",
+        "collection": "all"
       }
     },
     "carousel-2": {
       "type": "product-carousel",
       "settings": {
-        "heading": "Best Selling Exhausts"
+        "heading": "Best Selling Exhausts",
+        "view_all_url": "/collections/all",
+        "collection": "all"
       }
     },
     "carousel-3": {
       "type": "product-carousel",
       "settings": {
-        "heading": "Best Selling Handlebars"
+        "heading": "Best Selling Handlebars",
+        "view_all_url": "/collections/all",
+        "collection": "all"
       }
     },
     "features": {

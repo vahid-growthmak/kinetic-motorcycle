@@ -70,33 +70,29 @@
     <div class="km-container">
       <nav class="km-header__nav" role="navigation" aria-label="Primary" data-km-menu>
         <ul class="km-header__menu">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' -%}
+              {%- assign is_mega = false -%}
+              {%- if block.settings.label == 'COLLECTIONS' or block.settings.label == 'Collections' -%}
+                {%- assign is_mega = true -%}
+              {%- endif -%}
 
-          <li class="km-header__menu-item km-header__menu-item--mega">
-            {%- comment -%} Desktop: hover-driven dropdown. Mobile: tap expands accordion below. {%- endcomment -%}
-            <a href="/collections" class="km-header__menu-link km-header__menu-link--has-dropdown">
-              <span>COLLECTIONS</span>
-              {%- render 'icon', icon: 'chevron-down' -%}
-            </a>
-            <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 6l4 4 4-4"/>
-              </svg>
-            </button>
-            {% render 'header-megamenu' %}
-          </li>
-
-          <li class="km-header__menu-item">
-            <a href="/pages/reviews" class="km-header__menu-link">REVIEW</a>
-          </li>
-          <li class="km-header__menu-item">
-            <a href="/pages/faq" class="km-header__menu-link">FAQ</a>
-          </li>
-          <li class="km-header__menu-item">
-            <a href="/blogs" class="km-header__menu-link">BLOGS</a>
-          </li>
-          <li class="km-header__menu-item">
-            <a href="/pages/about" class="km-header__menu-link">ABOUT</a>
-          </li>
+              <li class="km-header__menu-item {% if is_mega %}km-header__menu-item--mega{% endif %}" {{ block.shopify_attributes }}>
+                <a href="{{ block.settings.url | default: '#' }}" class="km-header__menu-link {% if is_mega %}km-header__menu-link--has-dropdown{% endif %}">
+                  <span>{{ block.settings.label }}</span>
+                  {%- if is_mega -%}{%- render 'icon', icon: 'chevron-down' -%}{%- endif -%}
+                </a>
+                {%- if is_mega -%}
+                  <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 6l4 4 4-4"/>
+                    </svg>
+                  </button>
+                  {% render 'header-megamenu' %}
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
         </ul>
       </nav>
     </div>
@@ -435,9 +431,14 @@
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    function formatMoney(cents) {
-      var n = (Number(cents) || 0) / 100;
-      return '$ ' + n.toFixed(2) + ' USD';
+    function formatMoney(value) {
+      if (!value) return '';
+      // If it's already a formatted string containing letters or symbols (e.g. $19.99), return it as is.
+      if (/[^\d.,]/.test(String(value))) return String(value);
+      // Otherwise, assume it's a decimal value like "19.99"
+      var n = Number(value);
+      if (isNaN(n)) return '';
+      return '$' + n.toFixed(2);
     }
 
     function closePanel() {
@@ -458,7 +459,7 @@
       products.forEach(function (p) {
         var img = (p.featured_image || p.image || '');
         var price = formatMoney(p.price);
-        var compare = p.compare_at_price_min && p.compare_at_price_min > p.price
+        var compare = p.compare_at_price_min && p.compare_at_price_min > p.price_min
           ? formatMoney(p.compare_at_price_min) : '';
         html += '<a class="km-search-result" href="' + escHtml(p.url) + '">'
           + (img ? '<img class="km-search-result__img" src="' + escHtml(img) + '" alt="' + escHtml(p.title) + '" loading="lazy">' : '<span class="km-search-result__img"></span>')
@@ -481,8 +482,7 @@
       var url = '/search/suggest.json?q=' + encodeURIComponent(q)
         + '&resources[type]=product'
         + '&resources[limit]=8'
-        + '&resources[options][unavailable_products]=last'
-        + '&resources[options][fields]=title,product_type,variants.title,vendor';
+        + '&resources[options][unavailable_products]=last';
       var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
       currentReq = ctrl;
       fetch(url, ctrl ? { signal: ctrl.signal } : undefined)
@@ -578,7 +578,7 @@
       { "type": "link", "settings": { "label": "COLLECTIONS", "url": "/collections" } },
       { "type": "link", "settings": { "label": "REVIEW", "url": "/pages/reviews" } },
       { "type": "link", "settings": { "label": "FAQ", "url": "/pages/faq" } },
-      { "type": "link", "settings": { "label": "BLOGS", "url": "/blogs" } },
+      { "type": "link", "settings": { "label": "BLOGS", "url": "/blogs/news" } },
       { "type": "link", "settings": { "label": "ABOUT", "url": "/pages/about" } }
     ]
   }
