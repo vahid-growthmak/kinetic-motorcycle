@@ -1,7 +1,11 @@
 {%- comment -%}
   Model Hero Section — Specific to model collection pages.
   Features a comparison slider and model description.
+  Supports metafields: custom.before_image, custom.after_image
 {%- endcomment -%}
+
+{%- assign meta_before = collection.metafields.custom.before_image.value -%}
+{%- assign meta_after  = collection.metafields.custom.after_image.value -%}
 
 <section class="km-model-hero" id="Section-{{ section.id }}">
   <div class="km-container">
@@ -16,6 +20,8 @@
           <div class="km-model-hero__compare-before">
             {%- if section.settings.before_image != blank -%}
               <img src="{{ section.settings.before_image | image_url: width: 1800 }}" alt="Before transformation" loading="lazy" width="900" height="563">
+            {%- elsif meta_before != blank -%}
+              <img src="{{ meta_before | image_url: width: 1800 }}" alt="Before transformation" loading="lazy" width="900" height="563">
             {%- else -%}
               <img src="{{ 'model-softail-before.png' | asset_url }}" alt="Before transformation" loading="lazy" width="900" height="563">
             {%- endif -%}
@@ -24,6 +30,8 @@
           <div class="km-model-hero__compare-after" data-km-compare-after>
             {%- if section.settings.after_image != blank -%}
               <img src="{{ section.settings.after_image | image_url: width: 1800 }}" alt="After transformation" loading="lazy" width="900" height="563">
+            {%- elsif meta_after != blank -%}
+              <img src="{{ meta_after | image_url: width: 1800 }}" alt="After transformation" loading="lazy" width="900" height="563">
             {%- else -%}
               <img src="{{ 'model-softail-after.webp' | asset_url }}" alt="After transformation" loading="lazy" width="900" height="563">
             {%- endif -%}

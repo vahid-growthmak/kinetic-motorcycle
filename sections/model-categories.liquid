@@ -1,10 +1,11 @@
 {%- comment -%}
   Model Categories Grid Section — Grid of category cards.
-  Supports dynamic categories via collection metafields (custom.model_categories).
+  Supports dynamic categories via collection metafields (custom.category_collections).
+  Each sub-collection can have a custom.category_description metafield for card text.
 {%- endcomment -%}
 
 {%- assign current_coll = section.settings.collection | default: collection -%}
-{%- assign dynamic_categories = current_coll.metafields.custom.model_categories.value -%}
+{%- assign dynamic_categories = current_coll.metafields.custom.category_collections.value -%}
 
 <section class="km-model-cats" id="Section-{{ section.id }}">
   <div class="km-container">
@@ -32,9 +33,10 @@
             </div>
             <div class="km-model-cats__card-content">
               <h3 class="km-model-cats__card-title">{{ cat.title }}</h3>
-              <p class="km-model-cats__card-desc">
-                {{ cat.metafields.custom.short_description | default: cat.description | strip_html | truncatewords: 25 }}
-              </p>
+              {%- assign cat_desc = cat.metafields.custom.category_description.value | default: cat.description | strip_html -%}
+              {%- if cat_desc != blank -%}
+                <p class="km-model-cats__card-desc">{{ cat_desc | truncatewords: 30 }}</p>
+              {%- endif -%}
               <a href="{{ cat.url }}" class="km-btn km-btn-outline km-model-cats__card-btn">
                 View {{ cat.title }} {%- render 'icon', icon: 'arrow-right' -%}
               </a>
