@@ -24,9 +24,16 @@
       <div class="km-pp__gallery">
         <div class="km-pp__hero">
           {%- if product.featured_image != blank -%}
-            {{ product.featured_image | image_url: width: 1200 | image_tag:
-               width: 800, height: 800, loading: 'eager', fetchpriority: 'high',
-               alt: product.featured_image.alt | default: product.title, class: 'km-pp__hero-img' }}
+            <img
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              width="800"
+              height="800"
+              loading="eager"
+              fetchpriority="high"
+              class="km-pp__hero-img"
+              id="km-product-hero-img"
+            >
           {%- else -%}
             <div class="km-pp__hero-placeholder" aria-hidden="true"></div>
           {%- endif -%}
@@ -35,7 +42,7 @@
           <div class="km-pp__thumbs">
             {%- for img in product.images limit: 6 -%}
               <button type="button" class="km-pp__thumb{% if forloop.first %} is-active{% endif %}" data-km-thumb="{{ img | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
-                {{ img | image_url: width: 240 | image_tag: width: 120, height: 120, loading: 'lazy', alt: product.title }}
+                <img src="{{ img | image_url: width: 240 }}" width="120" height="120" loading="lazy" alt="{{ product.title | escape }}">
               </button>
             {%- endfor -%}
           </div>
@@ -169,7 +176,7 @@
 
   .km-pp__gallery { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 24px; }
   .km-pp__hero { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 20px; overflow: hidden; }
-  .km-pp__hero-img { width: 100%; height: 100%; object-fit: cover; }
+  .km-pp__hero-img { width: 100%; height: 100%; object-fit: cover; transition: opacity .2s ease; }
   .km-pp__hero-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }
   .km-pp__thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .km-pp__thumb { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 10px; overflow: hidden; cursor: pointer; padding: 6px; transition: border-color .2s ease; }
@@ -232,18 +239,20 @@
 <script>
 (() => {
   // Thumbnail swap
-  const hero = document.querySelector('.km-pp__hero-img');
-  document.querySelectorAll('[data-km-thumb]').forEach((t) => {
-    t.addEventListener('click', () => {
-      const src = t.getAttribute('data-km-thumb');
-      if (hero && src) {
-        hero.src = src;
-        hero.srcset = '';
-        hero.removeAttribute('srcset');
-      }
-      document.querySelectorAll('[data-km-thumb]').forEach((x) => x.classList.toggle('is-active', x === t));
+  const hero = document.getElementById('km-product-hero-img');
+  if (hero) {
+    document.querySelectorAll('[data-km-thumb]').forEach((t) => {
+      t.addEventListener('click', () => {
+        const src = t.getAttribute('data-km-thumb');
+        if (src) {
+          hero.style.opacity = '0.5';
+          hero.src = src;
+          hero.onload = () => { hero.style.opacity = '1'; };
+        }
+        document.querySelectorAll('[data-km-thumb]').forEach((x) => x.classList.toggle('is-active', x === t));
+      });
     });
-  });
+  }
 
   // Quantity stepper
   const qty = document.querySelector('[data-km-qty-input]');
