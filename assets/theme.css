@@ -1860,114 +1860,12 @@ video {
     line-height: 1.4 !important;
   }
 
-  .km-about-page__header {
-    margin-bottom: 24px !important;
+  .km-about-page__cta-wrap {
+    padding: 0 0 64px !important;
   }
 
-  .km-about-page__hero-grid {
+  .km-about-page__cta-grid {
     grid-template-columns: 1fr !important;
-    gap: 18px !important;
-  }
-
-  .km-about-page__hero-img {
-    aspect-ratio: 16/10 !important;
-  }
-
-  .km-about-page__hero-card {
-    padding: 20px !important;
-  }
-
-  .km-about-page__stats-strip {
-    grid-template-columns: 1fr !important;
-    padding: 24px 20px !important;
-    gap: 22px !important;
-    margin-bottom: 36px !important;
-  }
-
-  .km-about-page__stats-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-    border-left: 0 !important;
-    padding-left: 0 !important;
-    border-top: 1px solid var(--km-border) !important;
-    padding-top: 18px !important;
-  }
-
-  .km-about-page__stat-num {
-    font-size: 28px !important;
-  }
-
-  .km-about-page__vmi-wrap {
-    padding: 24px 0 40px !important;
-  }
-
-  .km-about-page__vmi-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    max-width: 100%;
-    justify-content: flex-start;
-    scrollbar-width: none;
-    margin: 0 auto 20px;
-  }
-
-  .km-about-page__vmi-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .km-about-page__vmi-tab {
-    flex: 0 0 auto;
-    padding: 9px 16px !important;
-    font-size: 11px !important;
-  }
-
-  .km-about-page__vmi-panel {
-    display: flex !important;
-    flex-direction: column !important;
-    aspect-ratio: auto !important;
-    min-height: 0 !important;
-  }
-
-  .km-about-page__vmi-media {
-    position: static !important;
-    aspect-ratio: 16/10 !important;
-  }
-
-  .km-about-page__vmi-card {
-    position: static !important;
-    transform: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    padding: 22px 20px !important;
-  }
-
-  .km-about-page__why {
-    padding: 50px 0 !important;
-  }
-
-  .km-about-page__why-h {
-    font-size: 28px !important;
-    font-weight: 700 !important;
-    line-height: 1.2 !important;
-    margin-bottom: 28px !important;
-  }
-
-  .km-about-page__why-grid {
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
-  }
-
-  .km-about-page__why-media {
-    max-width: 180px !important;
-  }
-
-  .km-about-page__why-card h3 {
-    font-size: 16px !important;
-  }
-
-  .km-about-page__why-card p {
-    font-size: 13px !important;
   }
 
   .km-about-page__cta-wrap {
