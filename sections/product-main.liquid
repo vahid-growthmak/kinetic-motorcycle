@@ -169,7 +169,7 @@
 
   .km-pp__gallery { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 24px; }
   .km-pp__hero { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 20px; overflow: hidden; }
-  .km-pp__hero-img { width: 100%; height: 100%; object-fit: contain; padding: 32px; }
+  .km-pp__hero-img { width: 100%; height: 100%; object-fit: cover; }
   .km-pp__hero-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }
   .km-pp__thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .km-pp__thumb { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 10px; overflow: hidden; cursor: pointer; padding: 6px; transition: border-color .2s ease; }
@@ -236,7 +236,11 @@
   document.querySelectorAll('[data-km-thumb]').forEach((t) => {
     t.addEventListener('click', () => {
       const src = t.getAttribute('data-km-thumb');
-      if (hero && src) { hero.src = src; hero.srcset = src; }
+      if (hero && src) {
+        hero.src = src;
+        hero.srcset = '';
+        hero.removeAttribute('srcset');
+      }
       document.querySelectorAll('[data-km-thumb]').forEach((x) => x.classList.toggle('is-active', x === t));
     });
   });
