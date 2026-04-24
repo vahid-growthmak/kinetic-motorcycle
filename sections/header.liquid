@@ -385,7 +385,7 @@
     .km-header__menu-link svg { display: none; }
     .km-header__desktop-chevron { display: none; }
     .km-header__mobile-expand {
-      display: flex;
+      display: flex !important;
       align-items: center;
       justify-content: center;
       width: 56px;
@@ -417,8 +417,8 @@
       border: none;
       background: transparent;
     }
-    .km-header__menu-item--mega.is-mega-open .km-mega { display: block; width: 100%; }
-    .km-header__menu-item--mega.is-mega-open .km-mega-mobile { display: block; width: 100%; }
+    .km-header__menu-item--mega.is-mega-open .km-mega { display: none !important; }
+    .km-header__menu-item--mega.is-mega-open .km-mega-mobile { display: block !important; width: 100%; }
     .km-mega__inner { padding: 16px 0 24px; }
     .km-mega__grid { grid-template-columns: 1fr; gap: 24px; }
   }
