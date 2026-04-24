@@ -324,6 +324,9 @@ p:last-child {
   }
 }
 
+/* ============================================================
+   MOBILE (≤ 640px)
+   ============================================================ */
 @media (max-width: 640px) {
   :root {
     --km-gutter: 16px;
@@ -552,7 +555,7 @@ p:last-child {
   }
 
   .km-pcarousel__card {
-    flex: 0 0 260px;
+    flex: 0 0 calc(50% - 12px);
     scroll-snap-align: start;
   }
 
@@ -564,6 +567,9 @@ p:last-child {
 @media (max-width: 640px) {
   .km-pcarousel__arrows {
     display: none;
+  }
+  .km-pcarousel__card {
+    flex: 0 0 100%;
   }
 }
 
@@ -639,6 +645,12 @@ video {
   .km-container {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .km-grid-4,
+  .km-grid-3,
+  .km-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 
   /* Prevent long strings/emails from breaking layout */
