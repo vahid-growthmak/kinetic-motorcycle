@@ -101,7 +101,9 @@
             {%- for link in main_menu.links -%}
             {%- assign is_mega = false -%}
             {%- if link.title == 'COLLECTIONS' or link.title == 'Collections' or link.title == 'Shop' -%}
-              {%- assign is_mega = true -%}
+              {%- if link.links.size > 0 -%}
+                {%- assign is_mega = true -%}
+              {%- endif -%}
             {%- endif -%}
 
             <li class="km-header__menu-item {% if is_mega %}km-header__menu-item--mega{% endif %}">
@@ -113,7 +115,15 @@
                 <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
                   {%- render 'icon', icon: 'chevron-down' -%}
                 </button>
-                {% render 'header-megamenu' %}
+                {% render 'header-megamenu', mega_link: link %}
+              {%- elsif link.links.size > 0 -%}
+                {%- comment -%} Standard dropdown if not designated as mega {%- endcomment -%}
+                <span class="km-header__desktop-chevron">{%- render 'icon', icon: 'chevron-down' -%}</span>
+                <ul class="km-header__dropdown">
+                  {%- for child in link.links -%}
+                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
               {%- endif -%}
             </li>
           {%- endfor -%}
@@ -244,6 +254,43 @@
   }
   .km-header__mobile-expand { display: none; }
   .km-header__nav-close { display: none; }
+
+  /* STANDARD DROPDOWN */
+  .km-header__menu-item { position: relative; }
+  .km-header__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 200px;
+    border-top: 2px solid var(--km-accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all .2s ease;
+    z-index: 1000;
+  }
+  .km-header__menu-item:hover .km-header__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .km-header__dropdown a {
+    display: block;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--km-text);
+    text-decoration: none;
+    transition: background .2s ease;
+  }
+  .km-header__dropdown a:hover {
+    background: var(--km-body-bg);
+    color: var(--km-heading);
+  }
 
   /* MEGA MENU */
   .km-header__menu-item--mega { position: static; display: inline-flex; align-items: center; }
