@@ -1200,6 +1200,8 @@ video {
   .km-pcarousel__image,
   .km-pcarousel__img {
     height: 145px !important;
+    width: 100% !important;
+    object-fit: cover !important;
   }
 
   /* ---------- FEATURES (Webflow mobile: 50px pad, 28px H2, stacked) ---------- */
@@ -1447,7 +1449,9 @@ video {
   }
 
   .km-pp__thumb {
-    padding: 4px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
   }
 
   .km-pp__thumbs-empty {
