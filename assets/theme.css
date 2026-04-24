@@ -746,15 +746,13 @@ video {
     top: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    left: auto !important;
-    inset: auto !important;
-    /* cancel inline inset:0 */
-    width: 88% !important;
-    max-width: 360px !important;
+    left: 0 !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
     background: #fff !important;
     z-index: 1001 !important;
     padding: 72px 24px 32px !important;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, .18) !important;
     overflow-y: auto !important;
   }
 

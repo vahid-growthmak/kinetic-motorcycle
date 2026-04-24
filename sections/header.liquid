@@ -27,7 +27,7 @@
         {%- endif -%}
       </a>
 
-      <div class="km-header__search-wrap" data-km-search>
+      <div class="km-header__search-wrap km-header__search-wrap--desktop" data-km-search>
         <form action="{{ routes.search_url }}" method="get" role="search" class="km-header__search">
           {%- render 'icon', icon: 'search' -%}
           <input
@@ -74,6 +74,27 @@
         <button type="button" class="km-header__nav-close" data-km-menu-close aria-label="Close menu">
           {%- render 'icon', icon: 'close' -%}
         </button>
+
+        <div class="km-header__search-wrap km-header__search-wrap--mobile" data-km-search>
+          <form action="{{ routes.search_url }}" method="get" role="search" class="km-header__search">
+            {%- render 'icon', icon: 'search' -%}
+            <input
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ section.settings.search_placeholder | default: 'Search hardware...' }}"
+              aria-label="{{ 'general.accessibility.search' | t }}"
+              class="km-header__search-input"
+              autocomplete="off"
+              data-km-search-input
+            >
+            <input type="hidden" name="type" value="product">
+            <input type="hidden" name="options[prefix]" value="last">
+          </form>
+          <div class="km-header__search-results" data-km-search-results hidden>
+            <div class="km-header__search-inner" data-km-search-inner></div>
+          </div>
+        </div>
         <ul class="km-header__menu">
           {%- assign main_menu = section.settings.menu -%}
           {%- if main_menu != blank -%}
