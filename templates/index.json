@@ -352,7 +352,7 @@
       "settings": {
         "eyebrow": "",
         "heading": "Our Blogs",
-        "blog": "",
+        "blog": "news",
         "view_all_label": "View All",
         "view_all_url": ""
       }
