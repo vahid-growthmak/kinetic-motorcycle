@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
@@ -24,15 +33,15 @@
           "settings": {
             "title": "Address",
             "address": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379",
-            "phone": "713-936-5412",
-            "email": "support@kineticmotorcycles.com"
+            "phone": "",
+            "email": ""
           }
         },
         "contact_2": {
           "type": "contact",
           "settings": {
             "title": "Phone & Email",
-            "address": "Kinetic Motorcycles\n7312 Louetta Road\nSuite B118-428\nSpring, Texas 77379",
+            "address": "",
             "phone": "713-936-5412",
             "email": "support@kineticmotorcycles.com"
           }
