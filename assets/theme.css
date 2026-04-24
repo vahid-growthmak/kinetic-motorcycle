@@ -1200,7 +1200,6 @@ video {
   .km-pcarousel__image,
   .km-pcarousel__img {
     height: 145px !important;
-    width: 100% !important;
     object-fit: cover !important;
   }
 
