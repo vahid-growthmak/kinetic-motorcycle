@@ -457,7 +457,15 @@ img, video { max-width: 100%; height: auto; }
     gap: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
+  }
+  .km-header__logo { margin: 0; }
+  .km-header__actions {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   .km-header__logo-img { height: 40px !important; width: auto !important; }
   /* Webflow hides the search bar on mobile entirely — only hamburger + cart remain */
