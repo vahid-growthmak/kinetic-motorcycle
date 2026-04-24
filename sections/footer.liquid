@@ -145,8 +145,13 @@
   .km-footer__contact--small strong { color: #fff; }
 
   /* Bike-model nav — 8 columns */
-  .km-footer__brands { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
-  .km-footer__brand-col { min-width: 120px; text-align: left; }
+  .km-footer__brands { display: flex; justify-content: space-between; gap: 32px; flex-wrap: nowrap; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .km-footer__brand-col { flex: 1; min-width: 0; text-align: left; }
+  
+  @media (max-width: 1100px) {
+    .km-footer__brands { flex-wrap: wrap; justify-content: center; gap: 48px; }
+    .km-footer__brand-col { flex: none; min-width: 140px; }
+  }
   .km-footer__brand-label {
     display: block;
     font-size: 13px;
