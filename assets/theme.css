@@ -1437,7 +1437,8 @@ video {
   }
 
   .km-pp__hero-img {
-    padding: 16px !important;
+    object-fit: cover !important;
+    padding: 0 !important;
   }
 
   .km-pp__thumbs {
