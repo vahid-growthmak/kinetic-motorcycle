@@ -642,7 +642,13 @@ video {
   .km-footer__brands {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 22px !important;
+    gap: 60px !important;
+  }
+
+  .km-footer__brand {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-bottom: 40px !important;
   }
 
   /* Footer Alignment */
@@ -2240,6 +2246,7 @@ video {
   .km-footer__brands {
     display: grid !important;
     grid-template-columns: 1fr !important;
+    gap: 32px !important;
   }
 
   .km-footer__top,
