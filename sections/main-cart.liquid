@@ -33,16 +33,21 @@
                 {%- endunless -%}
                 <div class="km-cart__qty-wrap">
                   <label for="updates_{{ item.key }}" class="km-cart__qty-label">Qty</label>
-                  <input
-                    type="number"
-                    id="updates_{{ item.key }}"
-                    name="updates[{{ item.key }}]"
-                    value="{{ item.quantity }}"
-                    min="0"
-                    inputmode="numeric"
-                    pattern="^[0-9]+$"
-                    aria-label="Update quantity for {{ item.product.title }}"
-                    class="km-cart__qty-input">
+                  <div class="km-cart__qty-selector" data-km-qty-selector>
+                    <button type="button" class="km-cart__qty-btn" data-qty-change="-1" aria-label="Decrease quantity">−</button>
+                    <input
+                      type="number"
+                      id="updates_{{ item.key }}"
+                      name="updates[{{ item.key }}]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      inputmode="numeric"
+                      pattern="^[0-9]+$"
+                      aria-label="Update quantity for {{ item.product.title }}"
+                      class="km-cart__qty-input"
+                      data-qty-input>
+                    <button type="button" class="km-cart__qty-btn" data-qty-change="1" aria-label="Increase quantity">+</button>
+                  </div>
                   <a href="{{ item.url_to_remove }}" class="km-cart__remove" aria-label="Remove {{ item.product.title }} from cart">Remove</a>
                 </div>
               </div>
@@ -140,7 +145,43 @@
   .km-cart__variant-list span:first-child { font-weight: 600; }
   .km-cart__qty-wrap { display: flex; align-items: center; gap: 14px; margin-top: 6px; }
   .km-cart__qty-label { font-size: 12px; font-weight: 600; color: var(--km-text, #4B5563); }
-  .km-cart__qty-input { width: 64px; padding: 6px 8px; border: 1px solid var(--km-border, #DDD); border-radius: 6px; font-size: 14px; font-family: inherit; background: #fff; color: #000; text-align: center; }
+  .km-cart__qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--km-border, #DDD);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .km-cart__qty-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--km-text, #4B5563);
+    transition: background .2s ease, color .2s ease;
+    padding: 0;
+  }
+  .km-cart__qty-btn:hover { background: #f3f4f6; color: #000; }
+  .km-cart__qty-input {
+    width: 36px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    color: #000;
+    -moz-appearance: textfield;
+  }
+  .km-cart__qty-input::-webkit-outer-spin-button,
+  .km-cart__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   .km-cart__remove { font-size: 12px; color: var(--km-text, #4B5563); text-decoration: underline; text-underline-offset: 3px; transition: color .2s ease; }
   .km-cart__remove:hover { color: #c0392b; }
   .km-cart__line-price { font-weight: 800; color: var(--km-heading, #000); font-size: 15px; }
@@ -171,6 +212,35 @@
     .km-cart__actions { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  (function() {
+    function initQtySelectors() {
+      document.querySelectorAll('[data-km-qty-selector]').forEach(function(container) {
+        if (container.dataset.initialized) return;
+        container.dataset.initialized = 'true';
+
+        var input = container.querySelector('[data-qty-input]');
+        var btns = container.querySelectorAll('[data-qty-change]');
+
+        btns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var change = parseInt(btn.dataset.qtyChange);
+            var currentVal = parseInt(input.value) || 0;
+            var newVal = Math.max(0, currentVal + change);
+            input.value = newVal;
+            
+            // Trigger change event to enable 'Update Cart' button if needed
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        });
+      });
+    }
+
+    initQtySelectors();
+    document.addEventListener('shopify:section:load', initQtySelectors);
+  })();
+</script>
 
 {% schema %}
 {
