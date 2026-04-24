@@ -56,6 +56,7 @@
 
 <style>
   .km-pp-related { padding: 64px 0; background: #fff; }
+  .km-pp-related .km-section-heading { margin-bottom: 32px; }
   .km-pp-related__grid { display: grid; gap: 24px; }
   .km-pp-related__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s ease, box-shadow .25s ease; }
   .km-pp-related__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
@@ -66,16 +67,18 @@
   .km-pp-related__price { font-size: 14px; font-weight: 700; color: #000; }
 
   @media (max-width: 1000px) {
+    .km-pp-related .km-section-heading { margin-bottom: 24px; }
     .km-pp-related__grid {
       display: flex !important;
       overflow-x: auto !important;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      gap: 24px !important;
+      gap: 16px !important;
       padding-bottom: 20px;
-      margin: 0 -20px;
-      padding-left: 20px;
-      padding-right: 20px;
+      margin-left: calc(var(--km-gutter, 20px) * -1) !important;
+      margin-right: calc(var(--km-gutter, 20px) * -1) !important;
+      padding-left: var(--km-gutter, 20px) !important;
+      padding-right: var(--km-gutter, 20px) !important;
     }
     .km-pp-related__grid::-webkit-scrollbar { display: none; }
     .km-pp-related__grid { -ms-overflow-style: none; scrollbar-width: none; }
@@ -86,7 +89,7 @@
     }
   }
   @media (max-width: 640px) {
-    .km-pp-related__card { flex: 0 0 100% !important; }
+    .km-pp-related__card { flex: 0 0 calc(100% - 40px) !important; }
   }
 </style>
 
