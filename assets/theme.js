@@ -61,11 +61,12 @@
     menuPanel.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', (e) => {
         // If it's the COLLECTIONS link and we're on mobile (drawer-open), toggle accordion instead of navigating
-        if (link === megaLink && menuPanel.classList.contains('is-open')) {
+        const isCollections = link === megaLink || link.textContent.trim().toUpperCase() === 'COLLECTIONS';
+        if (isCollections && menuPanel.classList.contains('is-open')) {
           e.preventDefault();
           e.stopPropagation();
           const open = megaItem.classList.toggle('is-mega-open');
-          megaLink.setAttribute('aria-expanded', open ? 'true' : 'false');
+          link.setAttribute('aria-expanded', open ? 'true' : 'false');
           return;
         }
         // Normal link inside drawer — close the drawer as it navigates
