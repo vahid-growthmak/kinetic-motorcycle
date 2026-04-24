@@ -11,7 +11,94 @@
   "sections": {
     "main": {
       "type": "about-page",
-      "settings": {}
+      "settings": {
+        "why_title": "Why Choose Kinetic Motorcycles"
+      },
+      "blocks": {
+        "tab_vision": {
+          "type": "tab",
+          "settings": {
+            "title": "Our Vision",
+            "heading": "Our Vision",
+            "content": "<p>We aim to set a higher standard in the motorcycle parts industry — a future where riders can confidently find the right parts for their bikes without confusion, delays, or uncertainty.<\/p>"
+          }
+        },
+        "tab_mission": {
+          "type": "tab",
+          "settings": {
+            "title": "Our Mission",
+            "heading": "Our Mission",
+            "content": "<p>Deliver motorcycle solutions that meet real-world riding needs. By focusing on trust, innovation, and consistent quality, we make sure every product and every interaction adds value to your experience as a rider.<\/p>"
+          }
+        },
+        "tab_innovation": {
+          "type": "tab",
+          "settings": {
+            "title": "Our Innovation",
+            "heading": "Our Innovation",
+            "content": "<p>We are shaping the future of automotive innovation & leading the way towards a more innovative, rider-first approach to motorcycle parts. Every component is engineered from scratch in-house — no templates, no outsourced shortcuts.<\/p>"
+          }
+        },
+        "stat_years": {
+          "type": "stat",
+          "settings": {
+            "number": "10+",
+            "label": "Years",
+            "sublabel": "Designing & Manufacturing"
+          }
+        },
+        "stat_delivered": {
+          "type": "stat",
+          "settings": {
+            "number": "11,900+",
+            "label": "Parts delivered",
+            "sublabel": ""
+          }
+        },
+        "stat_inventory": {
+          "type": "stat",
+          "settings": {
+            "number": "$2.3M+",
+            "label": "Inventory shipped",
+            "sublabel": ""
+          }
+        },
+        "why_made_in_usa": {
+          "type": "why_card",
+          "settings": {
+            "title": "Made in USA",
+            "asset_name": "feature-made-in-usa.webp",
+            "text": "Every product is designed and manufactured in the USA, ensuring top-notch quality and supporting local craftsmanship. When you choose us, you're choosing reliability and homegrown excellence."
+          }
+        },
+        "why_experience": {
+          "type": "why_card",
+          "settings": {
+            "title": "Established in 2014",
+            "asset_name": "feature-garage.webp",
+            "text": "For over 11 years, we've been delivering unmatched quality and expertise. Our track record reflects a deep commitment to customer satisfaction and industry-leading solutions."
+          }
+        },
+        "why_shipping": {
+          "type": "why_card",
+          "settings": {
+            "title": "Free Shipping",
+            "asset_name": "feature-shipping.webp",
+            "text": "Enjoy the convenience of free delivery anywhere in the US. We prioritize your satisfaction by making your shopping experience seamless and hassle-free."
+          }
+        }
+      },
+      "block_order": [
+        "tab_vision",
+        "tab_mission",
+        "tab_innovation",
+        "stat_years",
+        "stat_delivered",
+        "stat_inventory",
+        "why_made_in_usa",
+        "why_experience",
+        "why_shipping"
+      ]
     }
   },
   "order": [
