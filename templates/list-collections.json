@@ -28,63 +28,63 @@
           "type": "category",
           "settings": {
             "title": "Accessories",
-            "url": "/collections/harley-davidson-sportster-accessories"
+            "url": "shopify://collections/harley-davidson-sportster-accessories"
           }
         },
         "category_WHDy8t": {
           "type": "category",
           "settings": {
             "title": "Footpegs and Shifters",
-            "url": "/collections/harley-davidson-sportster-footpegs-shifters"
+            "url": "shopify://collections/harley-davidson-sportster-footpegs-shifters"
           }
         },
         "category_dcDWgp": {
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/harley-davidson-sportster-exhaust-systems"
+            "url": "shopify://collections/harley-davidson-sportster-exhaust-systems"
           }
         },
         "category_QNtjKg": {
           "type": "category",
           "settings": {
             "title": "Covers-Decals-Armor",
-            "url": "/collections/harley-davidson-sportster-covers-decals-armor"
+            "url": "shopify://collections/harley-davidson-sportster-covers-decals-armor"
           }
         },
         "category_RNYFGz": {
           "type": "category",
           "settings": {
             "title": "Handlebars",
-            "url": "/collections/harley-davidson-sportster-handlebars"
+            "url": "shopify://collections/harley-davidson-sportster-handlebars"
           }
         },
         "category_JVHPRg": {
           "type": "category",
           "settings": {
             "title": "Lighting",
-            "url": "/collections/harley-davidson-sportster-lighting"
+            "url": "shopify://collections/harley-davidson-sportster-lighting"
           }
         },
         "category_YehMdG": {
           "type": "category",
           "settings": {
             "title": "Grips",
-            "url": "/collections/harley-davidson-sportster-grips"
+            "url": "shopify://collections/harley-davidson-sportster-grips"
           }
         },
         "category_dKkgpQ": {
           "type": "category",
           "settings": {
             "title": "Services",
-            "url": "/collections/harley-davidson-sportster-services"
+            "url": "shopify://collections/harley-davidson-sportster-services"
           }
         },
         "category_pnbdGV": {
           "type": "category",
           "settings": {
             "title": "Intake Systems",
-            "url": "/collections/harley-davidson-sportster-intake-systems"
+            "url": "shopify://collections/harley-davidson-sportster-intake-systems"
           }
         },
         "model_zhkQyb": {
@@ -103,28 +103,28 @@
           "type": "category",
           "settings": {
             "title": "Accessories",
-            "url": "/collections/harley-davidson-softail-accessories"
+            "url": "shopify://collections/harley-davidson-softail-accessories"
           }
         },
         "category_dk8gnX": {
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/harley-davidson-softail-exhaust-systems"
+            "url": "shopify://collections/harley-davidson-softail-exhaust-systems"
           }
         },
         "category_PPNLNH": {
           "type": "category",
           "settings": {
             "title": "Covers-Decals-Armor",
-            "url": "/collections/harley-davidson-softail-covers-decals-armor"
+            "url": "shopify://collections/harley-davidson-softail-covers-decals-armor"
           }
         },
         "category_nBXhJ3": {
           "type": "category",
           "settings": {
             "title": "Intake Systems",
-            "url": "/collections/harley-davidson-softail-intake-systems"
+            "url": "shopify://collections/harley-davidson-softail-intake-systems"
           }
         },
         "model_VDMNtG": {
@@ -143,14 +143,14 @@
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/harley-davidson-dyna-exhaust-systems"
+            "url": "shopify://collections/harley-davidson-dyna-exhaust-systems"
           }
         },
         "category_6jHD4h": {
           "type": "category",
           "settings": {
             "title": "Intake Systems",
-            "url": "/collections/harley-davidson-dyna-intake-systems"
+            "url": "shopify://collections/harley-davidson-dyna-intake-systems"
           }
         },
         "model_K4xYkb": {
@@ -176,7 +176,7 @@
           "type": "category",
           "settings": {
             "title": "Faceplates",
-            "url": "/collections/triumph-faceplates"
+            "url": "shopify://collections/triumph-faceplates"
           }
         },
         "category_fq9BHx": {
@@ -216,7 +216,7 @@
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/honda-cb-exhaust-systems"
+            "url": "shopify://collections/honda-cb-exhaust-systems"
           }
         },
         "category_gdrp49": {
@@ -242,7 +242,7 @@
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/indian-exhausts"
+            "url": "shopify://collections/indian-exhausts"
           }
         }
       },
