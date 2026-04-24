@@ -2227,7 +2227,7 @@ video {
   }
 
   .km-footer__brands {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: 1fr !important;
   }
 
   .km-footer__logo-img {
