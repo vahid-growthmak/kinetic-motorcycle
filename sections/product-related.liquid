@@ -65,8 +65,30 @@
   .km-pp-related__info { padding: 14px 16px 18px; }
   .km-pp-related__info h3 { font-size: 13px; font-weight: 600; color: #000; margin: 0 0 6px; line-height: 1.4; }
   .km-pp-related__price { font-size: 14px; font-weight: 700; color: #000; }
-  @media (max-width: 1000px) { .km-pp-related__grid { grid-template-columns: repeat(2, 1fr) !important; } }
-  @media (max-width: 640px)  { .km-pp-related__grid { grid-template-columns: 1fr !important; } }
+
+  @media (max-width: 1000px) {
+    .km-pp-related__grid {
+      display: flex !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 16px !important;
+      padding-bottom: 20px; /* space for scrollbar */
+      margin: 0 -20px; /* pull to edges */
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .km-pp-related__grid::-webkit-scrollbar { display: none; } /* hide scrollbar for clean look */
+    .km-pp-related__grid { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .km-pp-related__card {
+      flex: 0 0 280px !important;
+      scroll-snap-align: start;
+    }
+  }
+  @media (max-width: 480px) {
+    .km-pp-related__card { flex: 0 0 240px !important; }
+  }
 </style>
 
 {% schema %}
