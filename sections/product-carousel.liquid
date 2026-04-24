@@ -26,19 +26,29 @@
 
     <div class="km-pcarousel__viewport" data-km-carousel>
       <div class="km-pcarousel__track" data-km-track>
-        {%- if section.settings.collection != blank -%}
-          {%- assign coll = collections[section.settings.collection] -%}
+        {%- assign carousel_collection = section.settings.collection -%}
+        {%- if carousel_collection == blank and product != blank and product.collections.size > 0 -%}
+          {%- assign carousel_collection = product.collections.first.handle -%}
+        {%- endif -%}
+        {%- if carousel_collection == blank -%}
+          {%- assign carousel_collection = 'all' -%}
+        {%- endif -%}
+
+        {%- if carousel_collection != blank -%}
+          {%- assign coll = collections[carousel_collection] -%}
           {%- assign filtered_products = coll.products -%}
           
           {%- if section.settings.filter_tag != blank -%}
             {%- assign filtered_products = coll.products | where: 'tags', section.settings.filter_tag -%}
           {%- endif -%}
           
-          {%- for product in filtered_products limit: section.settings.limit -%}
-            {%- render 'product-card', product: product, class: 'km-pcarousel__card' -%}
+          {%- for product_item in filtered_products limit: section.settings.limit -%}
+            {%- if product_item.id != product.id -%}
+              {%- render 'product-card', product: product_item, class: 'km-pcarousel__card' -%}
+            {%- endif -%}
           {%- else -%}
             <div class="km-pcarousel__empty" style="padding: 20px; font-size: 14px; color: #6b7280;">
-              No products found matching the selected tag.
+              No products found in the collection.
             </div>
           {%- endfor -%}
         {%- elsif section.blocks.size > 0 -%}
