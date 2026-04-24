@@ -15,6 +15,7 @@
         "badge_1": {
           "type": "badge",
           "settings": {
+            "image": "shopify://shop_images/696f69cd0b7dd971115d6a40_made-in-usa1.png",
             "label": "USA Designed & Made",
             "icon": "star"
           }
@@ -22,6 +23,7 @@
         "badge_2": {
           "type": "badge",
           "settings": {
+            "image": "shopify://shop_images/696f69cce231f45c8743e027_fa-solid--shipping-fast1.png",
             "label": "Worldwide Shipping",
             "icon": "star"
           }
@@ -29,6 +31,7 @@
         "badge_3": {
           "type": "badge",
           "settings": {
+            "image": "shopify://shop_images/696f69cc0b7dd971115d6a2a_commercial1.png",
             "label": "High Precision Motorcycle Parts",
             "icon": "star"
           }
