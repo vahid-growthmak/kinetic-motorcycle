@@ -401,21 +401,23 @@
     .km-header__search-wrap { max-width: none; }
     .km-header__search { padding: 8px 14px; }
     .km-header__menu-toggle { display: inline-flex; }
-    .km-header__bottom { background: none; border: 0; position: static; }
+    .km-header__bottom { background: none; border: 0; position: static; display: block; }
     .km-header__nav {
       position: fixed;
       inset: 0;
       background: #fff;
-      z-index: 999;
+      z-index: 10000;
       padding: 80px 24px 24px;
       overflow-y: auto;
       transform: translateX(100%);
       transition: transform 0.3s ease-in-out;
       visibility: hidden;
+      pointer-events: none;
     }
     .km-header__nav.is-open {
       transform: translateX(0);
       visibility: visible;
+      pointer-events: auto;
     }
     .km-header__nav-close {
       display: block;
