@@ -640,6 +640,7 @@ video {
   /* iPad Footer: 2-column grid for links and brands */
   .km-footer__grid,
   .km-footer__brands {
+    display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 22px !important;
   }
@@ -2237,6 +2238,7 @@ video {
   /* Footer: Single column layout */
   .km-footer__grid,
   .km-footer__brands {
+    display: grid !important;
     grid-template-columns: 1fr !important;
   }
 
