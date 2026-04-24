@@ -1448,7 +1448,8 @@ video {
   }
 
   .km-pp__thumb {
-    padding: 4px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
   }
 
