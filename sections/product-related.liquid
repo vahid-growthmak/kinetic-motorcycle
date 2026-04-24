@@ -2,95 +2,75 @@
   Product Related — "You May Also Like" (4-column grid of related products)
 {%- endcomment -%}
 
-<section class="km-pp-related" id="Section-{{ section.id }}">
+<section class="km-section km-pcarousel" id="Section-{{ section.id }}">
   <div class="km-container">
     <div class="km-section-row">
       <h2 class="km-section-heading">{{ section.settings.heading | default: 'You May Also Like' }}</h2>
     </div>
     
-    <div class="km-pp-related__viewport">
-      {%- if section.settings.show_related -%}
-        {%- assign limit = section.settings.limit | default: 4 -%}
-        {%- if product.collections.first.products.size > 0 -%}
-          {%- assign rel = product.collections.first.products -%}
-          <div class="km-pp-related__grid" style="grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, 1fr);">
+    <div class="km-pcarousel__viewport">
+      <div class="km-pcarousel__track">
+        {%- if section.settings.show_related -%}
+          {%- assign limit = section.settings.limit | default: 4 -%}
+          {%- if product.collections.first.products.size > 0 -%}
+            {%- assign rel = product.collections.first.products -%}
             {%- assign count = 0 -%}
             {%- for p in rel -%}
               {%- if p.id != product.id -%}
                 {%- assign count = count | plus: 1 -%}
-                <a href="{{ p.url }}" class="km-pp-related__card">
-                  <div class="km-pp-related__media">
-                    {%- if p.featured_image != blank -%}
-                      {{ p.featured_image | image_url: width: 500 | image_tag: width: 250, height: 250, loading: 'lazy', alt: p.title, class: 'km-pp-related__img' }}
-                    {%- else -%}
-                      <div class="km-pp__hero-placeholder" aria-hidden="true" style="width:100%;height:100%;background:#e5e7eb;"></div>
-                    {%- endif -%}
-                  </div>
-                  <div class="km-pp-related__info">
-                    <h3>{{ p.title | truncate: 60 }}</h3>
-                    <div class="km-pp-related__price">{{ p.price | money }}</div>
-                  </div>
-                </a>
+                {%- render 'product-card', product: p, class: 'km-pcarousel__card' -%}
                 {%- if count >= limit -%}{% break %}{%- endif -%}
               {%- endif -%}
             {%- endfor -%}
-          </div>
+          {%- else -%}
+            <p>No related products found.</p>
+          {%- endif -%}
         {%- else -%}
-          <p>No related products found.</p>
-        {%- endif -%}
-      {%- else -%}
-        {%- comment -%} Fallback placeholder or manual block selection {%- endcomment -%}
-        <div class="km-pp-related__grid" style="grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, 1fr);">
+          {%- comment -%} Fallback placeholder or manual block selection {%- endcomment -%}
           {%- for i in (1..section.settings.limit) -%}
-            <a href="#" class="km-pp-related__card">
-              <div class="km-pp-related__media">
+            <article class="km-pcarousel__card">
+              <div class="km-pcarousel__imgwrap">
                 <div class="km-pp__hero-placeholder" aria-hidden="true" style="width:100%;height:100%;background:#e5e7eb;"></div>
               </div>
-              <div class="km-pp-related__info">
-                <h3>Sample Product Title</h3>
-                <div class="km-pp-related__price">$99.00 USD</div>
+              <div class="km-pcarousel__meta">
+                <h3 class="km-pcarousel__title">Sample Product Title</h3>
+                <div class="km-pcarousel__pricerow">
+                  <span class="km-pcarousel__price">$99.00 USD</span>
+                </div>
               </div>
-            </a>
+            </article>
           {%- endfor -%}
-        </div>
-      {%- endif -%}
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .km-pp-related { padding: 64px 0; background: #fff; }
-  .km-pp-related__viewport {
+  .km-pcarousel__viewport {
     overflow: hidden;
     margin: 0 calc(var(--km-gutter) * -1);
     padding: 0 var(--km-gutter);
   }
-  .km-pp-related__grid { display: grid; gap: 24px; }
-  .km-pp-related__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s ease, box-shadow .25s ease; }
-  .km-pp-related__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
-  .km-pp-related__media { aspect-ratio: 1/1; background: #f9fafb; overflow: hidden; }
-  .km-pp-related__img { width: 100%; height: 100%; object-fit: cover; }
-  .km-pp-related__info { padding: 14px 16px 18px; }
-  .km-pp-related__info h3 { font-size: 13px; font-weight: 600; color: #000; margin: 0 0 6px; line-height: 1.4; }
-  .km-pp-related__price { font-size: 14px; font-weight: 700; color: #000; }
+  .km-pcarousel__track {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, minmax(0, 1fr));
+    gap: 24px;
+  }
 
   @media (max-width: 1000px) {
-    .km-pp-related__viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
-    .km-pp-related__grid {
-      display: flex !important;
-      gap: 24px !important;
-      padding-bottom: 20px;
-    }
-    .km-pp-related__grid::-webkit-scrollbar { display: none; }
-    .km-pp-related__grid { -ms-overflow-style: none; scrollbar-width: none; }
+    .km-pcarousel__viewport { overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+    .km-pcarousel__track { display: flex; gap: 24px; padding-bottom: 20px; }
+    .km-pcarousel__track::-webkit-scrollbar { display: none; }
+    .km-pcarousel__track { -ms-overflow-style: none; scrollbar-width: none; }
     
-    .km-pp-related__card {
+    .km-pcarousel__card {
       flex: 0 0 calc(50% - 12px) !important;
       scroll-snap-align: start;
     }
   }
   @media (max-width: 640px) {
-    .km-pp-related__card { flex: 0 0 100% !important; }
+    .km-pcarousel__card { flex: 0 0 100% !important; }
   }
 </style>
 
