@@ -59,7 +59,6 @@ Gear|gear|Lifestyle^gear-lifestyle~3D^lifestyle-3d~Apparel^lifestyle-apparel~Mag
           </span>
         </summary>
         <ul class="km-mega-mobile__list">
-          <li><a href="/collections/{{ r[1] }}" class="km-mega-mobile__shop-all">View all {{ r[0] }}</a></li>
           {%- assign subs = r[2] | split: '~' -%}
           {%- for s in subs -%}
             {%- assign sp = s | split: '^' -%}
