@@ -304,6 +304,7 @@
     width: 12px; height: 12px;
     transition: transform .25s ease;
   }
+  .km-header__mobile-expand { display: none; }
 
   /* MEGA MENU */
   .km-header__menu-item--mega { position: static; }
@@ -403,9 +404,28 @@
       background: #fff;
       z-index: 999;
       padding: 80px 24px 24px;
+      overflow-y: auto;
     }
     .km-header__menu { flex-direction: column; gap: 0; }
-    .km-header__menu-link { padding: 16px 0; border-bottom: 1px solid var(--km-border); }
+    .km-header__menu-link { padding: 16px 0; border-bottom: 1px solid var(--km-border); display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .km-header__mobile-expand { display: none; }
+
+    /* Mobile Mega Menu Accordion */
+    .km-header__menu-item--mega { position: relative; display: flex; flex-direction: column; }
+    .km-mega {
+      position: static;
+      display: none;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+    }
+    .km-header__menu-item--mega.is-mega-open .km-mega { display: block; }
+    .km-header__menu-item--mega.is-mega-open .km-header__menu-link--has-dropdown svg { transform: rotate(180deg); }
+    .km-mega__inner { padding: 16px 0 24px; }
+    .km-mega__grid { grid-template-columns: 1fr; gap: 24px; }
   }
 
   @media (max-width: 520px) {
