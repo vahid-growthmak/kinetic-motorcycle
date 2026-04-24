@@ -51,24 +51,21 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuPanel.classList.contains('is-open')) closeMenu();
     });
-    // Close when any regular link inside the drawer is clicked — EXCEPT:
-    //   - the COLLECTIONS link (toggles accordion instead of navigating, on mobile)
-    //   - links inside the mobile mega-menu accordion (navigate normally)
-    //   - <summary> elements inside <details> accordion
-    const megaItem = menuPanel.querySelector('.km-header__menu-item--mega');
-    const megaLink = megaItem ? megaItem.querySelector('.km-header__menu-link--has-dropdown') : null;
+    // Handle mega menu expansion via separate button on mobile
+    menuPanel.querySelectorAll('[data-km-mega-toggle]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const item = btn.closest('.km-header__menu-item--mega');
+        if (item) {
+          const open = item.classList.toggle('is-mega-open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+      });
+    });
 
     menuPanel.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', (e) => {
-        // If it's the COLLECTIONS link and we're on mobile (drawer-open), toggle accordion instead of navigating
-        const isCollections = link === megaLink || link.textContent.trim().toUpperCase() === 'COLLECTIONS';
-        if (isCollections && menuPanel.classList.contains('is-open')) {
-          e.preventDefault();
-          e.stopPropagation();
-          const open = megaItem.classList.toggle('is-mega-open');
-          link.setAttribute('aria-expanded', open ? 'true' : 'false');
-          return;
-        }
         // Normal link inside drawer — close the drawer as it navigates
         if (menuPanel.classList.contains('is-open')) closeMenu();
       });

@@ -111,9 +111,7 @@
               </a>
               {%- if is_mega -%}
                 <button type="button" class="km-header__mobile-expand" data-km-mega-toggle aria-expanded="false" aria-label="Toggle collections menu">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 6l4 4 4-4"/>
-                  </svg>
+                  {%- render 'icon', icon: 'chevron-down' -%}
                 </button>
                 {% render 'header-megamenu' %}
               {%- endif -%}
@@ -362,8 +360,32 @@
       color: var(--km-heading);
     }
     .km-header__menu { flex-direction: column; gap: 0; }
-    .km-header__menu-link { padding: 16px 0; border-bottom: 1px solid var(--km-border); display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .km-header__mobile-expand { display: none; }
+    .km-header__mobile-expand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 56px; /* Match menu link height */
+      width: 56px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--km-heading);
+      z-index: 2;
+    }
+    .km-header__menu-link {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--km-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .km-header__menu-link svg { display: none; } /* Hide the inline chevron on mobile links */
 
     /* Mobile Mega Menu Accordion */
     .km-header__menu-item--mega { position: relative; display: flex; flex-direction: column; }
