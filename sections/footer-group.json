@@ -58,7 +58,7 @@
           "type": "brand_menu",
           "settings": {
             "title": "Softail",
-            "url": "shopify://collections/softail",
+            "url": "shopify://collections/harley-davidson-softail-parts",
             "menu": "softail"
           }
         },
