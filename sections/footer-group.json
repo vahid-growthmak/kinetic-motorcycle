@@ -93,6 +93,22 @@
             "url": "shopify://collections/triumph-motorcycle-parts-accessories",
             "menu": "triumph"
           }
+        },
+        "brand_menu_cCzdRi": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Gear",
+            "url": "shopify://collections/motorcycle-gear",
+            "menu": "gear"
+          }
+        },
+        "brand_menu_PTC3dL": {
+          "type": "brand_menu",
+          "settings": {
+            "title": "Parts",
+            "url": "shopify://collections/premium-motorcycle-parts",
+            "menu": "parts"
+          }
         }
       },
       "block_order": [
@@ -105,7 +121,9 @@
         "brand_3",
         "brand_4",
         "brand_5",
-        "brand_6"
+        "brand_6",
+        "brand_menu_cCzdRi",
+        "brand_menu_PTC3dL"
       ],
       "custom_css": [],
       "settings": {
