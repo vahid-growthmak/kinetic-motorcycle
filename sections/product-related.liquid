@@ -4,7 +4,7 @@
 
 <section class="km-pp-related" id="Section-{{ section.id }}">
   <div class="km-container">
-    <h2 class="km-pp-related__h2">{{ section.settings.heading | default: 'You May Also Like' }}</h2>
+    <h2 class="km-section-heading">{{ section.settings.heading | default: 'You May Also Like' }}</h2>
     
     {%- if section.settings.show_related -%}
       {%- assign limit = section.settings.limit | default: 4 -%}
@@ -56,8 +56,7 @@
 
 <style>
   .km-pp-related { padding: 64px 0; background: #fff; }
-  .km-pp-related__h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: #000; margin: 0 0 28px; letter-spacing: -.01em; }
-  .km-pp-related__grid { display: grid; gap: 20px; }
+  .km-pp-related__grid { display: grid; gap: 24px; }
   .km-pp-related__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s ease, box-shadow .25s ease; }
   .km-pp-related__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
   .km-pp-related__media { aspect-ratio: 1/1; background: #f9fafb; overflow: hidden; }
@@ -72,22 +71,22 @@
       overflow-x: auto !important;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      gap: 16px !important;
-      padding-bottom: 20px; /* space for scrollbar */
-      margin: 0 -20px; /* pull to edges */
+      gap: 24px !important;
+      padding-bottom: 20px;
+      margin: 0 -20px;
       padding-left: 20px;
       padding-right: 20px;
     }
-    .km-pp-related__grid::-webkit-scrollbar { display: none; } /* hide scrollbar for clean look */
+    .km-pp-related__grid::-webkit-scrollbar { display: none; }
     .km-pp-related__grid { -ms-overflow-style: none; scrollbar-width: none; }
     
     .km-pp-related__card {
-      flex: 0 0 280px !important;
+      flex: 0 0 calc(50% - 12px) !important;
       scroll-snap-align: start;
     }
   }
-  @media (max-width: 480px) {
-    .km-pp-related__card { flex: 0 0 240px !important; }
+  @media (max-width: 640px) {
+    .km-pp-related__card { flex: 0 0 100% !important; }
   }
 </style>
 
