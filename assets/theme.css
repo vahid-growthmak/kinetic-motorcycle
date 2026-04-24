@@ -678,8 +678,8 @@ video {
     gap: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
-    justify-content: center;
-    position: relative;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .km-header__logo {
@@ -687,10 +687,9 @@ video {
   }
 
   .km-header__actions {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
 
   .km-header__logo-img {
@@ -2230,7 +2229,7 @@ video {
   }
 
   .km-footer__brands {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr 1fr !important;
   }
 
   .km-footer__logo-img {

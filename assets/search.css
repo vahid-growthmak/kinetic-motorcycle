@@ -151,6 +151,21 @@
 
 @media (max-width: 768px) {
   .km-header__search-wrap {
-    display: none !important;
+    display: block !important;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+    order: 10;
+  }
+  .km-header__search {
+    padding: 8px 16px;
+    background: #111; /* Darker on mobile for better contrast */
+    border: 1px solid rgba(255,255,255,.1);
+  }
+  .km-header__search-input {
+    color: #fff;
+  }
+  .km-header__search svg {
+    color: #fff;
   }
 }
