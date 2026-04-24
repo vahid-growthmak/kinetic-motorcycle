@@ -84,8 +84,9 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'tab' -%}
             <div class="km-about-page__vmi-panel {% if panel_count == 0 %}is-active{% endif %}" 
-                 id="Panel-{{ block.id }}" 
-                 {% if panel_count > 0 %}style="display:none;"{% endif %}>
+                 id="Panel-{{ block.id }}"
+                 role="tabpanel"
+                 {{ block.shopify_attributes }}>
               <div class="km-about-page__vmi-media">
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
@@ -134,9 +135,6 @@
     </div>
   </div>
 
-  {%- comment -%} CTA SPLIT {%- endcomment -%}
-  {%- comment -%} Removed missing section-cta snippet {%- endcomment -%}
-
 </section>
 
 <style>
@@ -163,11 +161,13 @@
   .km-about-page__stat-num { font-size: clamp(28px, 3.4vw, 40px); font-weight: 800; color: #000; line-height: 1; letter-spacing: -.02em; }
   .km-about-page__stat-label { font-size: 14px; font-weight: 700; color: #000; line-height: 1.2; }
   .km-about-page__stat-label span { display: block; font-size: 11px; font-weight: 500; color: var(--km-text, #4B5563); letter-spacing: .02em; margin-top: 2px; }
+  
   .km-about-page__vmi-wrap { padding: 40px 0 72px; background: var(--km-body-bg, #EDEDED); }
   .km-about-page__vmi-tabs { display: flex; gap: 4px; justify-content: center; padding: 6px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; max-width: max-content; margin: 0 auto 32px; }
   .km-about-page__vmi-tab { padding: 10px 22px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--km-text, #4B5563); background: transparent; border: 0; border-radius: 9999px; cursor: pointer; font-family: inherit; transition: background .25s ease, color .25s ease; }
   .km-about-page__vmi-tab:hover { color: #000; }
-  .km-about-page__vmi-tab.is-active { background: #000; color: #fff; }
+  .km-about-page__vmi-tab.is-active { background: #000 !important; color: #fff !important; }
+  
   .km-about-page__vmi-panel { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16/6; min-height: 320px; background: #000; display: none; }
   .km-about-page__vmi-panel.is-active { display: block; }
   .km-about-page__vmi-media { position: absolute; inset: 0; z-index: 0; }
@@ -178,6 +178,7 @@
   .km-about-page__vmi-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--km-accent, #FBB03D); color: #000; border-radius: 9999px; text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .04em; transition: background .2s ease; }
   .km-about-page__vmi-btn:hover { background: #e69a2b; }
   .km-about-page__vmi-btn svg { width: 12px; height: 12px; }
+  
   .km-about-page__why { padding: 72px 0; background: var(--km-body-bg, #EDEDED); }
   .km-about-page__why-h { font-size: clamp(28px, 3.4vw, 42px); font-weight: 700; color: #000; margin: 0 0 48px; letter-spacing: -.015em; line-height: 1.1; }
   .km-about-page__why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -191,9 +192,15 @@
     .km-about-page__hero-grid { grid-template-columns: 1fr; }
     .km-about-page__stats-strip { grid-template-columns: 1fr; }
     .km-about-page__stats-grid { border-left: 0; padding-left: 0; border-top: 1px solid var(--km-border, #DDDDDD); padding-top: 20px; }
+    
+    .km-about-page__vmi-tabs { max-width: none; width: 100%; overflow-x: auto; justify-content: flex-start; border-radius: 12px; }
+    .km-about-page__vmi-tab { white-space: nowrap; flex: 1; }
+    
+    .km-about-page__vmi-panel { aspect-ratio: auto; min-height: 0; display: none; flex-direction: column; }
     .km-about-page__vmi-panel.is-active { display: flex; }
     .km-about-page__vmi-media { position: static; aspect-ratio: 16/9; }
-    .km-about-page__vmi-card { position: static; transform: none; width: 100%; max-width: none; border-radius: 0; box-shadow: none; }
+    .km-about-page__vmi-card { position: static; transform: none; width: 100%; max-width: none; border-radius: 0; box-shadow: none; padding: 24px; }
+    
     .km-about-page__why-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -205,8 +212,11 @@
   if (!tabButtons.length || !panels.length) return;
 
   tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const targetId = 'Panel-' + btn.getAttribute('data-vmi-tab');
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabId = btn.getAttribute('data-vmi-tab');
+      const targetPanel = document.getElementById('Panel-' + tabId);
+      if (!targetPanel) return;
       
       // Update buttons
       tabButtons.forEach(b => {
@@ -216,13 +226,7 @@
 
       // Update panels
       panels.forEach(p => {
-        if (p.id === targetId) {
-          p.style.display = '';
-          p.classList.add('is-active');
-        } else {
-          p.style.display = 'none';
-          p.classList.remove('is-active');
-        }
+        p.classList.toggle('is-active', p === targetPanel);
       });
     });
   });
