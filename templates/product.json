@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -7,14 +16,14 @@
           "type": "badge",
           "settings": {
             "label": "USA Designed & Made",
-            "icon": "globe"
+            "icon": "star"
           }
         },
         "badge_2": {
           "type": "badge",
           "settings": {
             "label": "Worldwide Shipping",
-            "icon": "truck"
+            "icon": "star"
           }
         },
         "badge_3": {
@@ -39,42 +48,48 @@
           "type": "accordion_item",
           "settings": {
             "title": "Product Information",
-            "metafield_key": "product_information"
+            "metafield_key": "product_information",
+            "custom_content": ""
           }
         },
         "specs": {
           "type": "accordion_item",
           "settings": {
             "title": "Specifications",
-            "metafield_key": "specifications"
+            "metafield_key": "specifications",
+            "custom_content": ""
           }
         },
         "features": {
           "type": "accordion_item",
           "settings": {
             "title": "Features",
-            "metafield_key": "features"
+            "metafield_key": "features",
+            "custom_content": ""
           }
         },
         "fitment": {
           "type": "accordion_item",
           "settings": {
             "title": "Fitment",
-            "metafield_key": "fitment"
+            "metafield_key": "fitment",
+            "custom_content": ""
           }
         },
         "why_choose": {
           "type": "accordion_item",
           "settings": {
             "title": "Why Choose",
-            "metafield_key": "why_choose_this"
+            "metafield_key": "why_choose_this",
+            "custom_content": ""
           }
         },
         "faqs": {
           "type": "accordion_item",
           "settings": {
             "title": "FAQs",
-            "metafield_key": "faqs"
+            "metafield_key": "faqs",
+            "custom_content": ""
           }
         }
       },
@@ -96,7 +111,7 @@
           "settings": {
             "heading": "Designed & Built in the USA",
             "text": "Every Kinetic product is designed and manufactured in the United States. Keeping our work in-house allows us to control quality, refine fitment, and stand behind every part we make.",
-            "icon": "globe"
+            "icon": "star"
           }
         },
         "card_2": {
@@ -112,7 +127,7 @@
           "settings": {
             "heading": "Designed by Riders & Builders",
             "text": "Every product is shaped by hands-on building and riding experience, with practical decisions made where it matters most.",
-            "icon": "check"
+            "icon": "star"
           }
         }
       },
@@ -193,7 +208,12 @@
     "trending": {
       "type": "product-carousel",
       "settings": {
-        "heading": "Trending Products"
+        "heading": "Trending Products",
+        "view_all_label": "View All",
+        "view_all_url": "",
+        "collection": "trending-products",
+        "filter_tag": "",
+        "limit": 8
       }
     }
   },
