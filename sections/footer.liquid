@@ -114,18 +114,18 @@
   .km-footer { background: #000; color: #b5b5b5; margin-top: 64px; }
 
   /* Top: brand (full width with logo) + 4-col info grid */
-  .km-footer__top { padding: 64px 0 40px; border-bottom: 1px solid rgba(255,255,255,.08); text-align: center; }
-  .km-footer__brand { max-width: 340px; margin: 0 auto 48px; }
-  .km-footer__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
+  .km-footer__top { padding: 64px 0 40px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
+  .km-footer__brand { width: 100%; max-width: 260px; margin: 0; }
+  .km-footer__grid { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
   .km-footer__logo-img { height: 64px; width: auto; margin-bottom: 18px; object-fit: contain; }
   .km-footer__tagline { color: #b5b5b5; line-height: 1.6; margin: 0 0 22px; font-size: 14px; }
-  .km-footer__social { display: flex; gap: 10px; justify-content: center; }
+  .km-footer__social { display: flex; gap: 10px; }
   .km-footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.08); color: #fff; text-decoration: none; transition: background .2s ease, color .2s ease; }
   .km-footer__social a:hover { background: var(--km-accent, #FBB03D); color: #000; }
 
-  .km-footer__col { text-align: center; }
+  .km-footer__col { text-align: left; min-width: 140px; }
   .km-footer__heading { color: #fff; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 18px; font-weight: 700; }
-  .km-footer__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .km-footer__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
   .km-footer__links a { color: #b5b5b5; font-size: 14px; text-decoration: none; transition: color .2s ease; }
   .km-footer__links a:hover { color: #fff; }
 
@@ -140,8 +140,8 @@
   .km-footer__contact--small strong { color: #fff; }
 
   /* Bike-model nav — 8 columns */
-  .km-footer__brands { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 28px 24px; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,.08); text-align: center; }
-  .km-footer__brand-col { min-width: 0; }
+  .km-footer__brands { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .km-footer__brand-col { min-width: 120px; text-align: left; }
   .km-footer__brand-label {
     display: block;
     font-size: 13px;
@@ -154,28 +154,37 @@
     transition: color .2s ease;
   }
   .km-footer__brand-label:hover { color: var(--km-accent, #FBB03D); }
-  .km-footer__brand-subs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .km-footer__brand-subs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
   .km-footer__brand-subs a { color: #9ca3af; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; transition: color .2s ease; }
   .km-footer__brand-subs a:hover { color: #fff; }
 
   /* Bottom strip */
-  .km-footer__bottom { display: flex; flex-direction: column; gap: 24px; align-items: center; padding: 24px 0 32px; text-align: center; }
+  .km-footer__bottom { display: flex; justify-content: space-between; align-items: center; padding: 24px 0 32px; flex-wrap: wrap; gap: 24px; }
   .km-footer__copyright { font-size: 12px; color: #6b7280; margin: 0; }
-  .km-footer__legal { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .km-footer__legal { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
   .km-footer__legal a { font-size: 12px; color: #9ca3af; text-decoration: none; transition: color .2s ease; }
   .km-footer__legal a:hover { color: #fff; }
-  .km-footer__pay { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .km-footer__pay { display: flex; gap: 8px; align-items: center; }
   .km-footer__pay img { height: 22px; width: auto; opacity: .85; }
 
   @media (max-width: 1200px) {
-    .km-footer__brands { grid-template-columns: repeat(4, 1fr); }
+    .km-footer__top { flex-direction: column; align-items: center; gap: 48px; }
+    .km-footer__brand { text-align: center; }
+    .km-footer__social { justify-content: center; }
   }
-  @media (max-width: 1000px) {
-    .km-footer__grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) {
+    .km-footer__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; width: 100%; max-width: 600px; }
+    .km-footer__brands { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; width: 100%; max-width: 600px; }
+    .km-footer__bottom { flex-direction: column; justify-content: center; text-align: center; }
+    .km-footer__legal { justify-content: center; }
   }
-  @media (max-width: 700px) {
-    .km-footer__grid { grid-template-columns: 1fr; gap: 32px; }
-    .km-footer__brands { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    .km-footer__grid { grid-template-columns: 1fr; text-align: center; }
+    .km-footer__col { text-align: center; }
+    .km-footer__links { align-items: center; }
+    .km-footer__brands { grid-template-columns: 1fr; text-align: center; }
+    .km-footer__brand-col { text-align: center; }
+    .km-footer__brand-subs { align-items: center; }
   }
 </style>
 
