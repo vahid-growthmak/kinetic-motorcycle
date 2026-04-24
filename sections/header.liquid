@@ -69,6 +69,9 @@
   <div class="km-header__bottom">
     <div class="km-container">
       <nav class="km-header__nav" role="navigation" aria-label="Primary" data-km-menu>
+        <button type="button" class="km-header__nav-close" data-km-menu-close aria-label="Close menu">
+          {%- render 'icon', icon: 'close' -%}
+        </button>
         <ul class="km-header__menu">
           {%- assign main_menu = section.settings.menu -%}
           {%- if main_menu != blank -%}
@@ -398,13 +401,30 @@
     .km-header__search { padding: 8px 14px; }
     .km-header__menu-toggle { display: inline-flex; }
     .km-header__bottom { display: none; }
-    .km-header__nav.is-open {
+    .km-header__nav {
       position: fixed;
       inset: 0;
       background: #fff;
       z-index: 999;
       padding: 80px 24px 24px;
       overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      visibility: hidden;
+    }
+    .km-header__nav.is-open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+    .km-header__nav-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      color: var(--km-heading);
     }
     .km-header__menu { flex-direction: column; gap: 0; }
     .km-header__menu-link { padding: 16px 0; border-bottom: 1px solid var(--km-border); display: flex; justify-content: space-between; align-items: center; width: 100%; }

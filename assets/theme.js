@@ -36,12 +36,11 @@
       if (menuPanel.classList.contains('is-open')) closeMenu();
       else openMenu();
     });
-    // Click the close ✕ in top-right of drawer (rendered via ::before)
-    menuPanel.addEventListener('click', (e) => {
-      if (!menuPanel.classList.contains('is-open')) return;
-      const rect = menuPanel.getBoundingClientRect();
-      if (e.clientY < rect.top + 56 && e.clientX > rect.right - 60) closeMenu();
-    });
+    // Click the close ✕ button inside the drawer
+    const closeBtn = menuPanel.querySelector('[data-km-menu-close]');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeMenu);
+    }
     // Click backdrop (outside drawer) closes too
     document.addEventListener('click', (e) => {
       if (!menuPanel.classList.contains('is-open')) return;
