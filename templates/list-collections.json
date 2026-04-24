@@ -183,14 +183,14 @@
           "type": "category",
           "settings": {
             "title": "Exhausts",
-            "url": "/collections/triumph-exhaust-systems"
+            "url": "shopify://collections/triumph-exhausts"
           }
         },
         "category_T4FkxQ": {
           "type": "category",
           "settings": {
             "title": "Grips",
-            "url": "/collections/triumph-motorcycle-grips"
+            "url": "shopify://collections/triumph-grips"
           }
         },
         "model_8YabHg": {
