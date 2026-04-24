@@ -643,6 +643,7 @@ video {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 60px !important;
+    width: 100% !important;
   }
 
   .km-footer__brand {
@@ -2247,6 +2248,7 @@ video {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 32px !important;
+    width: 100% !important;
   }
 
   .km-footer__top,
