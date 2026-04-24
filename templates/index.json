@@ -26,93 +26,278 @@
       "type": "ticker",
       "settings": {}
     },
-    "model-chooser": {
-      "type": "model-chooser",
+    "main_list_collections_6iipJR": {
+      "type": "main-list-collections",
       "blocks": {
-        "sportster": {
+        "model_6DXBNC": {
           "type": "model",
           "settings": {
-            "name": "Harley Davidson Sportster",
-            "before_asset": "model-sportster-before.png",
-            "after_asset": "model-sportster-after.png",
-            "description": "The Harley-Davidson Sportster has been a symbol of versatility and style since 1957, beloved by riders for its adaptability and iconic look. Our Harley-Davidson Sportster collections bring together premium exhausts, handlebars, grips, lighting, intake systems, footpegs, shifters, accessories, and services, selected for precise fitment and dependable performance. You save time, avoid compatibility issues, and upgrade with confidence using proven parts that enhance power, comfort, and overall appearance.",
-            "categories": "Accessories|/collections/harley-davidson-sportster-accessories\nFootpegs and Shifters|/collections/harley-davidson-sportster-footpegs-shifters\nExhausts|/collections/harley-davidson-sportster-exhaust-systems\nCovers-Decals-Armor|/collections/harley-davidson-sportster-covers-decals-armor\nHandlebars|/collections/harley-davidson-sportster-handlebars\nLighting|/collections/harley-davidson-sportster-lighting\nGrips|/collections/harley-davidson-sportster-grips\nServices|/collections/harley-davidson-sportster-services\nIntake Systems|/collections/harley-davidson-sportster-intake-systems",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Harley Davidson Sportster",
+            "description": "<p>The Harley-Davidson Sportster has been a symbol of versatility and style since 1957, beloved by riders for its adaptability and iconic look. Our Harley-Davidson Sportster collections bring together premium <strong>exhausts, handlebars, grips, lighting, intake systems, footpegs, shifters, accessories, and services</strong>, selected for precise fitment and dependable performance. You save time, avoid compatibility issues, and upgrade with confidence using proven parts that enhance power, comfort, and overall appearance.</p>",
+            "url": "/collections/sportster",
+            "image_before": "shopify://shop_images/6961d13b84c016cf385c1d3a_image-38.webp",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_iibrqbiibrqbiibr.png",
+            "label_before": "Before",
+            "label_after": "After"
           }
         },
-        "softail": {
-          "type": "model",
+        "category_WBgKic": {
+          "type": "category",
           "settings": {
-            "name": "Harley Davidson Softail",
-            "before_asset": "model-softail-before.png",
-            "after_asset": "model-softail-after.webp",
-            "description": "The Softail blends classic styling with modern ride comfort. Our Softail collections bring together engineered exhausts, handlebars, seats, covers, accessories, and services — chosen for direct fitment and dependable performance. Upgrade the look and feel of your Softail with parts proven to improve power, comfort, and overall appearance.",
-            "categories": "Accessories|/collections/harley-davidson-softail-accessories\nExhausts|/collections/harley-davidson-softail-exhaust-systems\nHandlebars|/collections/harley-davidson-softail-handlebars\nSeats|/collections/harley-davidson-softail-seats\nCovers-Decals-Armor|/collections/harley-davidson-softail-covers-decals-armor\nLighting|/collections/harley-davidson-softail-lighting\nFootpegs and Shifters|/collections/harley-davidson-softail-footpegs-shifters\nGrips|/collections/harley-davidson-softail-grips\nServices|/collections/harley-davidson-softail-services",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Accessories",
+            "url": "/collections/harley-davidson-sportster-accessories"
           }
         },
-        "dyna": {
-          "type": "model",
+        "category_Lmhz6W": {
+          "type": "category",
           "settings": {
-            "name": "Harley Davidson Dyna",
-            "before_asset": "model-dyna-before.png",
-            "after_asset": "model-dyna-after.webp",
-            "description": "The Dyna platform is built for riders who push the limits. Our Dyna collections include full exhaust systems, precision shifters, intake kits, handlebars, lighting, and accessories — all selected for direct bolt-on fitment. Unlock real power gains and ride-quality upgrades with proven, performance-tested parts.",
-            "categories": "Accessories|/collections/harley-davidson-dyna-accessories\nFootpegs and Shifters|/collections/harley-davidson-dyna-footpegs-shifters\nExhausts|/collections/harley-davidson-dyna-exhaust-systems\nCovers-Decals-Armor|/collections/harley-davidson-dyna-covers-decals-armor\nHandlebars|/collections/harley-davidson-dyna-handlebars\nLighting|/collections/harley-davidson-dyna-lighting\nGrips|/collections/harley-davidson-dyna-grips\nServices|/collections/harley-davidson-dyna-services\nIntake Systems|/collections/harley-davidson-dyna-intake-systems",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Footpegs and Shifters",
+            "url": "/collections/harley-davidson-sportster-footpegs-shifters"
           }
         },
-        "triumph": {
-          "type": "model",
+        "category_gyTKeB": {
+          "type": "category",
           "settings": {
-            "name": "Triumph",
-            "before_asset": "model-triumph-before.png",
-            "after_asset": "model-triumph-after.webp",
-            "description": "From Bonneville to Speed Twin, Triumph is a hallmark of British engineering and classic styling. Our Triumph collections feature high-flow intakes, custom exhausts, CNC-machined cockpit parts, lighting, and accessories — selected for precise fitment and dependable performance. Upgrade with confidence and keep your ride authentic.",
-            "categories": "Accessories|/collections/triumph-motorcycle-accessories\nFootpegs and Shifters|/collections/triumph-footpegs-shifters\nExhausts|/collections/triumph-exhaust-systems\nHandlebars|/collections/triumph-handlebars\nLighting|/collections/triumph-lighting\nGrips|/collections/triumph-motorcycle-grips\nIntake Systems|/collections/triumph-intake-systems\nServices|/collections/triumph-services",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Exhausts",
+            "url": "/collections/harley-davidson-sportster-exhaust-systems"
           }
         },
-        "honda": {
-          "type": "model",
+        "category_DiiXtn": {
+          "type": "category",
           "settings": {
-            "name": "Honda",
-            "before_asset": "model-honda-before.png",
-            "after_asset": "model-honda-after.webp",
-            "description": "Honda builds some of the most reliable and versatile motorcycles on the road. Our Honda collections include intake kits, exhaust systems, handlebars, grips, lighting, and accessories — engineered for precise fitment across CB, cafe, and bobber platforms. Enhance power, comfort, and style with proven, direct-fit parts.",
-            "categories": "Accessories|/collections/honda-cb-accessories\nExhausts|/collections/honda-cb-exhaust-systems\nHandlebars|/collections/honda-cb-handlebars\nGrips|/collections/honda-cb-grips\nLighting|/collections/honda-cb-lighting\nIntake Systems|/collections/honda-cb-intake-systems\nFootpegs and Shifters|/collections/honda-cb-footpegs-shifters\nServices|/collections/honda-cb-services",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Covers-Decals-Armor",
+            "url": "/collections/harley-davidson-sportster-covers-decals-armor"
           }
         },
-        "indian": {
+        "category_BmrDyz": {
+          "type": "category",
+          "settings": {
+            "title": "Handlebars",
+            "url": "/collections/harley-davidson-sportster-handlebars"
+          }
+        },
+        "category_jAw3Dr": {
+          "type": "category",
+          "settings": {
+            "title": "Lighting",
+            "url": "/collections/harley-davidson-sportster-lighting"
+          }
+        },
+        "category_RfMa9G": {
+          "type": "category",
+          "settings": {
+            "title": "Grips",
+            "url": "/collections/harley-davidson-sportster-grips"
+          }
+        },
+        "category_Pa87nD": {
+          "type": "category",
+          "settings": {
+            "title": "Services",
+            "url": "/collections/harley-davidson-sportster-services"
+          }
+        },
+        "category_gPHLUY": {
+          "type": "category",
+          "settings": {
+            "title": "Intake Systems",
+            "url": "/collections/harley-davidson-sportster-intake-systems"
+          }
+        },
+        "model_kf6iBy": {
           "type": "model",
           "settings": {
-            "name": "Indian Motorcycle",
-            "before_asset": "model-indian-before.png",
-            "after_asset": "model-indian-after.png",
-            "description": "Indian builds American touring and cruiser motorcycles known for power, presence, and craftsmanship. Our Indian collections include premium custom exhaust systems engineered for the Scout platform.",
-            "categories": "Exhausts|/collections/indian-exhausts",
-            "cta_label": "",
-            "cta_url": ""
+            "title": "Harley Davidson Softail",
+            "description": "<p>The Harley-Davidson Softail combines classic styling with modern performance. Our Softail collections bring together premium <strong>exhausts, intake systems, accessories, covers, decals, and armor</strong>, carefully selected to enhance performance, comfort, and visual appeal. Each product is chosen for precise fitment and dependable performance, helping you upgrade with confidence and build a cohesive setup without unnecessary trial and error.</p>",
+            "url": "/collections/softail",
+            "image_before": "shopify://shop_images/6961d6f25670859d956a7908_image-39-p-2000.webp",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_i0t29pi0t29pi0t2.png",
+            "label_before": "Before",
+            "label_after": "After"
+          }
+        },
+        "category_Hmn7KA": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "url": "/collections/harley-davidson-softail-accessories"
+          }
+        },
+        "category_bEtKiC": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "url": "/collections/harley-davidson-softail-exhaust-systems"
+          }
+        },
+        "category_G9yQ7m": {
+          "type": "category",
+          "settings": {
+            "title": "Covers-Decals-Armor",
+            "url": "/collections/harley-davidson-softail-covers-decals-armor"
+          }
+        },
+        "category_f89M6N": {
+          "type": "category",
+          "settings": {
+            "title": "Intake Systems",
+            "url": "/collections/harley-davidson-softail-intake-systems"
+          }
+        },
+        "model_jWzrnJ": {
+          "type": "model",
+          "settings": {
+            "title": "Harley Davidson Dyna",
+            "description": "<p>The Harley-Davidson Dyna is built for riders who value raw power and precise handling. Our Dyna collections focus on premium <strong>exhausts and intake systems</strong> designed to enhance performance, throttle response, and sound. Each product is selected for proper fitment and long-term reliability, making it easy to upgrade without unnecessary trial and error.</p>",
+            "url": "/collections/dyna",
+            "image_before": "shopify://shop_images/6961d6f2fc4ce4972af31f5c_image-42-p-2000.webp",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_2g19qa2g19qa2g19.png",
+            "label_before": "Before",
+            "label_after": "After"
+          }
+        },
+        "category_gw6VhT": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "url": "/collections/harley-davidson-dyna-exhaust-systems"
+          }
+        },
+        "category_Ekmpk7": {
+          "type": "category",
+          "settings": {
+            "title": "Intake Systems",
+            "url": "/collections/harley-davidson-dyna-intake-systems"
+          }
+        },
+        "model_L8QMDN": {
+          "type": "model",
+          "settings": {
+            "title": "Triumph ( Bonneville / Thruxton / Scrambler )",
+            "description": "<p>Triumph motorcycles are known for timeless design and refined performance. Our collections for the <strong>Bonneville, Thruxton, and Scrambler</strong> bring together premium <strong>exhausts, grips, faceplates, and accessories</strong>, carefully selected to enhance performance while preserving classic character. Each product is chosen for precise fitment and dependable quality, making it easy to upgrade with confidence and maintain a clean, cohesive build. Thoughtfully engineered upgrades that respect your Triumph’s heritage while improving ride feel, control, and style.</p>",
+            "url": "/collections/triumph",
+            "image_before": "shopify://shop_images/6961d8bc1256667e996dcde7_image-40.webp",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_ovd8zxovd8zxovd8.png",
+            "label_before": "Before",
+            "label_after": "After"
+          }
+        },
+        "category_Ldh4XG": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "url": "/collections/triumph-motorcycle-accessories"
+          }
+        },
+        "category_FbgAMF": {
+          "type": "category",
+          "settings": {
+            "title": "Faceplates",
+            "url": "/collections/triumph-faceplates"
+          }
+        },
+        "category_xXPm8Q": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "url": "/collections/triumph-exhaust-systems"
+          }
+        },
+        "category_L6wLQa": {
+          "type": "category",
+          "settings": {
+            "title": "Grips",
+            "url": "/collections/triumph-motorcycle-grips"
+          }
+        },
+        "model_EAW4B6": {
+          "type": "model",
+          "settings": {
+            "title": "Honda CB Series",
+            "description": "<p>The Honda CB Series is known for balanced performance and proven reliability. Our CB collections feature premium <strong>exhausts, suspension, chassis components, and accessories</strong>, carefully selected to improve power delivery, handling, and overall ride quality. Each product is chosen for precise fitment and long-term durability, making it easy to upgrade with confidence and build a cohesive setup.</p>",
+            "url": "/collections/honda",
+            "image_before": "shopify://shop_images/6961d6f24e56327c44ed8702_image-41.webp",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_a6fkx3a6fkx3a6fk.png",
+            "label_before": "Before",
+            "label_after": "After"
+          }
+        },
+        "category_6fd6rL": {
+          "type": "category",
+          "settings": {
+            "title": "Accessories",
+            "url": "/collections/honda-cb-accessories"
+          }
+        },
+        "category_gL8xPh": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "url": "/collections/honda-cb-exhaust-systems"
+          }
+        },
+        "category_dMGMGr": {
+          "type": "category",
+          "settings": {
+            "title": "Suspension and Chassis",
+            "url": "/collections/honda-cb-suspension-chassis"
+          }
+        },
+        "model_jtfJbd": {
+          "type": "model",
+          "settings": {
+            "title": "Indian Motorcycle",
+            "description": "<p>The Indian Motorcycle, America’s oldest motorcycle brand since 1901, is a timeless icon of power and open-road freedom. At Kinetic Motorcycles, we celebrate this legacy with premium handcrafted parts — from custom <strong>exhausts</strong> to heritage-inspired handlebars — designed to elevate your ride. Transform your Indian into a personalized masterpiece that’s unmistakably yours.</p>",
+            "url": "/collections/indian",
+            "image_before": "shopify://shop_images/Gemini_Generated_Image_bftczebftczebftc.png",
+            "image_after": "shopify://shop_images/Gemini_Generated_Image_iyrmc2iyrmc2iyrm.png",
+            "label_before": "Before",
+            "label_after": "After"
+          }
+        },
+        "category_Bx94Ei": {
+          "type": "category",
+          "settings": {
+            "title": "Exhausts",
+            "url": "/collections/indian-exhausts"
           }
         }
       },
       "block_order": [
-        "sportster",
-        "softail",
-        "dyna",
-        "triumph",
-        "honda",
-        "indian"
+        "model_6DXBNC",
+        "category_WBgKic",
+        "category_Lmhz6W",
+        "category_gyTKeB",
+        "category_DiiXtn",
+        "category_BmrDyz",
+        "category_jAw3Dr",
+        "category_RfMa9G",
+        "category_Pa87nD",
+        "category_gPHLUY",
+        "model_kf6iBy",
+        "category_Hmn7KA",
+        "category_bEtKiC",
+        "category_G9yQ7m",
+        "category_f89M6N",
+        "model_jWzrnJ",
+        "category_gw6VhT",
+        "category_Ekmpk7",
+        "model_L8QMDN",
+        "category_Ldh4XG",
+        "category_FbgAMF",
+        "category_xXPm8Q",
+        "category_L6wLQa",
+        "model_EAW4B6",
+        "category_6fd6rL",
+        "category_gL8xPh",
+        "category_dMGMGr",
+        "model_jtfJbd",
+        "category_Bx94Ei"
       ],
       "settings": {
-        "heading": "Choose Your Model",
-        "subheading": "Slide to see the transformation. Performance-engineered parts for every ride."
+        "heading": "Shop Motorcycle Parts by Model",
+        "cats_label": "Choose category :",
+        "alternate_rows": true
       }
     },
     "carousel-1": {
@@ -121,9 +306,9 @@
         "heading": "Best Sellers",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-sellers",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "carousel-2": {
@@ -132,9 +317,9 @@
         "heading": "Best Selling Exhausts",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-selling-exhausts",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "carousel-3": {
@@ -143,9 +328,9 @@
         "heading": "Best Selling Handlebars",
         "view_all_label": "View All",
         "view_all_url": "/collections/all",
-        "collection": "all",
+        "collection": "best-selling-handlebars",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "features": {
@@ -191,7 +376,7 @@
   "order": [
     "hero",
     "ticker",
-    "model-chooser",
+    "main_list_collections_6iipJR",
     "carousel-1",
     "carousel-2",
     "carousel-3",

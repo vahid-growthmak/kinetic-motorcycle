@@ -107,9 +107,7 @@
         "brand_5",
         "brand_6"
       ],
-      "custom_css": [
-        ".km-footer__tagline{text-align: center}"
-      ],
+      "custom_css": [],
       "settings": {
         "tagline": "Performance parts for the ride of your life.",
         "instagram_url": "",
