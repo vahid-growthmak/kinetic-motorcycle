@@ -13,8 +13,8 @@
       "type": "model-hero",
       "settings": {
         "heading": "",
-        "before_image": "{{ collection.metafields.custom.before_image.value }}",
-        "after_image": "{{ collection.image }}",
+        "before_image": "{{ collection.image }}",
+        "after_image": "{{ collection.metafields.custom.before_image.value }}",
         "description": "{{ collection.description }}"
       }
     },
