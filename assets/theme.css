@@ -2195,9 +2195,9 @@ video {
 }
 
 /* ============================================================
-   MOBILE (≤ 768px)
+   MOBILE (≤ 440px)
    ============================================================ */
-@media (max-width: 768px) {
+@media (max-width: 440px) {
   /* Collection & Product Grids */
   .km-coll__grid,
   .km-pp-related__grid,
