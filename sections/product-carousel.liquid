@@ -44,7 +44,7 @@
         {%- elsif section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             <article class="km-pcarousel__card" {{ block.shopify_attributes }}>
-              <a href="{{ block.settings.url | default: '#' }}" class="km-pcarousel__imgwrap">
+              <a href="{{ block.settings.url | default: routes.all_products_collection_url }}" class="km-pcarousel__imgwrap">
                 {%- if block.settings.badge != blank -%}<span class="km-pcarousel__badge">{{ block.settings.badge }}</span>{%- endif -%}
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 800 | image_tag: width: 400, height: 400, loading: 'lazy', alt: block.settings.title, class: 'km-pcarousel__img' }}
@@ -53,7 +53,7 @@
                 {%- endif -%}
               </a>
               <div class="km-pcarousel__meta">
-                <h3 class="km-pcarousel__title"><a href="{{ block.settings.url | default: '#' }}">{{ block.settings.title }}</a></h3>
+                <h3 class="km-pcarousel__title"><a href="{{ block.settings.url | default: routes.all_products_collection_url }}">{{ block.settings.title }}</a></h3>
                 {%- if block.settings.model != blank -%}
                   <div class="km-pcarousel__model"><img src="{{ 'icon-motor.png' | asset_url }}" width="16" height="16" alt="" class="km-pcarousel__model-icon" loading="lazy"><span>{{ block.settings.model }}</span></div>
                 {%- endif -%}
@@ -73,11 +73,11 @@
           {%- for entry in fallback_products -%}
             {%- assign p = entry | split: '|' -%}
             <article class="km-pcarousel__card">
-              <a href="#" class="km-pcarousel__imgwrap">
+              <a href="{{ routes.all_products_collection_url }}" class="km-pcarousel__imgwrap">
                 <img src="{{ p[3] | asset_url }}" width="400" height="400" loading="lazy" alt="{{ p[0] }}" class="km-pcarousel__img">
               </a>
               <div class="km-pcarousel__meta">
-                <h3 class="km-pcarousel__title"><a href="#">{{ p[0] }}</a></h3>
+                <h3 class="km-pcarousel__title"><a href="{{ routes.all_products_collection_url }}">{{ p[0] }}</a></h3>
                 <div class="km-pcarousel__model"><img src="{{ 'icon-motor.png' | asset_url }}" width="16" height="16" alt="" class="km-pcarousel__model-icon" loading="lazy"><span>{{ p[1] }}</span></div>
                 <div class="km-pcarousel__pricerow"><span class="km-pcarousel__price">{{ p[2] }}</span></div>
                 {%- assign stars = p[4] | plus: 0 -%}
