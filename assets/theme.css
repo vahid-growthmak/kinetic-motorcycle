@@ -636,6 +636,13 @@ video {
     padding-left: 24px;
     padding-right: 24px;
   }
+
+  /* iPad Footer: 2-column grid */
+  .km-footer__grid,
+  .km-footer__brands {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 22px !important;
+  }
 }
 
 /* ============================================================
@@ -1374,8 +1381,8 @@ video {
     height: 34px !important;
   }
 
+  /* Grid is handled by 1024px block above, but keeping layout basics here */
   .km-footer__grid {
-    grid-template-columns: repeat(2, 1fr) !important;
     gap: 22px !important;
   }
 
@@ -1394,7 +1401,6 @@ video {
   }
 
   .km-footer__brands {
-    grid-template-columns: repeat(2, 1fr) !important;
     gap: 18px !important;
     padding: 24px 0 !important;
   }
@@ -2207,6 +2213,26 @@ video {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
+
+  /* Footer: Left align everything */
+  .km-footer__top,
+  .km-footer__brand,
+  .km-footer__grid,
+  .km-footer__links,
+  .km-footer__contact,
+  .km-footer__brands {
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .km-footer__grid,
+  .km-footer__brands {
+    grid-template-columns: 1fr !important;
+  }
+
+  .km-footer__social {
+    justify-content: flex-start !important;
+  }
 }
 
 /* ============================================================
@@ -2245,16 +2271,6 @@ video {
   }
 
   .km-pp-related__grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Footer */
-  .km-footer__grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-  }
-
-  .km-footer__brands {
     grid-template-columns: 1fr !important;
   }
 
