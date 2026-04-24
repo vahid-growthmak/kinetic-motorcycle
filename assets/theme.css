@@ -639,7 +639,7 @@ video {
 }
 
 /* ============================================================
-   MOBILE / TABLET (≤ 900px)
+   TABLET (≤ 900px)
    ============================================================ */
 @media (max-width: 900px) {
   .km-container {
@@ -649,7 +649,10 @@ video {
 
   .km-grid-4,
   .km-grid-3,
-  .km-grid-2 {
+  .km-grid-2,
+  .km-coll__grid,
+  .km-pp-related__grid,
+  .km-pp-trending__grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
@@ -1187,8 +1190,8 @@ video {
   }
 
   .km-pcarousel__card {
-    flex: 0 0 145px !important;
-    max-width: 145px !important;
+    flex: 0 0 calc(50% - 12px) !important;
+    max-width: calc(50% - 12px) !important;
     scroll-snap-align: start;
   }
 
@@ -2190,6 +2193,27 @@ video {
 }
 
 /* ============================================================
+   MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Collection & Product Grids */
+  .km-coll__grid,
+  .km-pp-related__grid,
+  .km-pp-trending__grid,
+  .km-grid-4,
+  .km-grid-3,
+  .km-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Carousels */
+  .km-pcarousel__card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ============================================================
    SMALL PHONES (≤ 480px)
    ============================================================ */
 @media (max-width: 480px) {
@@ -2225,11 +2249,6 @@ video {
   }
 
   .km-pp-related__grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Collection */
-  .km-coll__grid {
     grid-template-columns: 1fr !important;
   }
 
