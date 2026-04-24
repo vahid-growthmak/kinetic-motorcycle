@@ -11,45 +11,45 @@
     {%- comment -%} BREADCRUMB {%- endcomment -%}
     <nav class="km-pp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
-      <span aria-hidden="true">›</span>
-      <a href="{{ routes.all_products_collection_url }}">Products</a>
-      <span aria-hidden="true">›</span>
-      <span class="km-pp__crumb-current">{{ product.title | upcase }}</span>
+      {%- if product.collections.size > 0 -%}
+        <span aria-hidden="true">/</span>
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+      {%- endif -%}
+      <span aria-hidden="true">/</span>
+      <span class="km-pp__crumb-current">{{ product.title }}</span>
     </nav>
 
     {%- comment -%} TOP GRID — gallery | info {%- endcomment -%}
     <div class="km-pp__top">
 
       {%- comment -%} LEFT: gallery {%- endcomment -%}
-      <div class="km-pp__gallery">
-        <div class="km-pp__hero">
-          {%- if product.featured_image != blank -%}
-            <img
-              src="{{ product.featured_image | image_url: width: 1200 }}"
-              alt="{{ product.featured_image.alt | default: product.title | escape }}"
-              width="800"
-              height="800"
-              loading="eager"
-              fetchpriority="high"
-              class="km-pp__hero-img"
-              id="km-product-hero-img"
-            >
-          {%- else -%}
-            <div class="km-pp__hero-placeholder" aria-hidden="true"></div>
+        <div class="km-pp__gallery">
+          <div class="km-pp__hero">
+            {%- if product.featured_image != blank -%}
+              <img
+                src="{{ product.featured_image | image_url: width: 1200 }}"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                width="800"
+                height="800"
+                loading="eager"
+                fetchpriority="high"
+                class="km-pp__hero-img"
+                id="km-product-hero-img"
+              >
+            {%- else -%}
+              <div class="km-pp__hero-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+          </div>
+          {%- if product.images.size > 1 -%}
+            <div class="km-pp__thumbs">
+              {%- for img in product.images limit: 6 -%}
+                <button type="button" class="km-pp__thumb{% if forloop.first %} is-active{% endif %}" data-km-thumb="{{ img | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
+                  <img src="{{ img | image_url: width: 240 }}" width="120" height="120" loading="lazy" alt="{{ product.title | escape }}">
+                </button>
+              {%- endfor -%}
+            </div>
           {%- endif -%}
         </div>
-        {%- if product.images.size > 1 -%}
-          <div class="km-pp__thumbs">
-            {%- for img in product.images limit: 6 -%}
-              <button type="button" class="km-pp__thumb{% if forloop.first %} is-active{% endif %}" data-km-thumb="{{ img | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
-                <img src="{{ img | image_url: width: 240 }}" width="120" height="120" loading="lazy" alt="{{ product.title | escape }}">
-              </button>
-            {%- endfor -%}
-          </div>
-        {%- else -%}
-          <div class="km-pp__thumbs-empty">No items found</div>
-        {%- endif -%}
-      </div>
 
       {%- comment -%} RIGHT: info {%- endcomment -%}
       <div class="km-pp__info">
@@ -128,38 +128,35 @@
           {%- endif -%}
         </form>
 
-        <div class="km-pp__badges">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'badge' -%}
-              <div class="km-pp__badge" {{ block.shopify_attributes }}>
-                <span class="km-pp__badge-icon" aria-hidden="true">
-                  {%- render 'icon', icon: block.settings.icon | default: 'globe' -%}
-                </span>
-                {{ block.settings.label }}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-          {%- if section.blocks.size == 0 -%}
-            <div class="km-pp__badge">
-              <span class="km-pp__badge-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              </span>
-              USA Designed &amp; Made
-            </div>
-            <div class="km-pp__badge">
-              <span class="km-pp__badge-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-              </span>
-              Worldwide Shipping
-            </div>
-            <div class="km-pp__badge">
-              <span class="km-pp__badge-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m10 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/></svg>
-              </span>
-              High Precision Motorcycle Parts
-            </div>
-          {%- endif -%}
+      </div>
+    </div>
+
+    <div class="km-pp__badges">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'badge' -%}
+          <div class="km-pp__badge" {{ block.shopify_attributes }}>
+            <span class="km-pp__badge-icon" aria-hidden="true">
+              {%- render 'icon', icon: block.settings.icon | default: 'globe' -%}
+            </span>
+            <span class="km-pp__badge-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if section.blocks.size == 0 -%}
+        <div class="km-pp__badge">
+          <span class="km-pp__badge-icon" aria-hidden="true">{%- render 'icon', icon: 'globe' -%}</span>
+          <span class="km-pp__badge-label">USA Designed &amp; Made</span>
         </div>
+        <div class="km-pp__badge">
+          <span class="km-pp__badge-icon" aria-hidden="true">{%- render 'icon', icon: 'truck' -%}</span>
+          <span class="km-pp__badge-label">Worldwide Shipping</span>
+        </div>
+        <div class="km-pp__badge">
+          <span class="km-pp__badge-icon" aria-hidden="true">{%- render 'icon', icon: 'star' -%}</span>
+          <span class="km-pp__badge-label">High Precision Parts</span>
+        </div>
+      {%- endif -%}
+    </div>
       </div>
     </div>
   </div>
@@ -167,19 +164,23 @@
 
 <style>
   .km-product-page { padding: 36px 0 72px; background: var(--km-body-bg, #EDEDED); }
-  .km-pp__crumbs { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--km-text, #4B5563); margin-bottom: 32px; }
-  .km-pp__crumbs a { color: inherit; text-decoration: none; }
-  .km-pp__crumbs a:hover { color: var(--km-accent, #FBB03D); }
-  .km-pp__crumb-current { color: #000; font-weight: 700; }
+  .km-pp__crumbs { display: flex; align-items: center; gap: 10px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #9ca3af; margin-bottom: 32px; }
+  .km-pp__crumbs a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  .km-pp__crumbs a:hover { color: #000; }
+  .km-pp__crumbs span[aria-hidden="true"] { color: #d1d5db; font-size: 8px; }
+  .km-pp__crumb-current { color: #000; }
 
   .km-pp__top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: flex-start; }
 
   .km-pp__gallery { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 24px; }
-  .km-pp__hero { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 20px; overflow: hidden; }
+  .km-pp__hero { aspect-ratio: 16/10; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
   .km-pp__hero-img { width: 100%; height: 100%; object-fit: cover; transition: opacity .2s ease; }
   .km-pp__hero-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }
-  .km-pp__thumbs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-  .km-pp__thumb { aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 10px; overflow: hidden; cursor: pointer; padding: 6px; transition: border-color .2s ease; }
+  .km-pp__thumbs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; }
+  .km-pp__thumbs::-webkit-scrollbar { height: 4px; }
+  .km-pp__thumbs::-webkit-scrollbar-track { background: transparent; }
+  .km-pp__thumbs::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+  .km-pp__thumb { flex: 0 0 100px; aspect-ratio: 1/1; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 10px; overflow: hidden; cursor: pointer; padding: 6px; transition: border-color .2s ease; }
   .km-pp__thumb img { width: 100%; height: 100%; object-fit: contain; }
   .km-pp__thumb:hover { border-color: #000; }
   .km-pp__thumb.is-active { border-color: var(--km-accent, #FBB03D); border-width: 2px; }
@@ -223,9 +224,37 @@
   .km-pp__buy-now { width: 100%; padding: 16px 24px; background: var(--km-accent, #FBB03D); color: #000; border: 0; border-radius: 9999px; font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: background .2s ease; }
   .km-pp__buy-now:hover { background: #e69a2b; }
 
-  .km-pp__badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; padding-top: 18px; border-top: 1px solid var(--km-border, #DDDDDD); }
-  .km-pp__badge { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--km-text, #4B5563); line-height: 1.3; }
-  .km-pp__badge-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--km-body-bg, #EDEDED); display: inline-flex; align-items: center; justify-content: center; color: #000; }
+  .km-pp__badges { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    margin-top: 48px; 
+    padding: 32px 0; 
+    border-top: 1px solid var(--km-border, #DDDDDD); 
+  }
+  .km-pp__badge { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    font-size: 11px; 
+    font-weight: 800; 
+    letter-spacing: .1em; 
+    text-transform: uppercase; 
+    color: #000; 
+  }
+  .km-pp__badge-icon { 
+    width: 44px; 
+    height: 44px; 
+    border-radius: 50%; 
+    background: #fff; 
+    border: 1px solid var(--km-border, #DDDDDD);
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #000; 
+    flex-shrink: 0;
+  }
+  .km-pp__badge-icon svg { width: 20px; height: 20px; }
 
   @media (max-width: 1000px) {
     .km-pp__top { grid-template-columns: 1fr; }
