@@ -637,11 +637,31 @@ video {
     padding-right: 24px;
   }
 
-  /* iPad Footer: 2-column grid */
+  /* iPad Footer: 2-column grid for links and brands */
   .km-footer__grid,
   .km-footer__brands {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 22px !important;
+  }
+
+  /* Footer Alignment */
+  .km-footer__top,
+  .km-footer__brand,
+  .km-footer__grid,
+  .km-footer__col,
+  .km-footer__heading,
+  .km-footer__links,
+  .km-footer__contact,
+  .km-footer__brands,
+  .km-footer__brand-col,
+  .km-footer__brand-label,
+  .km-footer__brand-subs {
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .km-footer__social {
+    justify-content: flex-start !important;
   }
 }
 
@@ -2214,20 +2234,25 @@ video {
     max-width: 100% !important;
   }
 
-  /* Footer: Left align everything */
-  .km-footer__top,
-  .km-footer__brand,
-  .km-footer__grid,
-  .km-footer__links,
-  .km-footer__contact,
-  .km-footer__brands {
-    text-align: left !important;
-    align-items: flex-start !important;
-  }
-
+  /* Footer: Single column layout */
   .km-footer__grid,
   .km-footer__brands {
     grid-template-columns: 1fr !important;
+  }
+
+  .km-footer__top,
+  .km-footer__brand,
+  .km-footer__grid,
+  .km-footer__col,
+  .km-footer__heading,
+  .km-footer__links,
+  .km-footer__contact,
+  .km-footer__brands,
+  .km-footer__brand-col,
+  .km-footer__brand-label,
+  .km-footer__brand-subs {
+    text-align: left !important;
+    align-items: flex-start !important;
   }
 
   .km-footer__social {
