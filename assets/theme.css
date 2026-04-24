@@ -427,7 +427,19 @@ img, video { max-width: 100%; height: auto; }
    MOBILE (≤ 768px)
    ============================================================ */
 @media (max-width: 768px) {
-  .km-container { padding-left: 20px; padding-right: 20px; }
+  .km-container { padding-left: 16px; padding-right: 16px; }
+  
+  /* Prevent long strings/emails from breaking layout */
+  body {
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  a, p, span, h1, h2, h3, h4, h5, h6 {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 
   /* Form inputs: prevent iOS zoom on focus */
   input[type="email"],
