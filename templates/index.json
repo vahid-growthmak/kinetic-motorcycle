@@ -193,7 +193,7 @@
           "type": "category",
           "settings": {
             "title": "Faceplates",
-            "url": "/collections/triumph-faceplates"
+            "url": "shopify://collections/triumph-accessories"
           }
         },
         "category_xXPm8Q": {
@@ -240,7 +240,7 @@
           "type": "category",
           "settings": {
             "title": "Suspension and Chassis",
-            "url": "/collections/honda-cb-suspension-chassis"
+            "url": "shopify://collections/honda-suspension-and-chasis"
           }
         },
         "model_jtfJbd": {
