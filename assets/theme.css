@@ -1212,6 +1212,10 @@ video {
     font-size: 13px !important;
   }
 
+  .km-pcarousel__image,
+  .km-pcarousel__img {
+    height: 145px !important;
+  }
 
   /* ---------- FEATURES (Webflow mobile: 50px pad, 28px H2, stacked) ---------- */
   .km-features {
