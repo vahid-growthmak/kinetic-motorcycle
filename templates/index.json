@@ -146,7 +146,7 @@
         "view_all_url": "/collections/all",
         "collection": "best-selling-exhausts",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "carousel-3": {
@@ -157,7 +157,7 @@
         "view_all_url": "/collections/all",
         "collection": "best-selling-handlebars",
         "filter_tag": "",
-        "limit": 8
+        "limit": 4
       }
     },
     "features": {
