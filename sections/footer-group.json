@@ -82,7 +82,7 @@
           "type": "brand_menu",
           "settings": {
             "title": "Honda",
-            "url": "shopify://collections/honda",
+            "url": "shopify://collections/honda-cb-parts",
             "menu": "honda"
           }
         },
