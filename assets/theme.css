@@ -637,15 +637,11 @@ video {
     padding-right: 24px;
   }
 
-  /* iPad Footer: 2-column grid for links, 1-column for brands */
-  .km-footer__grid {
+  /* iPad Footer: 2-column grid */
+  .km-footer__grid,
+  .km-footer__brands {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 22px !important;
-  }
-
-  .km-footer__brands {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
   }
 }
 
@@ -2222,14 +2218,9 @@ video {
   .km-footer__top,
   .km-footer__brand,
   .km-footer__grid,
-  .km-footer__col,
-  .km-footer__heading,
   .km-footer__links,
   .km-footer__contact,
-  .km-footer__brands,
-  .km-footer__brand-col,
-  .km-footer__brand-label,
-  .km-footer__brand-subs {
+  .km-footer__brands {
     text-align: left !important;
     align-items: flex-start !important;
   }
