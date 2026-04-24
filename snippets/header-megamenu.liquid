@@ -7,14 +7,14 @@
 
 {%- comment -%} Data definition: brand|slug|sub-link labels/slugs (separated by ^) {%- endcomment -%}
 {%- capture mega_data -%}
-Sportster|sportster|Accessories^harley-davidson-sportster-accessories~Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters~Exhausts^harley-davidson-sportster-exhaust-systems~Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor~Handlebars^harley-davidson-sportster-handlebars~Lighting^harley-davidson-sportster-lighting~Services^harley-davidson-sportster-services~Intake Systems^harley-davidson-sportster-intake-systems~Grips^harley-davidson-sportster-grips
-Softail|softail|Accessories^harley-davidson-softail-accessories~Exhausts^harley-davidson-softail-exhaust-systems~Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor~Intake Systems^harley-davidson-softail-intake-systems
-Dyna|dyna|Exhausts^harley-davidson-dyna-exhaust-systems~Intake Systems^harley-davidson-dyna-intake-systems
+Sportster|harley-davidson-sportster-parts|Accessories^harley-davidson-sportster-accessories~Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters~Exhausts^harley-davidson-sportster-exhaust-systems~Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor~Handlebars^harley-davidson-sportster-handlebars~Lighting^harley-davidson-sportster-lighting~Services^harley-davidson-sportster-services~Intake Systems^harley-davidson-sportster-intake-systems~Grips^harley-davidson-sportster-grips
+Softail|harley-davidson-softail-parts|Accessories^harley-davidson-softail-accessories~Exhausts^harley-davidson-softail-exhaust-systems~Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor~Intake Systems^harley-davidson-softail-intake-systems
+Dyna|harley-davidson-dyna-parts|Exhausts^harley-davidson-dyna-exhaust-systems~Intake Systems^harley-davidson-dyna-intake-systems
 Indian|indian|Exhausts^indian-exhausts
-Triumph|triumph|Exhausts^triumph-exhaust-systems~Grips^triumph-motorcycle-grips~Accessories^triumph-motorcycle-accessories~Faceplates^triumph-faceplates
-Honda|honda|Accessories^honda-cb-accessories~Exhausts^honda-cb-exhaust-systems~Suspension and Chassis^honda-cb-suspension-chassis
+Triumph|triumph-motorcycle-parts-accessories|Exhausts^triumph-exhaust-systems~Grips^triumph-motorcycle-grips~Accessories^triumph-motorcycle-accessories~Faceplates^triumph-faceplates
+Honda|honda-cb-parts|Accessories^honda-cb-accessories~Exhausts^honda-cb-exhaust-systems~Suspension and Chassis^honda-cb-suspension-chassis
 Parts|parts|Flash^parts-flash~Accessories^parts-accessories~Electrical^parts-electrical~Grips^parts-grips~Mufflers &amp; Exhaust^parts-mufflers-exhaust
-Gear|gear|Lifestyle^gear-lifestyle~3D^lifestyle-3d~Apparel^lifestyle-apparel~Magnets &amp; Pins^lifestyle-magnets-pins~Gift Cards^gift-cards~Decals &amp; Patches^lifestyle-decals-patches
+Lifestyle|lifestyle|3D^lifestyle-3d~Apparel^lifestyle-apparel~Magnets &amp; Pins^lifestyle-magnets-pins~Gift Cards^gift-cards~Decals &amp; Patches^lifestyle-decals-patches~Gear^lifestyle-gear
 {%- endcapture -%}
 {%- assign mega_rows = mega_data | strip | newline_to_br | split: '<br />' -%}
 
