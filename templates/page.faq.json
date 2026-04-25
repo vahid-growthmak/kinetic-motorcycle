@@ -11,7 +11,13 @@
   "sections": {
     "main": {
       "type": "faq",
-      "settings": {}
+      "settings": {
+        "eyebrow": "",
+        "heading": "FAQs",
+        "subheading": "",
+        "side_image": "shopify://shop_images/696e1895666058be5be13d04_image-7.webp",
+        "open_first": true
+      }
     }
   },
   "order": [
