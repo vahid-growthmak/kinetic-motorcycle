@@ -20,17 +20,17 @@
         </a>
         <p class="km-footer__tagline">{{ section.settings.tagline | default: 'Performance parts for the ride of your life.' }}</p>
         <div class="km-footer__social">
-          {%- if section.settings.instagram_url != blank -%}
-            <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', icon: 'instagram' -%}</a>
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', icon: 'instagram' -%}</a>
           {%- endif -%}
-          {%- if section.settings.facebook_url != blank -%}
-            <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">{%- render 'icon', icon: 'facebook' -%}</a>
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{%- render 'icon', icon: 'facebook' -%}</a>
           {%- endif -%}
-          {%- if section.settings.youtube_url != blank -%}
-            <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', icon: 'youtube' -%}</a>
+          {%- if settings.social_youtube != blank -%}
+            <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', icon: 'youtube' -%}</a>
           {%- endif -%}
-          {%- if section.settings.twitter_url != blank -%}
-            <a href="{{ section.settings.twitter_url }}" target="_blank" rel="noopener" aria-label="Twitter">{%- render 'icon', icon: 'twitter' -%}</a>
+          {%- if settings.social_twitter != blank -%}
+            <a href="{{ settings.social_twitter }}" target="_blank" rel="noopener" aria-label="Twitter">{%- render 'icon', icon: 'twitter' -%}</a>
           {%- endif -%}
         </div>
       </div>
@@ -198,11 +198,6 @@
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Footer logo" },
     { "type": "text", "id": "tagline", "label": "Tagline", "default": "Performance parts for the ride of your life." },
-    { "type": "header", "content": "Social Links" },
-    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
-    { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
-    { "type": "url", "id": "twitter_url", "label": "Twitter URL" },
     { "type": "header", "content": "Bottom Bar" },
     { "type": "link_list", "id": "legal_menu", "label": "Legal Menu" }
   ],
