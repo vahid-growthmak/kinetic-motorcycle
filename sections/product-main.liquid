@@ -64,6 +64,8 @@
           {%- assign found_specific = false -%}
           {%- for col in product.collections -%}
             {%- assign ct = col.title | downcase -%}
+            {%- if ct contains 'best seller' or ct contains 'best selling' -%}{%- continue -%}{%- endif -%}
+            
             {%- if ct contains c_singular and ct contains m_down -%}
               {%- assign cat_url = col.url -%}
               {%- assign found_specific = true -%}
@@ -73,7 +75,10 @@
           
           {%- unless found_specific -%}
             {%- for col in product.collections -%}
-              {%- if col.title downcase contains c_singular -%}
+              {%- assign ct = col.title | downcase -%}
+              {%- if ct contains 'best seller' or ct contains 'best selling' -%}{%- continue -%}{%- endif -%}
+              
+              {%- if ct contains c_singular -%}
                 {%- assign cat_url = col.url -%}
                 {%- break -%}
               {%- endif -%}
