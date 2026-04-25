@@ -354,7 +354,7 @@
         "heading": "Our Blogs",
         "blog": "news",
         "view_all_label": "View All",
-        "view_all_url": ""
+        "view_all_url": "shopify://blogs/news"
       }
     },
     "cta": {
