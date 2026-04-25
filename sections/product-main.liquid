@@ -57,7 +57,6 @@
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           
-          {%- assign cat_url = current_col.url -%}
           {%- assign c_down = display_category | downcase | strip -%}
           {%- assign c_singular = c_down | remove: 's' -%}
           
@@ -65,14 +64,16 @@
             Structural Priority: Look for a collection that matches the exact "Model Category" naming
             (e.g. "Honda Suspension and Chassis")
           {%- endcomment -%}
+          {%- assign cat_url = '#' -%}
           {%- assign found_specific = false -%}
           {%- assign target_title = m_down | append: ' ' | append: c_down -%}
           {%- assign target_title_rev = c_down | append: ' ' | append: m_down -%}
           
           {%- for col in product.collections -%}
             {%- assign ct = col.title | downcase | strip -%}
+            {%- if ct contains 'best' or ct contains 'seller' or ct contains 'featured' or ct contains 'new' -%}{%- continue -%}{%- endif -%}
+            
             {%- if ct == target_title or ct == target_title_rev or ct contains target_title or ct contains target_title_rev -%}
-               {%- if ct contains 'best' or ct contains 'seller' -%}{%- continue -%}{%- endif -%}
                {%- assign cat_url = col.url -%}
                {%- assign found_specific = true -%}
                {%- break -%}
@@ -98,10 +99,15 @@
               {%- if ct contains 'best' or ct contains 'seller' -%}{%- continue -%}{%- endif -%}
               {%- if ct contains c_singular -%}
                 {%- assign cat_url = col.url -%}
+                {%- assign found_specific = true -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
           {%- endunless -%}
+          
+          {%- if cat_url == '#' or cat_url == blank -%}
+            {%- assign cat_url = current_col.url -%}
+          {%- endif -%}
           
           <a href="{{ cat_url }}">{{ display_category }}</a>
         {%- endif -%}
