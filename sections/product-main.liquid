@@ -24,23 +24,28 @@
       {%- if display_model != blank -%}
         <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
         
-        {%- comment -%} Improved Model Collection Search {%- endcomment -%}
+        {%- comment -%} 
+          Reverse Engineering: The 'Model' link should go to the broad collection 
+          that matches the 'Model' metafield rule.
+        {%- endcomment -%}
         {%- assign model_url = '#' -%}
-        {%- assign model_down = display_model | downcase | strip -%}
+        {%- assign m_down = display_model | downcase | strip -%}
         
         {%- for col in product.collections -%}
-          {%- assign col_title = col.title | downcase -%}
-          {%- if col_title == model_down or col_title contains model_down -%}
+          {%- assign ct = col.title | downcase -%}
+          {%- if ct == m_down or ct == m_down | append: 's' or ct == m_down | append: ' parts' or ct == 'harley-davidson ' | append: m_down -%}
             {%- assign model_url = col.url -%}
-            {%- if col_title == model_down -%}{%- break -%}{%- endif -%}
+            {%- break -%}
           {%- endif -%}
         {%- endfor -%}
         
         {%- if model_url == '#' -%}
-          {%- assign model_handle = display_model | handleize -%}
-          {%- if collections[model_handle] != blank -%}
-            {%- assign model_url = collections[model_handle].url -%}
-          {%- endif -%}
+          {%- for col in product.collections -%}
+            {%- if col.title downcase contains m_down -%}
+              {%- assign model_url = col.url -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
         {%- endif -%}
         
         <a href="{{ model_url }}">{{ display_model }}</a>
@@ -48,25 +53,34 @@
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           
-          {%- comment -%} The "Category" should ideally link to the specific model-category collection {%- endcomment -%}
-          {%- assign category_url = current_col.url -%}
+          {%- comment -%} 
+            Reverse Engineering: The 'Category' link should go to the specific Model+Category collection 
+            that matches both metafield rules.
+          {%- endcomment -%}
+          {%- assign cat_url = current_col.url -%}
+          {%- assign c_down = display_category | downcase | strip -%}
+          {%- assign c_singular = c_down | remove: 's' -%}
           
-          {%- comment -%} Verify if the current collection title matches the category {%- endcomment -%}
-          {%- assign col_title_down = current_col.title | downcase -%}
-          {%- assign cat_down = display_category | downcase -%}
+          {%- assign found_specific = false -%}
+          {%- for col in product.collections -%}
+            {%- assign ct = col.title | downcase -%}
+            {%- if ct contains c_singular and ct contains m_down -%}
+              {%- assign cat_url = col.url -%}
+              {%- assign found_specific = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
           
-          {%- unless col_title_down contains cat_down -%}
-            {%- comment -%} If current col doesn't match, find one that does {%- endcomment -%}
+          {%- unless found_specific -%}
             {%- for col in product.collections -%}
-              {%- assign c_title = col.title | downcase -%}
-              {%- if c_title contains cat_down and c_title contains model_down -%}
-                {%- assign category_url = col.url -%}
+              {%- if col.title downcase contains c_singular -%}
+                {%- assign cat_url = col.url -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
           {%- endunless -%}
           
-          <a href="{{ category_url }}">{{ display_category }}</a>
+          <a href="{{ cat_url }}">{{ display_category }}</a>
         {%- endif -%}
       {%- else -%}
         {%- comment -%} FALLBACK TO COLLECTION LOGIC {%- endcomment -%}
