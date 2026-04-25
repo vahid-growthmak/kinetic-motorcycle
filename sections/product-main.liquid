@@ -19,45 +19,78 @@
       {%- assign display_model = section.settings.breadcrumb_model_label | default: mf_model -%}
       {%- assign display_category = section.settings.breadcrumb_category_label | default: mf_category -%}
 
+      {%- assign current_col = collection | default: product.collections.first -%}
+      
       {%- if display_model != blank -%}
         <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
-        {%- if display_model.url -%}
-          <a href="{{ display_model.url }}">{{ display_model.title }}</a>
+        
+        {%- comment -%} Try to find Model Collection {%- endcomment -%}
+        {%- assign model_handle = display_model | handleize -%}
+        {%- assign model_collection = collections[model_handle] -%}
+        
+        {%- if model_collection -%}
+          <a href="{{ model_collection.url }}">{{ display_model }}</a>
         {%- else -%}
-          <a href="/collections/{{ display_model | handleize }}">{{ display_model }}</a>
+          {%- comment -%} Fallback search in product collections {%- endcomment -%}
+          {%- assign model_url = '#' -%}
+          {%- for col in product.collections -%}
+            {%- assign col_title = col.title | downcase -%}
+            {%- assign model_down = display_model | downcase -%}
+            {%- if col_title == model_down -%}
+              {%- assign model_url = col.url -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ model_url }}">{{ display_model }}</a>
         {%- endif -%}
 
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
-          {%- if display_category.url -%}
-            <a href="{{ display_category.url }}">{{ display_category.title }}</a>
-          {%- else -%}
-            <a href="/collections/{{ display_model | handleize }}-{{ display_category | handleize }}">{{ display_category }}</a>
-          {%- endif -%}
+          
+          {%- comment -%} The "Category" should ideally link to the specific model-category collection {%- endcomment -%}
+          {%- assign category_url = current_col.url -%}
+          
+          {%- comment -%} Verify if the current collection title matches the category {%- endcomment -%}
+          {%- assign col_title_down = current_col.title | downcase -%}
+          {%- assign cat_down = display_category | downcase -%}
+          
+          {%- unless col_title_down contains cat_down -%}
+            {%- comment -%} If current col doesn't match, find one that does {%- endcomment -%}
+            {%- for col in product.collections -%}
+              {%- assign c_title = col.title | downcase -%}
+              {%- if c_title contains cat_down and c_title contains model_down -%}
+                {%- assign category_url = col.url -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endunless -%}
+          
+          <a href="{{ category_url }}">{{ display_category }}</a>
         {%- endif -%}
       {%- else -%}
         {%- comment -%} FALLBACK TO COLLECTION LOGIC {%- endcomment -%}
-        {%- assign current_collection = collection | default: product.collections.first -%}
-        {%- if current_collection -%}
-          {%- assign handle_parts = current_collection.handle | split: '-' -%}
-          {%- assign model_handle = '' -%}
-          {%- if current_collection.handle contains 'harley-davidson' -%}
-            {%- assign model_handle = handle_parts[2] -%}
-          {%- elsif current_collection.handle contains 'indian' or current_collection.handle contains 'triumph' or current_collection.handle contains 'honda' -%}
-            {%- assign model_handle = handle_parts[1] -%}
+        {%- if current_col -%}
+          {%- assign handle_parts = current_col.handle | split: '-' -%}
+          {%- assign model_part = '' -%}
+          {%- if current_col.handle contains 'harley-davidson' -%}
+            {%- assign model_part = handle_parts[2] -%}
+          {%- elsif current_col.handle contains 'indian' or current_col.handle contains 'triumph' or current_col.handle contains 'honda' -%}
+            {%- assign model_part = handle_parts[1] -%}
           {%- else -%}
-            {%- assign model_handle = handle_parts | first -%}
+            {%- assign model_part = handle_parts | first -%}
           {%- endif -%}
-          {%- assign parent_collection = collections[model_handle] -%}
-          {%- if parent_collection -%}
+          
+          {%- assign parent_col = collections[model_part] -%}
+          {%- if parent_col -%}
             <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
-            <a href="{{ parent_collection.url }}">{{ parent_collection.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
-          {%- elsif model_handle != blank -%}
+            <a href="{{ parent_col.url }}">{{ parent_col.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
+          {%- elsif model_part != blank -%}
             <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
-            <a href="/collections/{{ model_handle }}">{{ model_handle | capitalize }}</a>
+            <a href="/collections/{{ model_part }}">{{ model_part | capitalize }}</a>
           {%- endif -%}
+          
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
-          <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
+          <a href="{{ current_col.url }}">{{ current_col.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
         {%- else -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           <a href="{{ routes.all_products_collection_url }}">Products</a>
