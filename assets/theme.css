@@ -2271,3 +2271,51 @@ video {
   white-space: nowrap;
   border: 0;
 }
+/* Pagination */
+.km-pagination {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.km-pagination span,
+.km-pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--km-border);
+  color: #000;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+.km-pagination .current {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+.km-pagination a:hover {
+  background: var(--km-accent);
+  color: #000;
+  border-color: var(--km-accent);
+  transform: translateY(-2px);
+}
+.km-pagination .deco {
+  border: none;
+  background: transparent;
+  min-width: 20px;
+}
+.km-pagination .prev,
+.km-pagination .next {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 12px;
+}

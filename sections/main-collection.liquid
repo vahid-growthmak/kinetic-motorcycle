@@ -85,7 +85,7 @@
             </div>
 
             {%- if paginate.pages > 1 -%}
-              <nav class="km-coll__pagination">{{ paginate | default_pagination }}</nav>
+              <nav class="km-pagination">{{ paginate | default_pagination }}</nav>
             {%- endif -%}
           {%- else -%}
             <div class="km-coll__empty">
@@ -135,7 +135,6 @@
   .km-coll__rating .is-off { color: #d1d5db; }
 
   .km-coll__empty { padding: 80px 20px; text-align: center; background: #fff; border-radius: 16px; }
-  .km-coll__pagination { margin-top: 48px; display: flex; justify-content: center; gap: 8px; }
 
   @media (max-width: 1000px) { .km-coll__grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px)  { .km-coll__grid { grid-template-columns: 1fr; } }

@@ -17,35 +17,41 @@
     </header>
 
     {%- if search.performed -%}
-      {%- if search.results_count > 0 -%}
-        <p class="km-search__summary">
-          {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for
-          &ldquo;<strong>{{ search.terms | escape }}</strong>&rdquo;
-        </p>
+      {%- paginate search.results by 12 -%}
+        {%- if search.results_count > 0 -%}
+          <p class="km-search__summary">
+            {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for
+            &ldquo;<strong>{{ search.terms | escape }}</strong>&rdquo;
+          </p>
 
-        <div class="km-search__grid" style="grid-template-columns: repeat({{ section.settings.columns | default: 4 }}, 1fr);">
-          {%- for item in search.results -%}
-            <a href="{{ item.url }}" class="km-search__card">
-              {%- if item.featured_image or item.image -%}
-                {%- assign result_img = item.featured_image | default: item.image -%}
-                <div class="km-search__media">
-                  {{ result_img | image_url: width: 400 | image_tag:
-                     width: 200, height: 200, loading: 'lazy',
-                     alt: item.title, class: 'km-search__img' }}
+          <div class="km-search__grid" style="grid-template-columns: repeat({{ section.settings.columns | default: 4 }}, 1fr);">
+            {%- for item in search.results -%}
+              <a href="{{ item.url }}" class="km-search__card">
+                {%- if item.featured_image or item.image -%}
+                  {%- assign result_img = item.featured_image | default: item.image -%}
+                  <div class="km-search__media">
+                    {{ result_img | image_url: width: 400 | image_tag:
+                       width: 200, height: 200, loading: 'lazy',
+                       alt: item.title, class: 'km-search__img' }}
+                  </div>
+                {%- endif -%}
+                <div class="km-search__info">
+                  <span class="km-search__kind">{{ item.object_type }}</span>
+                  <h3 class="km-search__name">{{ item.title }}</h3>
                 </div>
-              {%- endif -%}
-              <div class="km-search__info">
-                <span class="km-search__kind">{{ item.object_type }}</span>
-                <h3 class="km-search__name">{{ item.title }}</h3>
-              </div>
-            </a>
-          {%- endfor -%}
-        </div>
-      {%- else -%}
-        <p class="km-search__empty">
-          {{ section.settings.no_results | default: 'No results found. Try different keywords.' }}
-        </p>
-      {%- endif -%}
+              </a>
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="km-pagination">{{ paginate | default_pagination }}</nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="km-search__empty">
+            {{ section.settings.no_results | default: 'No results found. Try different keywords.' }}
+          </p>
+        {%- endif -%}
+      {%- endpaginate -%}
     {%- endif -%}
   </div>
 </section>
