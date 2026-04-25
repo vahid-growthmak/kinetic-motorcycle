@@ -2277,45 +2277,61 @@ video {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 14px;
   font-weight: 600;
 }
-.km-pagination span,
-.km-pagination a {
+.km-pagination a,
+.km-pagination .current {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  height: 40px;
-  padding: 0 12px;
-  border-radius: 12px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 8px;
   background: #fff;
   border: 1px solid var(--km-border);
   color: #000;
   text-decoration: none;
-  transition: all .25s ease;
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.km-pagination span {
+  display: inline-flex;
+}
+.km-pagination span:not(.current) {
+  border: none;
+  background: none;
+}
+.km-pagination span:not(.current) a {
+  /* Ensure the link inside the span gets the full styling */
 }
 .km-pagination .current {
   background: #000 !important;
   color: #fff !important;
   border-color: #000 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .km-pagination a:hover {
-  background: var(--km-accent);
-  color: #000;
+  background: #fff;
+  color: var(--km-accent);
   border-color: var(--km-accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 .km-pagination .deco {
-  border: none;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 20px;
+  color: #9ca3af;
 }
-.km-pagination .prev,
-.km-pagination .next {
+.km-pagination .prev a,
+.km-pagination .next a {
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .05em;
-  font-size: 12px;
+  letter-spacing: .1em;
+  font-size: 11px;
 }
+
