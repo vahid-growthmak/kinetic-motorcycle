@@ -28,11 +28,14 @@
           Reverse Engineering: The 'Model' link should go to the broad collection 
           that matches the 'Model' metafield rule.
         {%- endcomment -%}
+        {%- comment -%} Improved Model Collection Search {%- endcomment -%}
         {%- assign model_url = '#' -%}
         {%- assign m_down = display_model | downcase | strip -%}
         
         {%- for col in product.collections -%}
           {%- assign ct = col.title | downcase -%}
+          {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
+          
           {%- if ct == m_down or ct == m_down | append: 's' or ct == m_down | append: ' parts' or ct == 'harley-davidson ' | append: m_down -%}
             {%- assign model_url = col.url -%}
             {%- break -%}
@@ -41,7 +44,9 @@
         
         {%- if model_url == '#' -%}
           {%- for col in product.collections -%}
-            {%- if col.title downcase contains m_down -%}
+            {%- assign ct = col.title | downcase -%}
+            {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
+            {%- if ct contains m_down -%}
               {%- assign model_url = col.url -%}
               {%- break -%}
             {%- endif -%}
@@ -53,10 +58,6 @@
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           
-          {%- comment -%} 
-            Reverse Engineering: The 'Category' link should go to the specific Model+Category collection 
-            that matches both metafield rules.
-          {%- endcomment -%}
           {%- assign cat_url = current_col.url -%}
           {%- assign c_down = display_category | downcase | strip -%}
           {%- assign c_singular = c_down | remove: 's' -%}
@@ -64,7 +65,7 @@
           {%- assign found_specific = false -%}
           {%- for col in product.collections -%}
             {%- assign ct = col.title | downcase -%}
-            {%- if ct contains 'best seller' or ct contains 'best selling' -%}{%- continue -%}{%- endif -%}
+            {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
             
             {%- if ct contains c_singular and ct contains m_down -%}
               {%- assign cat_url = col.url -%}
@@ -76,7 +77,7 @@
           {%- unless found_specific -%}
             {%- for col in product.collections -%}
               {%- assign ct = col.title | downcase -%}
-              {%- if ct contains 'best seller' or ct contains 'best selling' -%}{%- continue -%}{%- endif -%}
+              {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
               
               {%- if ct contains c_singular -%}
                 {%- assign cat_url = col.url -%}
