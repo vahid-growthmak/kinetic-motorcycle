@@ -9,26 +9,30 @@
   <div class="km-container">
 
     {%- comment -%} BREADCRUMB {%- endcomment -%}
+    {%- if section.settings.show_breadcrumbs -%}
     <nav class="km-pp__crumbs" aria-label="Breadcrumb">
-      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home | default: 'Home' }}</a>
       
       {%- assign mf_model = product.metafields.custom.model.value | default: product.metafields.custom.model -%}
       {%- assign mf_category = product.metafields.custom.category.value | default: product.metafields.custom.category -%}
+      
+      {%- assign display_model = section.settings.breadcrumb_model_label | default: mf_model -%}
+      {%- assign display_category = section.settings.breadcrumb_category_label | default: mf_category -%}
 
-      {%- if mf_model != blank -%}
-        <span aria-hidden="true">›</span>
-        {%- if mf_model.url -%}
-          <a href="{{ mf_model.url }}">{{ mf_model.title }}</a>
+      {%- if display_model != blank -%}
+        <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
+        {%- if display_model.url -%}
+          <a href="{{ display_model.url }}">{{ display_model.title }}</a>
         {%- else -%}
-          <a href="/collections/{{ mf_model | handleize }}">{{ mf_model }}</a>
+          <a href="/collections/{{ display_model | handleize }}">{{ display_model }}</a>
         {%- endif -%}
 
-        {%- if mf_category != blank -%}
-          <span aria-hidden="true">›</span>
-          {%- if mf_category.url -%}
-            <a href="{{ mf_category.url }}">{{ mf_category.title }}</a>
+        {%- if display_category != blank -%}
+          <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
+          {%- if display_category.url -%}
+            <a href="{{ display_category.url }}">{{ display_category.title }}</a>
           {%- else -%}
-            <a href="/collections/{{ mf_model | handleize }}-{{ mf_category | handleize }}">{{ mf_category }}</a>
+            <a href="/collections/{{ display_model | handleize }}-{{ display_category | handleize }}">{{ display_category }}</a>
           {%- endif -%}
         {%- endif -%}
       {%- else -%}
@@ -46,23 +50,24 @@
           {%- endif -%}
           {%- assign parent_collection = collections[model_handle] -%}
           {%- if parent_collection -%}
-            <span aria-hidden="true">›</span>
+            <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
             <a href="{{ parent_collection.url }}">{{ parent_collection.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
           {%- elsif model_handle != blank -%}
-            <span aria-hidden="true">›</span>
+            <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
             <a href="/collections/{{ model_handle }}">{{ model_handle | capitalize }}</a>
           {%- endif -%}
-          <span aria-hidden="true">›</span>
+          <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
         {%- else -%}
-          <span aria-hidden="true">›</span>
+          <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           <a href="{{ routes.all_products_collection_url }}">Products</a>
         {%- endif -%}
       {%- endif -%}
       
-      <span aria-hidden="true">›</span>
+      <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
       <span class="km-pp__crumb-current">{{ product.title | upcase }}</span>
     </nav>
+    {%- endif -%}
 
     {%- comment -%} TOP GRID — gallery | info {%- endcomment -%}
     <div class="km-pp__top">
@@ -345,6 +350,14 @@
 {% schema %}
 {
   "name": "Product Main",
+  "settings": [
+    { "type": "header", "content": "Breadcrumbs" },
+    { "type": "checkbox", "id": "show_breadcrumbs", "label": "Show breadcrumbs", "default": true },
+    { "type": "text", "id": "breadcrumb_home", "label": "Home label", "default": "Home" },
+    { "type": "text", "id": "breadcrumb_separator", "label": "Separator", "default": "›" },
+    { "type": "text", "id": "breadcrumb_model_label", "label": "Global Model Override", "info": "Leave blank to use metafields/collections" },
+    { "type": "text", "id": "breadcrumb_category_label", "label": "Global Category Override", "info": "Leave blank to use metafields/collections" }
+  ],
   "blocks": [
     {
       "type": "badge",
