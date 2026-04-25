@@ -38,7 +38,7 @@
         {%- endif -%}
 
         <span aria-hidden="true">›</span>
-        <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Sportster ' | remove: 'Softail ' | remove: 'Dyna ' | remove: 'Indian ' | remove: 'Triumph ' | remove: 'Honda ' | remove: ' Systems' | remove: ' Accessories' }}</a>
+        <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
       {%- else -%}
         <span aria-hidden="true">›</span>
         <a href="{{ routes.all_products_collection_url }}">Products</a>
