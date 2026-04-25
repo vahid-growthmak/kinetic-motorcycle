@@ -12,36 +12,52 @@
     <nav class="km-pp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
       
-      {%- assign current_collection = collection | default: product.collections.first -%}
-      
-      {%- if current_collection -%}
-        {%- assign handle_parts = current_collection.handle | split: '-' -%}
-        {%- assign model_name = '' -%}
-        {%- assign model_handle = '' -%}
-        
-        {%- if current_collection.handle contains 'harley-davidson' -%}
-          {%- assign model_handle = handle_parts[2] -%}
-        {%- elsif current_collection.handle contains 'indian' or current_collection.handle contains 'triumph' or current_collection.handle contains 'honda' -%}
-          {%- assign model_handle = handle_parts[1] -%}
+      {%- assign mf_model = product.metafields.custom.model.value | default: product.metafields.custom.model -%}
+      {%- assign mf_category = product.metafields.custom.category.value | default: product.metafields.custom.category -%}
+
+      {%- if mf_model != blank -%}
+        <span aria-hidden="true">›</span>
+        {%- if mf_model.url -%}
+          <a href="{{ mf_model.url }}">{{ mf_model.title }}</a>
         {%- else -%}
-          {%- assign model_handle = handle_parts | first -%}
+          <a href="/collections/{{ mf_model | handleize }}">{{ mf_model }}</a>
         {%- endif -%}
 
-        {%- assign parent_collection = collections[model_handle] -%}
-        
-        {%- if parent_collection -%}
+        {%- if mf_category != blank -%}
           <span aria-hidden="true">›</span>
-          <a href="{{ parent_collection.url }}">{{ parent_collection.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
-        {%- elsif model_handle != blank -%}
-          <span aria-hidden="true">›</span>
-          <a href="/collections/{{ model_handle }}">{{ model_handle | capitalize }}</a>
+          {%- if mf_category.url -%}
+            <a href="{{ mf_category.url }}">{{ mf_category.title }}</a>
+          {%- else -%}
+            <a href="/collections/{{ mf_model | handleize }}-{{ mf_category | handleize }}">{{ mf_category }}</a>
+          {%- endif -%}
         {%- endif -%}
-
-        <span aria-hidden="true">›</span>
-        <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
       {%- else -%}
-        <span aria-hidden="true">›</span>
-        <a href="{{ routes.all_products_collection_url }}">Products</a>
+        {%- comment -%} FALLBACK TO COLLECTION LOGIC {%- endcomment -%}
+        {%- assign current_collection = collection | default: product.collections.first -%}
+        {%- if current_collection -%}
+          {%- assign handle_parts = current_collection.handle | split: '-' -%}
+          {%- assign model_handle = '' -%}
+          {%- if current_collection.handle contains 'harley-davidson' -%}
+            {%- assign model_handle = handle_parts[2] -%}
+          {%- elsif current_collection.handle contains 'indian' or current_collection.handle contains 'triumph' or current_collection.handle contains 'honda' -%}
+            {%- assign model_handle = handle_parts[1] -%}
+          {%- else -%}
+            {%- assign model_handle = handle_parts | first -%}
+          {%- endif -%}
+          {%- assign parent_collection = collections[model_handle] -%}
+          {%- if parent_collection -%}
+            <span aria-hidden="true">›</span>
+            <a href="{{ parent_collection.url }}">{{ parent_collection.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
+          {%- elsif model_handle != blank -%}
+            <span aria-hidden="true">›</span>
+            <a href="/collections/{{ model_handle }}">{{ model_handle | capitalize }}</a>
+          {%- endif -%}
+          <span aria-hidden="true">›</span>
+          <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Harley-Davidson' | remove: 'Sportster ' | remove: 'Sportster' | remove: 'Softail ' | remove: 'Softail' | remove: 'Dyna ' | remove: 'Dyna' | remove: 'Indian ' | remove: 'Indian' | remove: 'Triumph ' | remove: 'Triumph' | remove: 'Honda ' | remove: 'Honda' | strip }}</a>
+        {%- else -%}
+          <span aria-hidden="true">›</span>
+          <a href="{{ routes.all_products_collection_url }}">Products</a>
+        {%- endif -%}
       {%- endif -%}
       
       <span aria-hidden="true">›</span>
