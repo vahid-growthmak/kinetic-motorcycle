@@ -15,27 +15,30 @@
       {%- assign current_collection = collection | default: product.collections.first -%}
       
       {%- if current_collection -%}
-        {%- comment -%} Check if this is a sub-collection (e.g. Sportster Exhausts) {%- endcomment -%}
-        {%- if current_collection.handle contains 'harley-davidson-' or current_collection.handle contains 'indian-' or current_collection.handle contains 'triumph-' or current_collection.handle contains 'honda-' -%}
-          
-          {%- comment -%} Try to find the Parent Model collection {%- endcomment -%}
-          {%- assign model_handle = current_collection.handle | split: '-' | slice: 0, 3 | join: '-' | append: '-parts' -%}
-          {%- if current_collection.handle contains 'indian' or current_collection.handle contains 'triumph' -%}
-             {%- assign model_handle = current_collection.handle | split: '-' | first -%}
-          {%- endif -%}
-          
-          {%- assign parent_col = collections[model_handle] -%}
-          {%- if parent_col and parent_col.handle != current_collection.handle -%}
-            <span aria-hidden="true">›</span>
-            <a href="{{ parent_col.url }}">{{ parent_col.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
-          {%- endif -%}
-
-          <span aria-hidden="true">›</span>
-          <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Sportster ' | remove: 'Softail ' | remove: 'Dyna ' | remove: 'Indian ' | remove: 'Triumph ' | remove: 'Honda ' | remove: ' Systems' | remove: ' Accessories' }}</a>
+        {%- assign handle_parts = current_collection.handle | split: '-' -%}
+        {%- assign model_name = '' -%}
+        {%- assign model_handle = '' -%}
+        
+        {%- if current_collection.handle contains 'harley-davidson' -%}
+          {%- assign model_handle = handle_parts[2] -%}
+        {%- elsif current_collection.handle contains 'indian' or current_collection.handle contains 'triumph' or current_collection.handle contains 'honda' -%}
+          {%- assign model_handle = handle_parts[1] -%}
         {%- else -%}
-          <span aria-hidden="true">›</span>
-          <a href="{{ current_collection.url }}">{{ current_collection.title }}</a>
+          {%- assign model_handle = handle_parts | first -%}
         {%- endif -%}
+
+        {%- assign parent_collection = collections[model_handle] -%}
+        
+        {%- if parent_collection -%}
+          <span aria-hidden="true">›</span>
+          <a href="{{ parent_collection.url }}">{{ parent_collection.title | remove: ' Parts' | remove: ' parts' | remove: 'Harley-Davidson ' }}</a>
+        {%- elsif model_handle != blank -%}
+          <span aria-hidden="true">›</span>
+          <a href="/collections/{{ model_handle }}">{{ model_handle | capitalize }}</a>
+        {%- endif -%}
+
+        <span aria-hidden="true">›</span>
+        <a href="{{ current_collection.url }}">{{ current_collection.title | remove: 'Harley-Davidson ' | remove: 'Sportster ' | remove: 'Softail ' | remove: 'Dyna ' | remove: 'Indian ' | remove: 'Triumph ' | remove: 'Honda ' | remove: ' Systems' | remove: ' Accessories' }}</a>
       {%- else -%}
         <span aria-hidden="true">›</span>
         <a href="{{ routes.all_products_collection_url }}">Products</a>
