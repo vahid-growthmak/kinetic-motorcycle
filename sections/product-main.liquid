@@ -28,15 +28,14 @@
           Reverse Engineering: The 'Model' link should go to the broad collection 
           that matches the 'Model' metafield rule.
         {%- endcomment -%}
-        {%- comment -%} Improved Model Collection Search {%- endcomment -%}
+        {%- comment -%} Rule-Based Model Search (Structural) {%- endcomment -%}
         {%- assign model_url = '#' -%}
         {%- assign m_down = display_model | downcase | strip -%}
         
+        {%- comment -%} 1. Look for Exact Structural Match {%- endcomment -%}
         {%- for col in product.collections -%}
-          {%- assign ct = col.title | downcase -%}
-          {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
-          
-          {%- if ct == m_down or ct == m_down | append: 's' or ct == m_down | append: ' parts' or ct == 'harley-davidson ' | append: m_down -%}
+          {%- assign ct = col.title | downcase | strip -%}
+          {%- if ct == m_down or ct == m_down | append: ' parts' or ct == 'harley-davidson ' | append: m_down -%}
             {%- assign model_url = col.url -%}
             {%- break -%}
           {%- endif -%}
@@ -45,7 +44,7 @@
         {%- if model_url == '#' -%}
           {%- for col in product.collections -%}
             {%- assign ct = col.title | downcase -%}
-            {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
+            {%- if ct contains 'best' or ct contains 'featured' or ct contains 'new' or ct contains 'arrival' -%}{%- continue -%}{%- endif -%}
             {%- if ct contains m_down -%}
               {%- assign model_url = col.url -%}
               {%- break -%}
@@ -62,23 +61,41 @@
           {%- assign c_down = display_category | downcase | strip -%}
           {%- assign c_singular = c_down | remove: 's' -%}
           
+          {%- comment -%} 
+            Structural Priority: Look for a collection that matches the exact "Model Category" naming
+            (e.g. "Honda Suspension and Chassis")
+          {%- endcomment -%}
           {%- assign found_specific = false -%}
+          {%- assign target_title = m_down | append: ' ' | append: c_down -%}
+          {%- assign target_title_rev = c_down | append: ' ' | append: m_down -%}
+          
           {%- for col in product.collections -%}
-            {%- assign ct = col.title | downcase -%}
-            {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
-            
-            {%- if ct contains c_singular and ct contains m_down -%}
-              {%- assign cat_url = col.url -%}
-              {%- assign found_specific = true -%}
-              {%- break -%}
+            {%- assign ct = col.title | downcase | strip -%}
+            {%- if ct == target_title or ct == target_title_rev or ct contains target_title or ct contains target_title_rev -%}
+               {%- if ct contains 'best' or ct contains 'seller' -%}{%- continue -%}{%- endif -%}
+               {%- assign cat_url = col.url -%}
+               {%- assign found_specific = true -%}
+               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
           
           {%- unless found_specific -%}
             {%- for col in product.collections -%}
               {%- assign ct = col.title | downcase -%}
-              {%- if ct contains 'best seller' or ct contains 'best selling' or ct contains 'featured' or ct contains 'new arrivals' -%}{%- continue -%}{%- endif -%}
+              {%- if ct contains 'best' or ct contains 'seller' or ct contains 'featured' -%}{%- continue -%}{%- endif -%}
               
+              {%- if ct contains c_singular and ct contains m_down -%}
+                {%- assign cat_url = col.url -%}
+                {%- assign found_specific = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endunless -%}
+          
+          {%- unless found_specific -%}
+            {%- for col in product.collections -%}
+              {%- assign ct = col.title | downcase -%}
+              {%- if ct contains 'best' or ct contains 'seller' -%}{%- continue -%}{%- endif -%}
               {%- if ct contains c_singular -%}
                 {%- assign cat_url = col.url -%}
                 {%- break -%}
