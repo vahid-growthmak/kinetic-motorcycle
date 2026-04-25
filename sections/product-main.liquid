@@ -24,25 +24,26 @@
       {%- if display_model != blank -%}
         <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
         
-        {%- comment -%} Try to find Model Collection {%- endcomment -%}
-        {%- assign model_handle = display_model | handleize -%}
-        {%- assign model_collection = collections[model_handle] -%}
+        {%- comment -%} Improved Model Collection Search {%- endcomment -%}
+        {%- assign model_url = '#' -%}
+        {%- assign model_down = display_model | downcase | strip -%}
         
-        {%- if model_collection -%}
-          <a href="{{ model_collection.url }}">{{ display_model }}</a>
-        {%- else -%}
-          {%- comment -%} Fallback search in product collections {%- endcomment -%}
-          {%- assign model_url = '#' -%}
-          {%- for col in product.collections -%}
-            {%- assign col_title = col.title | downcase -%}
-            {%- assign model_down = display_model | downcase -%}
-            {%- if col_title == model_down -%}
-              {%- assign model_url = col.url -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
-          <a href="{{ model_url }}">{{ display_model }}</a>
+        {%- for col in product.collections -%}
+          {%- assign col_title = col.title | downcase -%}
+          {%- if col_title == model_down or col_title contains model_down -%}
+            {%- assign model_url = col.url -%}
+            {%- if col_title == model_down -%}{%- break -%}{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- if model_url == '#' -%}
+          {%- assign model_handle = display_model | handleize -%}
+          {%- if collections[model_handle] != blank -%}
+            {%- assign model_url = collections[model_handle].url -%}
+          {%- endif -%}
         {%- endif -%}
+        
+        <a href="{{ model_url }}">{{ display_model }}</a>
 
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
