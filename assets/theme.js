@@ -177,37 +177,55 @@
     let variants;
     try { variants = JSON.parse(dataEl.textContent); } catch (e) { return; }
     
+    const infoContainer = form.closest('.km-pp__info') || document;
     const idInput = form.querySelector('input[name="id"]');
     const addBtn = form.querySelector('.km-pp__add');
-    const priceEl = document.querySelector('.km-pp__price');
-    const compareEl = document.querySelector('.km-pp__compare');
+    const priceEl = infoContainer.querySelector('.km-pp__price');
+    const compareEl = infoContainer.querySelector('.km-pp__compare');
     const mainImg = document.getElementById('km-product-hero-img');
     
     const selected = [];
     form.querySelectorAll('.km-pp__option-values').forEach((group, i) => {
       const active = group.querySelector('.km-pp__option-value.is-active') || group.querySelector('.km-pp__option-value');
-      selected[i] = active ? active.getAttribute('data-option-value') : null;
+      if (active) {
+        selected[i] = active.getAttribute('data-option-value');
+      }
     });
 
-    // Detect currency from existing price element
-    const currencyMatch = priceEl ? priceEl.textContent.match(/^[^\d]+/) : null;
-    const currencySymbol = currencyMatch ? currencyMatch[0].trim() + ' ' : '$';
+    // Improved currency detection
+    let currencySymbol = 'Rs. ';
+    if (priceEl) {
+      const text = priceEl.textContent.trim();
+      const match = text.match(/^[^\d\s,.]+/);
+      if (match) currencySymbol = match[0].trim() + ' ';
+    }
 
     const formatMoney = (cents) => {
-      const amount = (cents / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const amount = (cents / 100).toLocaleString('en-IN', { 
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2 
+      });
       return currencySymbol + amount;
     };
 
     const update = () => {
-      const match = variants.find(v => v.options.every((o, i) => o === selected[i]));
+      const match = variants.find(v => {
+        return v.options.every((opt, i) => {
+          return opt && selected[i] && opt.toString().trim() === selected[i].toString().trim();
+        });
+      });
+
       if (match) {
         if (idInput) idInput.value = match.id;
         if (priceEl) priceEl.textContent = formatMoney(match.price);
-        if (compareEl && match.compare_at_price && match.compare_at_price > match.price) {
-          compareEl.textContent = formatMoney(match.compare_at_price);
-          compareEl.style.display = '';
-        } else if (compareEl) {
-          compareEl.style.display = 'none';
+        
+        if (compareEl) {
+          if (match.compare_at_price > match.price) {
+            compareEl.textContent = formatMoney(match.compare_at_price);
+            compareEl.style.display = '';
+          } else {
+            compareEl.style.display = 'none';
+          }
         }
         
         if (addBtn) {
@@ -215,12 +233,10 @@
           addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
         }
 
-        // Update image if variant has one
         if (match.featured_image && match.featured_image.src && mainImg) {
           mainImg.src = match.featured_image.src;
         }
 
-        // Update URL
         try {
           const url = new URL(window.location.href);
           url.searchParams.set('variant', match.id);
@@ -234,6 +250,8 @@
         e.preventDefault();
         const idx = parseInt(btn.getAttribute('data-option-index'), 10);
         const val = btn.getAttribute('data-option-value');
+        
+        if (isNaN(idx)) return;
         selected[idx] = val;
         
         const group = btn.closest('.km-pp__option-values');
@@ -245,7 +263,7 @@
       });
     });
     
-    // Run initial update to sync price/id
+    // Initial sync
     update();
   });
 
