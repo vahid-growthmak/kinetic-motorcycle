@@ -162,5 +162,26 @@
         "label": "Twitter / X URL"
       }
     ]
+  },
+  {
+    "name": "Integrations",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brevo (Newsletter)"
+      },
+      {
+        "type": "text",
+        "id": "brevo_api_key",
+        "label": "API Key",
+        "info": "Warning: This key will be visible in the browser source code."
+      },
+      {
+        "type": "number",
+        "id": "brevo_list_id",
+        "label": "List ID",
+        "default": 1
+      }
+    ]
   }
 ]

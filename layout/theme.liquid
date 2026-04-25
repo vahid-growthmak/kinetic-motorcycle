@@ -75,5 +75,49 @@
     {% sections 'footer-group' %}
 
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    {%- if settings.brevo_api_key != blank -%}
+    <script>
+      document.addEventListener('submit', async function(e) {
+        const form = e.target;
+        if (form.getAttribute('data-name') !== 'newsletter-cta') return;
+        
+        e.preventDefault();
+
+        const formWrapper = form.closest('.w-form') || form.parentElement;
+        const successMessage = formWrapper.querySelector('.w-form-done');
+        const errorMessage = formWrapper.querySelector('.w-form-fail');
+        const emailInput = form.querySelector('input[name="email"]');
+        
+        if (!emailInput) return;
+        const email = emailInput.value;
+
+        try {
+          const response = await fetch('https://api.brevo.com/v3/contacts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'api-key': '{{ settings.brevo_api_key }}'
+            },
+            body: JSON.stringify({
+              email: email,
+              listIds: [{{ settings.brevo_list_id | default: 1 }}],
+              updateEnabled: true
+            })
+          });
+
+          if (response.ok || response.status === 204) {
+            if (successMessage) successMessage.style.display = 'block';
+            form.style.display = 'none';
+          } else {
+            if (errorMessage) errorMessage.style.display = 'block';
+          }
+        } catch (err) {
+          console.error('Brevo Error:', err);
+          if (errorMessage) errorMessage.style.display = 'block';
+        }
+      });
+    </script>
+    {%- endif -%}
   </body>
 </html>
