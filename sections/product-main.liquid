@@ -24,48 +24,48 @@
       {%- if display_model != blank -%}
         <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
         
-        {%- comment -%} Try to find the most relevant Model Collection {%- endcomment -%}
-        {%- assign model_url = '#' -%}
-        {%- assign model_down = display_model | downcase | strip -%}
+        {%- comment -%} Try to find Model Collection {%- endcomment -%}
+        {%- assign model_handle = display_model | handleize -%}
+        {%- assign model_collection = collections[model_handle] -%}
         
-        {%- for col in product.collections -%}
-          {%- assign col_t = col.title | downcase -%}
-          {%- if col_t == model_down or col_t == model_down | append: 's' or col_t contains model_down -%}
-            {%- assign model_url = col.url -%}
-            {%- if col_t == model_down -%}{%- break -%}{%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-        <a href="{{ model_url }}">{{ display_model }}</a>
+        {%- if model_collection -%}
+          <a href="{{ model_collection.url }}">{{ display_model }}</a>
+        {%- else -%}
+          {%- comment -%} Fallback search in product collections {%- endcomment -%}
+          {%- assign model_url = '#' -%}
+          {%- for col in product.collections -%}
+            {%- assign col_title = col.title | downcase -%}
+            {%- assign model_down = display_model | downcase -%}
+            {%- if col_title == model_down -%}
+              {%- assign model_url = col.url -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ model_url }}">{{ display_model }}</a>
+        {%- endif -%}
 
         {%- if display_category != blank -%}
           <span aria-hidden="true">{{ section.settings.breadcrumb_separator | default: '›' }}</span>
           
-          {%- assign cat_url = current_col.url -%}
-          {%- assign cat_down = display_category | downcase | strip -%}
-          {%- assign cat_singular = cat_down | remove: 's' -%}
+          {%- comment -%} The "Category" should ideally link to the specific model-category collection {%- endcomment -%}
+          {%- assign category_url = current_col.url -%}
           
-          {%- comment -%} Look for a collection that matches BOTH model and category {%- endcomment -%}
-          {%- assign found_specific = false -%}
-          {%- for col in product.collections -%}
-            {%- assign ct = col.title | downcase -%}
-            {%- if ct contains cat_singular and ct contains model_down -%}
-              {%- assign cat_url = col.url -%}
-              {%- assign found_specific = true -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
+          {%- comment -%} Verify if the current collection title matches the category {%- endcomment -%}
+          {%- assign col_title_down = current_col.title | downcase -%}
+          {%- assign cat_down = display_category | downcase -%}
           
-          {%- if found_specific == false -%}
+          {%- unless col_title_down contains cat_down -%}
+            {%- comment -%} If current col doesn't match, find one that does {%- endcomment -%}
             {%- for col in product.collections -%}
-              {%- assign ct = col.title | downcase -%}
-              {%- if ct contains cat_singular -%}
-                {%- assign cat_url = col.url -%}
+              {%- assign c_title = col.title | downcase -%}
+              {%- if c_title contains cat_down and c_title contains model_down -%}
+                {%- assign category_url = col.url -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
-          {%- endif -%}
+          {%- endunless -%}
           
-          <a href="{{ cat_url }}">{{ display_category }}</a>
+          <a href="{{ category_url }}">{{ display_category }}</a>
         {%- endif -%}
       {%- else -%}
         {%- comment -%} FALLBACK TO COLLECTION LOGIC {%- endcomment -%}
