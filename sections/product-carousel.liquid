@@ -13,14 +13,6 @@
         {%- if section.settings.view_all_url != blank -%}
           <a href="{{ section.settings.view_all_url }}" class="km-btn-view-all">{{ section.settings.view_all_label | default: 'View All' }}</a>
         {%- endif -%}
-        <div class="km-pcarousel__arrows">
-          <button type="button" class="km-pcarousel__arrow" data-km-prev aria-label="Previous">
-            {%- render 'icon', icon: 'chevron-left' -%}
-          </button>
-          <button type="button" class="km-pcarousel__arrow" data-km-next aria-label="Next">
-            {%- render 'icon', icon: 'chevron-right' -%}
-          </button>
-        </div>
       </div>
     </div>
 
