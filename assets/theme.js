@@ -176,16 +176,28 @@
     if (!dataEl) return;
     let variants;
     try { variants = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    
     const idInput = form.querySelector('input[name="id"]');
     const addBtn = form.querySelector('.km-pp__add');
     const priceEl = document.querySelector('.km-pp__price');
     const compareEl = document.querySelector('.km-pp__compare');
+    const mainImg = document.getElementById('km-product-hero-img');
+    
     const selected = [];
     form.querySelectorAll('.km-pp__option-values').forEach((group, i) => {
       const active = group.querySelector('.km-pp__option-value.is-active') || group.querySelector('.km-pp__option-value');
       selected[i] = active ? active.getAttribute('data-option-value') : null;
     });
-    const formatMoney = (cents) => '$' + (cents / 100).toFixed(2);
+
+    // Detect currency from existing price element
+    const currencyMatch = priceEl ? priceEl.textContent.match(/^[^\d]+/) : null;
+    const currencySymbol = currencyMatch ? currencyMatch[0].trim() + ' ' : '$';
+
+    const formatMoney = (cents) => {
+      const amount = (cents / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return currencySymbol + amount;
+    };
+
     const update = () => {
       const match = variants.find(v => v.options.every((o, i) => o === selected[i]));
       if (match) {
@@ -197,14 +209,18 @@
         } else if (compareEl) {
           compareEl.style.display = 'none';
         }
+        
         if (addBtn) {
           addBtn.disabled = !match.available;
           addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
         }
-        if (match.featured_image && match.featured_image.src) {
-          const mainImg = document.querySelector('.km-pp__media img, [data-km-product-image]');
-          if (mainImg) mainImg.src = match.featured_image.src;
+
+        // Update image if variant has one
+        if (match.featured_image && match.featured_image.src && mainImg) {
+          mainImg.src = match.featured_image.src;
         }
+
+        // Update URL
         try {
           const url = new URL(window.location.href);
           url.searchParams.set('variant', match.id);
@@ -212,21 +228,25 @@
         } catch (e) {}
       }
     };
+
     form.querySelectorAll('.km-pp__option-value').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const pos = parseInt(btn.getAttribute('data-option-position'), 10) || 0;
+        const idx = parseInt(btn.getAttribute('data-option-index'), 10);
         const val = btn.getAttribute('data-option-value');
-        selected[pos] = val;
+        selected[idx] = val;
+        
         const group = btn.closest('.km-pp__option-values');
         if (group) {
-          group.querySelectorAll('.km-pp__option-value').forEach(b => { b.classList.remove('is-active'); b.removeAttribute('aria-current'); });
+          group.querySelectorAll('.km-pp__option-value').forEach(b => b.classList.remove('is-active'));
           btn.classList.add('is-active');
-          btn.setAttribute('aria-current', 'true');
         }
         update();
       });
     });
+    
+    // Run initial update to sync price/id
+    update();
   });
 
 })();

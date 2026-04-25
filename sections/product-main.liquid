@@ -132,7 +132,11 @@
                 <label class="km-pp__option-label">{{ option.name }}</label>
                 <div class="km-pp__option-values">
                   {%- for value in option.values -%}
-                    <button type="button" class="km-pp__option-value{% if option.selected_value == value %} is-active{% endif %}" data-option-index="{{ forloop.parentloop.index0 }}" data-option-value="{{ value | escape }}">{{ value }}</button>
+                    <button type="button" class="km-pp__option-value{% if option.selected_value == value %} is-active{% endif %}" 
+                      data-option-index="{{ forloop.parentloop.index0 }}" 
+                      data-option-value="{{ value | escape }}">
+                      {{ value }}
+                    </button>
                   {%- endfor -%}
                 </div>
               </div>
