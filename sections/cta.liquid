@@ -45,21 +45,27 @@
           {%- endif -%}
           <h3 class="km-cta__right-heading">{{ section.settings.right_heading }}</h3>
 
-          <form action="/contact#contact_form" method="post" class="km-cta__form">
-            <input type="hidden" name="form_type" value="customer">
-            <input type="hidden" name="utf8" value="✓">
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            <label for="CTAEmail" class="km-visually-hidden">Email address</label>
-            <input id="CTAEmail"
-                   type="email"
-                   name="contact[email]"
-                   placeholder="{{ section.settings.email_placeholder | default: 'Email address' }}"
-                   required
-                   class="km-cta__form-input">
-            <button type="submit" class="km-cta__form-submit">
-              {{ section.settings.submit_label | default: 'Submit' }}
-            </button>
-          </form>
+          <div class="w-form">
+            {%- form 'customer', class: 'km-cta__form', data-name: 'newsletter-cta' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label for="CTAEmail" class="km-visually-hidden">Email address</label>
+              <input id="CTAEmail"
+                     type="email"
+                     name="contact[email]"
+                     placeholder="{{ section.settings.email_placeholder | default: 'Email address' }}"
+                     required
+                     class="km-cta__form-input">
+              <button type="submit" class="km-cta__form-submit">
+                {{ section.settings.submit_label | default: 'Submit' }}
+              </button>
+            {%- endform -%}
+            <div class="w-form-done km-cta__form-msg km-cta__form-msg--ok" style="display:none;">
+              <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail km-cta__form-msg km-cta__form-msg--err" style="display:none;">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
         </div>
       </div>
 
