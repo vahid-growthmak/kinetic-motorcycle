@@ -4,8 +4,8 @@
 {%- endcomment -%}
 
 <div class="km-container judgeme-section" style="margin-top: 64px; margin-bottom: 64px;">
-  <div class="km-pp__review-wrapper">
-    <h2 class="km-section-title" style="margin-bottom: 32px; text-align: center;">Customer Reviews</h2>
+  <div class="km-pp__review-wrapper" id="km-judgeme-wrapper">
+    <h2 class="km-section-title" style="margin-bottom: 40px; text-align: center;">Customer Reviews</h2>
     
     <!-- Start of Judge.me code -->
     {% assign has_legacy = false %}
@@ -39,52 +39,54 @@
     border: 1px solid var(--km-border, #DDDDDD);
     border-radius: 20px;
     padding: 64px 48px;
+    position: relative;
   }
   
   .km-section-title {
-    font-size: 32px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 700;
     color: #000;
     margin: 0;
+    letter-spacing: -.01em;
+    text-transform: none; /* Match "What Our Customers Say" */
   }
   
-  /* Judge.me Overrides to match theme */
-  .jdgm-widget {
+  /* FORCE OVERRIDES FOR JUDGE.ME */
+  #km-judgeme-wrapper .jdgm-widget {
     font-family: inherit !important;
     color: var(--km-text, #4B5563) !important;
     border: 0 !important;
   }
   
-  /* Hide duplicate title */
-  .jdgm-rev-widg__title {
+  /* Hide Judge.me's duplicate title */
+  #km-judgeme-wrapper .jdgm-rev-widg__title {
     display: none !important;
   }
   
-  .jdgm-rev-widg__header {
+  #km-judgeme-wrapper .jdgm-rev-widg__header {
     border-bottom: 0 !important;
     margin-bottom: 32px !important;
-    text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    text-align: center !important;
   }
   
-  .jdgm-widget .jdgm-star {
+  #km-judgeme-wrapper .jdgm-widget .jdgm-star {
     color: var(--km-accent, #FBB03D) !important;
   }
   
-  /* Primary CTA Button Styling */
-  .jdgm-write-rev-btn, 
-  .jdgm-submit-rev,
-  .jdgm-all-reviews-rating-wrapper .jdgm-btn,
-  .jdgm-rev-widg .jdgm-btn {
+  /* BUTTON COLOR - PRIMARY CTA YELLOW */
+  #km-judgeme-wrapper .jdgm-write-rev-btn, 
+  #km-judgeme-wrapper .jdgm-submit-rev,
+  #km-judgeme-wrapper .jdgm-rev-widg .jdgm-btn,
+  #km-judgeme-wrapper .jdgm-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 16px 32px !important;
-    background: var(--km-accent, #FBB03D) !important; /* Kinetic Yellow */
+    background-color: var(--km-accent, #FBB03D) !important; /* Kinetic Yellow */
+    background: var(--km-accent, #FBB03D) !important;
     color: #000 !important;
     border: 0 !important;
     border-radius: 9999px !important;
@@ -96,20 +98,19 @@
     transition: all .2s ease !important;
     height: auto !important;
     line-height: 1 !important;
+    box-shadow: none !important;
   }
   
-  .jdgm-write-rev-btn:hover,
-  .jdgm-submit-rev:hover {
+  #km-judgeme-wrapper .jdgm-write-rev-btn:hover,
+  #km-judgeme-wrapper .jdgm-submit-rev:hover,
+  #km-judgeme-wrapper .jdgm-btn:hover {
+    background-color: #000 !important;
     background: #000 !important;
     color: #fff !important;
     transform: translateY(-2px);
   }
   
-  .jdgm-rev-widg__summary {
-    text-align: center !important;
-  }
-  
-  .jdgm-rev-widg__summary-text {
+  #km-judgeme-wrapper .jdgm-rev-widg__summary-text {
     font-weight: 700 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
@@ -119,36 +120,37 @@
     display: block !important;
   }
   
-  .jdgm-rev {
+  #km-judgeme-wrapper .jdgm-rev {
     border-top: 1px solid var(--km-border, #DDDDDD) !important;
     padding: 32px 0 !important;
   }
   
-  .jdgm-rev__author {
+  #km-judgeme-wrapper .jdgm-rev__author {
     font-weight: 700 !important;
     color: #000 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
   }
   
-  .jdgm-rev__title {
+  #km-judgeme-wrapper .jdgm-rev__title {
     font-weight: 700 !important;
     color: #000 !important;
     font-size: 16px !important;
     margin: 8px 0 !important;
   }
   
-  .jdgm-rev__body p {
+  #km-judgeme-wrapper .jdgm-rev__body p {
     line-height: 1.65 !important;
     font-size: 14px !important;
   }
 
-  /* Fix the "No items found" or "Be the first" centering */
-  .jdgm-rev-widg__header-right {
+  /* Centering Fixes */
+  #km-judgeme-wrapper .jdgm-rev-widg__header-right {
     float: none !important;
     display: flex !important;
     justify-content: center !important;
     margin-top: 16px !important;
+    width: 100% !important;
   }
   
   @media (max-width: 768px) {
@@ -160,6 +162,34 @@
     }
   }
 </style>
+
+<script>
+  // Force styles on Judge.me widget after it loads
+  (() => {
+    const applyStyles = () => {
+      const widget = document.getElementById('judgeme_product_reviews');
+      if (widget && widget.innerHTML.length > 100) {
+        // Find title and hide if still there
+        const title = widget.querySelector('.jdgm-rev-widg__title');
+        if (title) title.style.display = 'none';
+        
+        // Find button and force background
+        const btns = widget.querySelectorAll('.jdgm-btn, .jdgm-write-rev-btn');
+        btns.forEach(btn => {
+          btn.style.setProperty('background-color', '#FBB03D', 'important');
+          btn.style.setProperty('color', '#000', 'important');
+        });
+      }
+    };
+    
+    // Run periodically as Judge.me loads late
+    const interval = setInterval(applyStyles, 1000);
+    setTimeout(() => clearInterval(interval), 10000);
+    
+    // Also listen for Judge.me's own events if they exist
+    document.addEventListener('jdgm.doneSetup', applyStyles);
+  })();
+</script>
 
 {% schema %}
 {
