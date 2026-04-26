@@ -180,56 +180,72 @@
 </style>
 
 <script>
-  // Robust MutationObserver to force inline styles as soon as Judge.me renders
+  // ULTRA-AGGRESSIVE JUDGE.ME STYLER
+  // This script bypasses class names and searches for elements by their raw text content
+  // to guarantee styling is applied no matter how Judge.me loads or obfuscates classes.
   (() => {
-    const forceJudgeMeStyles = () => {
-      // 1. Hide titles
-      const titles = document.querySelectorAll('.jdgm-rev-widg__title, .jdgm-widget-title');
-      titles.forEach(t => {
-        t.style.setProperty('display', 'none', 'important');
-        t.style.setProperty('visibility', 'hidden', 'important');
+    const applyDeepStyles = () => {
+      const wrapper = document.getElementById('km-judgeme-wrapper');
+      if (!wrapper) return;
+
+      // 1. Find and hide duplicate titles
+      const allTextElements = wrapper.querySelectorAll('h2, h3, div, span');
+      allTextElements.forEach(el => {
+        const text = el.textContent.trim().toLowerCase();
+        if (text === 'customer reviews' && !el.classList.contains('km-section-title')) {
+          el.setAttribute('style', 'display: none !important; visibility: hidden !important; opacity: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important;');
+        }
+      });
+
+      // 2. Find and style buttons
+      const allButtons = wrapper.querySelectorAll('a, button, input[type="submit"], input[type="button"], .jdgm-btn');
+      allButtons.forEach(btn => {
+        const text = (btn.value || btn.textContent || '').trim().toLowerCase();
+        if (text.includes('write a review') || text.includes('submit review') || btn.classList.toString().includes('jdgm-')) {
+          // Ignore our own carousel arrows if they somehow end up here
+          if (btn.classList.contains('km-pp-reviews__arrow')) return;
+          
+          btn.setAttribute('style', 'background-color: #FBB03D !important; background: #FBB03D !important; color: #000 !important; border: none !important; border-radius: 9999px !important; padding: 16px 32px !important; font-weight: 800 !important; font-size: 12px !important; text-transform: uppercase !important; letter-spacing: 0.14em !important; box-shadow: none !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; text-decoration: none !important;');
+        }
+      });
+
+      // 3. Fix star colors
+      const stars = wrapper.querySelectorAll('.jdgm-star');
+      stars.forEach(star => {
+        star.setAttribute('style', 'color: #FBB03D !important;');
+      });
+
+      // 4. Center header right container (usually contains the button in empty state)
+      const headerRight = wrapper.querySelectorAll('.jdgm-rev-widg__header-right');
+      headerRight.forEach(hr => {
+        hr.setAttribute('style', 'float: none !important; display: flex !important; justify-content: center !important; margin-top: 16px !important; width: 100% !important;');
       });
       
-      // 2. Force Button Colors
-      const btns = document.querySelectorAll('.jdgm-btn, .jdgm-write-rev-btn, .jdgm-submit-rev');
-      btns.forEach(btn => {
-        btn.style.setProperty('background-color', '#FBB03D', 'important');
-        btn.style.setProperty('background', '#FBB03D', 'important');
-        btn.style.setProperty('color', '#000', 'important');
-        btn.style.setProperty('border', 'none', 'important');
-        btn.style.setProperty('border-radius', '9999px', 'important');
+      // 5. Center header text
+      const headers = wrapper.querySelectorAll('.jdgm-rev-widg__header');
+      headers.forEach(h => {
+        h.setAttribute('style', 'display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; border: none !important;');
       });
     };
 
-    // Run immediately just in case
-    forceJudgeMeStyles();
+    // Run immediately
+    applyDeepStyles();
 
-    // Set up observer to watch for Judge.me injecting its HTML
-    const observer = new MutationObserver((mutations) => {
-      let shouldForce = false;
-      for (const mutation of mutations) {
-        if (mutation.addedNodes.length > 0) {
-          // If any nodes were added, run the styling check
-          shouldForce = true;
-          break;
-        }
-      }
-      if (shouldForce) {
-        forceJudgeMeStyles();
-      }
-    });
+    // Use MutationObserver to watch for ANY DOM changes within the wrapper
+    const wrapper = document.getElementById('km-judgeme-wrapper');
+    if (wrapper) {
+      const observer = new MutationObserver(() => {
+        applyDeepStyles();
+      });
+      observer.observe(wrapper, { childList: true, subtree: true, attributes: true });
+    }
 
-    // Start observing the body for changes
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Polling fallback
+    const interval = setInterval(applyDeepStyles, 100); // Very fast polling
+    setTimeout(() => clearInterval(interval), 15000); // Stop after 15s
 
-    // Fallback polling for the first 10 seconds
-    const interval = setInterval(forceJudgeMeStyles, 500);
-    setTimeout(() => {
-      clearInterval(interval);
-      // We can keep the observer running to catch "Write Review" modal opens
-    }, 10000);
-    
-    document.addEventListener('jdgm.doneSetup', forceJudgeMeStyles);
+    // Listen for custom events
+    document.addEventListener('jdgm.doneSetup', applyDeepStyles);
   })();
 </script>
 
