@@ -205,6 +205,10 @@
         "heading": "What Our Customers Say"
       }
     },
+    "judgeme": {
+      "type": "judgeme-widget",
+      "settings": {}
+    },
     "related": {
       "type": "product-related",
       "settings": {
@@ -232,6 +236,7 @@
     "trust",
     "innovation",
     "reviews",
+    "judgeme",
     "related",
     "trending"
   ]
