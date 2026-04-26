@@ -48,22 +48,36 @@
     color: #000;
     margin: 0;
     letter-spacing: -.01em;
-    text-transform: none; /* Match "What Our Customers Say" */
+    text-transform: none;
   }
   
-  /* FORCE OVERRIDES FOR JUDGE.ME */
-  #km-judgeme-wrapper .jdgm-widget {
+  /* =========================================
+     HYPER-AGGRESSIVE JUDGE.ME OVERRIDES
+     Using 'html body' to ensure high specificity 
+     against Judge.me's injected stylesheets.
+     ========================================= */
+  
+  html body .jdgm-widget.jdgm-review-widget {
     font-family: inherit !important;
     color: var(--km-text, #4B5563) !important;
     border: 0 !important;
   }
   
-  /* Hide Judge.me's duplicate title */
-  #km-judgeme-wrapper .jdgm-rev-widg__title {
+  /* 1. Hide the duplicate title */
+  html body .jdgm-rev-widg__title,
+  html body .jdgm-widget-title,
+  html body h2.jdgm-rev-widg__title {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
   
-  #km-judgeme-wrapper .jdgm-rev-widg__header {
+  /* 2. Center the header area */
+  html body .jdgm-rev-widg__header {
     border-bottom: 0 !important;
     margin-bottom: 32px !important;
     display: flex !important;
@@ -72,20 +86,21 @@
     text-align: center !important;
   }
   
-  #km-judgeme-wrapper .jdgm-widget .jdgm-star {
+  html body .jdgm-widget .jdgm-star {
     color: var(--km-accent, #FBB03D) !important;
   }
   
-  /* BUTTON COLOR - PRIMARY CTA YELLOW */
-  #km-judgeme-wrapper .jdgm-write-rev-btn, 
-  #km-judgeme-wrapper .jdgm-submit-rev,
-  #km-judgeme-wrapper .jdgm-rev-widg .jdgm-btn,
-  #km-judgeme-wrapper .jdgm-btn {
+  /* 3. Primary CTA Button Styling (Force Yellow) */
+  html body .jdgm-write-rev-btn, 
+  html body .jdgm-submit-rev,
+  html body .jdgm-rev-widg .jdgm-btn,
+  html body .jdgm-btn,
+  html body input.jdgm-submit-rev {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 16px 32px !important;
-    background-color: var(--km-accent, #FBB03D) !important; /* Kinetic Yellow */
+    background-color: var(--km-accent, #FBB03D) !important;
     background: var(--km-accent, #FBB03D) !important;
     color: #000 !important;
     border: 0 !important;
@@ -101,16 +116,17 @@
     box-shadow: none !important;
   }
   
-  #km-judgeme-wrapper .jdgm-write-rev-btn:hover,
-  #km-judgeme-wrapper .jdgm-submit-rev:hover,
-  #km-judgeme-wrapper .jdgm-btn:hover {
+  html body .jdgm-write-rev-btn:hover,
+  html body .jdgm-submit-rev:hover,
+  html body .jdgm-btn:hover,
+  html body input.jdgm-submit-rev:hover {
     background-color: #000 !important;
     background: #000 !important;
     color: #fff !important;
     transform: translateY(-2px);
   }
   
-  #km-judgeme-wrapper .jdgm-rev-widg__summary-text {
+  html body .jdgm-rev-widg__summary-text {
     font-weight: 700 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
@@ -120,32 +136,32 @@
     display: block !important;
   }
   
-  #km-judgeme-wrapper .jdgm-rev {
+  html body .jdgm-rev {
     border-top: 1px solid var(--km-border, #DDDDDD) !important;
     padding: 32px 0 !important;
   }
   
-  #km-judgeme-wrapper .jdgm-rev__author {
+  html body .jdgm-rev__author {
     font-weight: 700 !important;
     color: #000 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
   }
   
-  #km-judgeme-wrapper .jdgm-rev__title {
+  html body .jdgm-rev__title {
     font-weight: 700 !important;
     color: #000 !important;
     font-size: 16px !important;
     margin: 8px 0 !important;
   }
   
-  #km-judgeme-wrapper .jdgm-rev__body p {
+  html body .jdgm-rev__body p {
     line-height: 1.65 !important;
     font-size: 14px !important;
   }
 
-  /* Centering Fixes */
-  #km-judgeme-wrapper .jdgm-rev-widg__header-right {
+  /* Centering Fixes for Empty State */
+  html body .jdgm-rev-widg__header-right {
     float: none !important;
     display: flex !important;
     justify-content: center !important;
@@ -164,30 +180,56 @@
 </style>
 
 <script>
-  // Force styles on Judge.me widget after it loads
+  // Robust MutationObserver to force inline styles as soon as Judge.me renders
   (() => {
-    const applyStyles = () => {
-      const widget = document.getElementById('judgeme_product_reviews');
-      if (widget && widget.innerHTML.length > 100) {
-        // Find title and hide if still there
-        const title = widget.querySelector('.jdgm-rev-widg__title');
-        if (title) title.style.display = 'none';
-        
-        // Find button and force background
-        const btns = widget.querySelectorAll('.jdgm-btn, .jdgm-write-rev-btn');
-        btns.forEach(btn => {
-          btn.style.setProperty('background-color', '#FBB03D', 'important');
-          btn.style.setProperty('color', '#000', 'important');
-        });
-      }
+    const forceJudgeMeStyles = () => {
+      // 1. Hide titles
+      const titles = document.querySelectorAll('.jdgm-rev-widg__title, .jdgm-widget-title');
+      titles.forEach(t => {
+        t.style.setProperty('display', 'none', 'important');
+        t.style.setProperty('visibility', 'hidden', 'important');
+      });
+      
+      // 2. Force Button Colors
+      const btns = document.querySelectorAll('.jdgm-btn, .jdgm-write-rev-btn, .jdgm-submit-rev');
+      btns.forEach(btn => {
+        btn.style.setProperty('background-color', '#FBB03D', 'important');
+        btn.style.setProperty('background', '#FBB03D', 'important');
+        btn.style.setProperty('color', '#000', 'important');
+        btn.style.setProperty('border', 'none', 'important');
+        btn.style.setProperty('border-radius', '9999px', 'important');
+      });
     };
+
+    // Run immediately just in case
+    forceJudgeMeStyles();
+
+    // Set up observer to watch for Judge.me injecting its HTML
+    const observer = new MutationObserver((mutations) => {
+      let shouldForce = false;
+      for (const mutation of mutations) {
+        if (mutation.addedNodes.length > 0) {
+          // If any nodes were added, run the styling check
+          shouldForce = true;
+          break;
+        }
+      }
+      if (shouldForce) {
+        forceJudgeMeStyles();
+      }
+    });
+
+    // Start observing the body for changes
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Fallback polling for the first 10 seconds
+    const interval = setInterval(forceJudgeMeStyles, 500);
+    setTimeout(() => {
+      clearInterval(interval);
+      // We can keep the observer running to catch "Write Review" modal opens
+    }, 10000);
     
-    // Run periodically as Judge.me loads late
-    const interval = setInterval(applyStyles, 1000);
-    setTimeout(() => clearInterval(interval), 10000);
-    
-    // Also listen for Judge.me's own events if they exist
-    document.addEventListener('jdgm.doneSetup', applyStyles);
+    document.addEventListener('jdgm.doneSetup', forceJudgeMeStyles);
   })();
 </script>
 
