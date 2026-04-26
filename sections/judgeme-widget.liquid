@@ -3,31 +3,125 @@
   This section displays the review widget for the current product.
 {%- endcomment -%}
 
-<div class="km-container judgeme-section" style="margin-top: 40px; margin-bottom: 40px;">
-  <!-- Start of Judge.me code -->
-  {% assign has_legacy = false %}
-  {% if product.metafields.judgeme.widget.size > 20 %}
-    {% assign has_legacy = true %}
-  {% endif %}
-  <div style='clear:both'></div>
-  <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' 
-    data-product-title='{{ product.title | escape }}' 
-    data-id='{{ product.id }}' 
-    data-product-id='{{ product.id }}' 
-    data-widget='review' 
-    data-auto-install='false' 
-    data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' 
-    data-entry-point='review_widget.js' 
-    data-entry-key='review-widget/main.js'>
-    {% if has_legacy %}
-      <div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>
+<div class="km-container judgeme-section" style="margin-top: 64px; margin-bottom: 64px;">
+  <div class="km-pp__review-wrapper">
+    <h2 class="km-section-title" style="margin-bottom: 32px; text-align: center;">Customer Reviews</h2>
+    
+    <!-- Start of Judge.me code -->
+    {% assign has_legacy = false %}
+    {% if product.metafields.judgeme.widget.size > 20 %}
+      {% assign has_legacy = true %}
     {% endif %}
+    <div style='clear:both'></div>
+    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' 
+      data-product-title='{{ product.title | escape }}' 
+      data-id='{{ product.id }}' 
+      data-product-id='{{ product.id }}' 
+      data-widget='review' 
+      data-auto-install='false' 
+      data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' 
+      data-entry-point='review_widget.js' 
+      data-entry-key='review-widget/main.js'>
+      {% if has_legacy %}
+        <div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>
+      {% endif %}
+    </div>
+    {% if product.metafields.judgeme.review_widget_data %}
+      <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
+    {% endif %}
+    <!-- End of Judge.me code -->
   </div>
-  {% if product.metafields.judgeme.review_widget_data %}
-    <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
-  {% endif %}
-  <!-- End of Judge.me code -->
 </div>
+
+<style>
+  .km-pp__review-wrapper {
+    background: #fff;
+    border: 1px solid var(--km-border, #DDDDDD);
+    border-radius: 20px;
+    padding: 48px;
+  }
+  
+  /* Judge.me Overrides to match theme */
+  .jdgm-widget {
+    font-family: inherit !important;
+    color: var(--km-text, #4B5563) !important;
+  }
+  
+  .jdgm-rev-widg__title {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.015em !important;
+    color: #000 !important;
+  }
+  
+  .jdgm-widget .jdgm-star {
+    color: var(--km-accent, #FBB03D) !important;
+  }
+  
+  /* Button Styling */
+  .jdgm-write-rev-btn, 
+  .jdgm-submit-rev,
+  .jdgm-all-reviews-rating-wrapper .jdgm-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 24px !important;
+    background: #000 !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 9999px !important;
+    font-weight: 800 !important;
+    font-size: 11px !important;
+    letter-spacing: .14em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: all .2s ease !important;
+  }
+  
+  .jdgm-write-rev-btn:hover,
+  .jdgm-submit-rev:hover {
+    background: var(--km-accent, #FBB03D) !important;
+    color: #000 !important;
+    transform: translateY(-2px);
+  }
+  
+  .jdgm-rev-widg__summary-text {
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: 0.04em !important;
+  }
+  
+  .jdgm-rev {
+    border-top: 1px solid var(--km-border, #DDDDDD) !important;
+    padding: 24px 0 !important;
+  }
+  
+  .jdgm-rev__author {
+    font-weight: 700 !important;
+    color: #000 !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+  }
+  
+  .jdgm-rev__title {
+    font-weight: 700 !important;
+    color: #000 !important;
+    font-size: 16px !important;
+  }
+  
+  .jdgm-rev__body p {
+    line-height: 1.6 !important;
+    font-size: 14px !important;
+  }
+  
+  @media (max-width: 768px) {
+    .km-pp__review-wrapper {
+      padding: 24px;
+    }
+  }
+</style>
 
 {% schema %}
 {
