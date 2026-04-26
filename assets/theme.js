@@ -232,12 +232,13 @@
       } else {
         if (idInput) idInput.value = "";
       }
+      if (match) {
         if (addBtn) {
-          addBtn.disabled = match ? !match.available : true;
-          addBtn.textContent = match ? (match.available ? 'Add to Cart' : 'Sold Out') : 'Select Options';
+          addBtn.disabled = !match.available;
+          addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
         }
 
-        if (match && match.featured_image && match.featured_image.src && mainImg) {
+        if (match.featured_image && match.featured_image.src && mainImg) {
           mainImg.src = match.featured_image.src;
         }
 
@@ -246,6 +247,11 @@
           url.searchParams.set('variant', match.id);
           window.history.replaceState({}, '', url);
         } catch (e) {}
+      } else {
+        if (addBtn) {
+          addBtn.disabled = true;
+          addBtn.textContent = 'Select Options';
+        }
       }
     };
 
