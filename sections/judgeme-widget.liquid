@@ -38,64 +38,90 @@
     background: #fff;
     border: 1px solid var(--km-border, #DDDDDD);
     border-radius: 20px;
-    padding: 48px;
+    padding: 64px 48px;
+  }
+  
+  .km-section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #000;
+    margin: 0;
   }
   
   /* Judge.me Overrides to match theme */
   .jdgm-widget {
     font-family: inherit !important;
     color: var(--km-text, #4B5563) !important;
+    border: 0 !important;
   }
   
+  /* Hide duplicate title */
   .jdgm-rev-widg__title {
-    font-size: 24px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: -0.015em !important;
-    color: #000 !important;
+    display: none !important;
+  }
+  
+  .jdgm-rev-widg__header {
+    border-bottom: 0 !important;
+    margin-bottom: 32px !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
   
   .jdgm-widget .jdgm-star {
     color: var(--km-accent, #FBB03D) !important;
   }
   
-  /* Button Styling */
+  /* Primary CTA Button Styling */
   .jdgm-write-rev-btn, 
   .jdgm-submit-rev,
-  .jdgm-all-reviews-rating-wrapper .jdgm-btn {
+  .jdgm-all-reviews-rating-wrapper .jdgm-btn,
+  .jdgm-rev-widg .jdgm-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 12px 24px !important;
-    background: #000 !important;
-    color: #fff !important;
+    padding: 16px 32px !important;
+    background: var(--km-accent, #FBB03D) !important; /* Kinetic Yellow */
+    color: #000 !important;
     border: 0 !important;
     border-radius: 9999px !important;
     font-weight: 800 !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     letter-spacing: .14em !important;
     text-transform: uppercase !important;
     cursor: pointer !important;
     transition: all .2s ease !important;
+    height: auto !important;
+    line-height: 1 !important;
   }
   
   .jdgm-write-rev-btn:hover,
   .jdgm-submit-rev:hover {
-    background: var(--km-accent, #FBB03D) !important;
-    color: #000 !important;
+    background: #000 !important;
+    color: #fff !important;
     transform: translateY(-2px);
+  }
+  
+  .jdgm-rev-widg__summary {
+    text-align: center !important;
   }
   
   .jdgm-rev-widg__summary-text {
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
     letter-spacing: 0.04em !important;
+    color: #000 !important;
+    margin-top: 12px !important;
+    display: block !important;
   }
   
   .jdgm-rev {
     border-top: 1px solid var(--km-border, #DDDDDD) !important;
-    padding: 24px 0 !important;
+    padding: 32px 0 !important;
   }
   
   .jdgm-rev__author {
@@ -109,16 +135,28 @@
     font-weight: 700 !important;
     color: #000 !important;
     font-size: 16px !important;
+    margin: 8px 0 !important;
   }
   
   .jdgm-rev__body p {
-    line-height: 1.6 !important;
+    line-height: 1.65 !important;
     font-size: 14px !important;
+  }
+
+  /* Fix the "No items found" or "Be the first" centering */
+  .jdgm-rev-widg__header-right {
+    float: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 16px !important;
   }
   
   @media (max-width: 768px) {
     .km-pp__review-wrapper {
-      padding: 24px;
+      padding: 32px 20px;
+    }
+    .km-section-title {
+      font-size: 24px;
     }
   }
 </style>
