@@ -13,48 +13,64 @@
 
 <style>
   .km-pp__review-wrapper {
-    background: #fff;
+    background: var(--km-surface, #FFFFFF);
     border: 1px solid var(--km-border, #DDDDDD);
-    border-radius: 20px;
-    padding: 64px 48px;
+    border-radius: var(--km-radius-lg, 20px);
+    padding: 80px 48px;
     position: relative;
+    box-shadow: var(--km-shadow-sm);
   }
   
   .km-section-title {
-    font-size: clamp(24px, 3vw, 34px);
+    font-family: var(--km-font-heading);
+    font-size: clamp(28px, 3.2vw, 44px);
     font-weight: 700;
-    color: #000;
-    margin: 0;
-    letter-spacing: -.01em;
+    color: var(--km-heading, #000);
+    margin: 0 0 48px;
+    letter-spacing: -.02em;
     text-transform: none;
+    text-align: center;
   }
   
-  /* Safe Judge.me Overrides */
+  /* =========================================
+     Kinetic Styled Judge.me Widget
+     ========================================= */
+  
   #km-judgeme-wrapper .jdgm-widget.jdgm-review-widget {
-    font-family: inherit !important;
+    font-family: var(--km-font-body) !important;
     color: var(--km-text, #4B5563) !important;
     border: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
   }
   
+  /* Hide Judge.me's native headers */
   #km-judgeme-wrapper .jdgm-rev-widg__title,
   #km-judgeme-wrapper .jdgm-widget-title,
   #km-judgeme-wrapper h2.jdgm-rev-widg__title {
     display: none !important;
   }
   
+  /* Custom Header Layout */
   #km-judgeme-wrapper .jdgm-rev-widg__header {
     border-bottom: 0 !important;
-    margin-bottom: 32px !important;
+    margin-bottom: 48px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
   }
   
+  /* Stars Styling */
   #km-judgeme-wrapper .jdgm-widget .jdgm-star {
     color: var(--km-accent, #FBB03D) !important;
+    font-size: 18px !important;
+    margin: 0 2px !important;
   }
   
+  /* Kinetic CTA Buttons */
   #km-judgeme-wrapper .jdgm-write-rev-btn, 
   #km-judgeme-wrapper .jdgm-submit-rev,
   #km-judgeme-wrapper .jdgm-rev-widg .jdgm-btn,
@@ -62,80 +78,115 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 16px 32px !important;
+    padding: 16px 40px !important;
     background-color: var(--km-accent, #FBB03D) !important;
     background: var(--km-accent, #FBB03D) !important;
-    color: #000 !important;
-    border: 0 !important;
-    border-radius: 9999px !important;
+    color: #000000 !important;
+    border: 1px solid var(--km-accent, #FBB03D) !important;
+    border-radius: var(--km-radius-pill, 9999px) !important;
+    font-family: var(--km-font-heading) !important;
     font-weight: 800 !important;
-    font-size: 12px !important;
-    letter-spacing: .14em !important;
+    font-size: 13px !important;
+    letter-spacing: .12em !important;
     text-transform: uppercase !important;
     cursor: pointer !important;
-    transition: all .2s ease !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     height: auto !important;
     line-height: 1 !important;
     box-shadow: none !important;
+    margin: 8px !important;
   }
   
   #km-judgeme-wrapper .jdgm-write-rev-btn:hover,
   #km-judgeme-wrapper .jdgm-submit-rev:hover,
   #km-judgeme-wrapper .jdgm-btn:hover {
-    background-color: #000 !important;
-    background: #000 !important;
-    color: #fff !important;
-    transform: translateY(-2px);
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #000000 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
   }
   
+  /* Review Summary Text */
   #km-judgeme-wrapper .jdgm-rev-widg__summary-text {
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    font-size: 13px !important;
-    letter-spacing: 0.04em !important;
+    font-size: 14px !important;
+    letter-spacing: 0.06em !important;
     color: #000 !important;
-    margin-top: 12px !important;
+    margin-top: 16px !important;
     display: block !important;
   }
   
+  /* Individual Review Cards */
   #km-judgeme-wrapper .jdgm-rev {
     border-top: 1px solid var(--km-border, #DDDDDD) !important;
-    padding: 32px 0 !important;
+    padding: 48px 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  #km-judgeme-wrapper .jdgm-rev:last-child {
+    border-bottom: 0 !important;
   }
   
   #km-judgeme-wrapper .jdgm-rev__author {
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     color: #000 !important;
     text-transform: uppercase !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
+    letter-spacing: 0.04em !important;
+  }
+  
+  #km-judgeme-wrapper .jdgm-rev__timestamp {
+    color: #9CA3AF !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
   }
   
   #km-judgeme-wrapper .jdgm-rev__title {
+    font-family: var(--km-font-heading) !important;
     font-weight: 700 !important;
     color: #000 !important;
-    font-size: 16px !important;
-    margin: 8px 0 !important;
+    font-size: 20px !important;
+    margin: 12px 0 !important;
+    letter-spacing: -0.01em !important;
   }
   
   #km-judgeme-wrapper .jdgm-rev__body p {
-    line-height: 1.65 !important;
-    font-size: 14px !important;
+    line-height: 1.7 !important;
+    font-size: 16px !important;
+    color: var(--km-text, #4B5563) !important;
   }
 
+  /* Form & Pagination Centering */
   #km-judgeme-wrapper .jdgm-rev-widg__header-right {
     float: none !important;
     display: flex !important;
     justify-content: center !important;
-    margin-top: 16px !important;
+    margin-top: 24px !important;
     width: 100% !important;
+  }
+  
+  #km-judgeme-wrapper .jdgm-paginate {
+    margin-top: 48px !important;
+    border-top: 1px solid var(--km-border, #DDDDDD) !important;
+    padding-top: 32px !important;
+    text-align: center !important;
   }
   
   @media (max-width: 768px) {
     .km-pp__review-wrapper {
-      padding: 32px 20px;
+      padding: 48px 20px;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
     }
     .km-section-title {
-      font-size: 24px;
+      font-size: 28px;
+    }
+    #km-judgeme-wrapper .jdgm-write-rev-btn {
+      width: 100% !important;
     }
   }
 </style>
