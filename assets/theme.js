@@ -186,9 +186,11 @@
     
     const selected = [];
     form.querySelectorAll('.km-pp__option-values').forEach((group, i) => {
-      const active = group.querySelector('.km-pp__option-value.is-active') || group.querySelector('.km-pp__option-value');
+      const active = group.querySelector('.km-pp__option-value.is-active');
       if (active) {
         selected[i] = active.getAttribute('data-option-value');
+      } else {
+        selected[i] = null;
       }
     });
 
@@ -215,7 +217,7 @@
         });
       });
 
-      if (match) {
+      if (match && selected.every(s => s !== null)) {
         if (idInput) idInput.value = match.id;
         if (priceEl) priceEl.textContent = formatMoney(match.price);
         
@@ -227,13 +229,15 @@
             compareEl.style.display = 'none';
           }
         }
-        
+      } else {
+        if (idInput) idInput.value = "";
+      }
         if (addBtn) {
-          addBtn.disabled = !match.available;
-          addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
+          addBtn.disabled = match ? !match.available : true;
+          addBtn.textContent = match ? (match.available ? 'Add to Cart' : 'Sold Out') : 'Select Options';
         }
 
-        if (match.featured_image && match.featured_image.src && mainImg) {
+        if (match && match.featured_image && match.featured_image.src && mainImg) {
           mainImg.src = match.featured_image.src;
         }
 
