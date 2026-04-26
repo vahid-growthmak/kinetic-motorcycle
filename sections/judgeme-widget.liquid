@@ -51,33 +51,20 @@
     text-transform: none;
   }
   
-  /* =========================================
-     HYPER-AGGRESSIVE JUDGE.ME OVERRIDES
-     Using 'html body' to ensure high specificity 
-     against Judge.me's injected stylesheets.
-     ========================================= */
-  
-  html body .jdgm-widget.jdgm-review-widget {
+  /* Safe Judge.me Overrides */
+  #km-judgeme-wrapper .jdgm-widget.jdgm-review-widget {
     font-family: inherit !important;
     color: var(--km-text, #4B5563) !important;
     border: 0 !important;
   }
   
-  /* 1. Hide the duplicate title */
-  html body .jdgm-rev-widg__title,
-  html body .jdgm-widget-title,
-  html body h2.jdgm-rev-widg__title {
+  #km-judgeme-wrapper .jdgm-rev-widg__title,
+  #km-judgeme-wrapper .jdgm-widget-title,
+  #km-judgeme-wrapper h2.jdgm-rev-widg__title {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
   }
   
-  /* 2. Center the header area */
-  html body .jdgm-rev-widg__header {
+  #km-judgeme-wrapper .jdgm-rev-widg__header {
     border-bottom: 0 !important;
     margin-bottom: 32px !important;
     display: flex !important;
@@ -86,16 +73,14 @@
     text-align: center !important;
   }
   
-  html body .jdgm-widget .jdgm-star {
+  #km-judgeme-wrapper .jdgm-widget .jdgm-star {
     color: var(--km-accent, #FBB03D) !important;
   }
   
-  /* 3. Primary CTA Button Styling (Force Yellow) */
-  html body .jdgm-write-rev-btn, 
-  html body .jdgm-submit-rev,
-  html body .jdgm-rev-widg .jdgm-btn,
-  html body .jdgm-btn,
-  html body input.jdgm-submit-rev {
+  #km-judgeme-wrapper .jdgm-write-rev-btn, 
+  #km-judgeme-wrapper .jdgm-submit-rev,
+  #km-judgeme-wrapper .jdgm-rev-widg .jdgm-btn,
+  #km-judgeme-wrapper .jdgm-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -116,17 +101,16 @@
     box-shadow: none !important;
   }
   
-  html body .jdgm-write-rev-btn:hover,
-  html body .jdgm-submit-rev:hover,
-  html body .jdgm-btn:hover,
-  html body input.jdgm-submit-rev:hover {
+  #km-judgeme-wrapper .jdgm-write-rev-btn:hover,
+  #km-judgeme-wrapper .jdgm-submit-rev:hover,
+  #km-judgeme-wrapper .jdgm-btn:hover {
     background-color: #000 !important;
     background: #000 !important;
     color: #fff !important;
     transform: translateY(-2px);
   }
   
-  html body .jdgm-rev-widg__summary-text {
+  #km-judgeme-wrapper .jdgm-rev-widg__summary-text {
     font-weight: 700 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
@@ -136,32 +120,31 @@
     display: block !important;
   }
   
-  html body .jdgm-rev {
+  #km-judgeme-wrapper .jdgm-rev {
     border-top: 1px solid var(--km-border, #DDDDDD) !important;
     padding: 32px 0 !important;
   }
   
-  html body .jdgm-rev__author {
+  #km-judgeme-wrapper .jdgm-rev__author {
     font-weight: 700 !important;
     color: #000 !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
   }
   
-  html body .jdgm-rev__title {
+  #km-judgeme-wrapper .jdgm-rev__title {
     font-weight: 700 !important;
     color: #000 !important;
     font-size: 16px !important;
     margin: 8px 0 !important;
   }
   
-  html body .jdgm-rev__body p {
+  #km-judgeme-wrapper .jdgm-rev__body p {
     line-height: 1.65 !important;
     font-size: 14px !important;
   }
 
-  /* Centering Fixes for Empty State */
-  html body .jdgm-rev-widg__header-right {
+  #km-judgeme-wrapper .jdgm-rev-widg__header-right {
     float: none !important;
     display: flex !important;
     justify-content: center !important;
@@ -180,72 +163,47 @@
 </style>
 
 <script>
-  // ULTRA-AGGRESSIVE JUDGE.ME STYLER
-  // This script bypasses class names and searches for elements by their raw text content
-  // to guarantee styling is applied no matter how Judge.me loads or obfuscates classes.
   (() => {
-    const applyDeepStyles = () => {
+    // Safe DOM styling without infinite loops
+    const safeStyleJudgeMe = () => {
       const wrapper = document.getElementById('km-judgeme-wrapper');
       if (!wrapper) return;
 
-      // 1. Find and hide duplicate titles
-      const allTextElements = wrapper.querySelectorAll('h2, h3, div, span');
-      allTextElements.forEach(el => {
-        const text = el.textContent.trim().toLowerCase();
-        if (text === 'customer reviews' && !el.classList.contains('km-section-title')) {
-          el.setAttribute('style', 'display: none !important; visibility: hidden !important; opacity: 0 !important; height: 0 !important; overflow: hidden !important; position: absolute !important;');
+      // Hide Duplicate Title
+      const titles = wrapper.querySelectorAll('.jdgm-rev-widg__title, h2.jdgm-rev-widg__title');
+      titles.forEach(el => {
+        if (el.style.display !== 'none') {
+          el.style.setProperty('display', 'none', 'important');
         }
       });
 
-      // 2. Find and style buttons
-      const allButtons = wrapper.querySelectorAll('a, button, input[type="submit"], input[type="button"], .jdgm-btn');
-      allButtons.forEach(btn => {
-        const text = (btn.value || btn.textContent || '').trim().toLowerCase();
-        if (text.includes('write a review') || text.includes('submit review') || btn.classList.toString().includes('jdgm-')) {
-          // Ignore our own carousel arrows if they somehow end up here
-          if (btn.classList.contains('km-pp-reviews__arrow')) return;
-          
-          btn.setAttribute('style', 'background-color: #FBB03D !important; background: #FBB03D !important; color: #000 !important; border: none !important; border-radius: 9999px !important; padding: 16px 32px !important; font-weight: 800 !important; font-size: 12px !important; text-transform: uppercase !important; letter-spacing: 0.14em !important; box-shadow: none !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; cursor: pointer !important; text-decoration: none !important;');
+      // Force Button Colors
+      const buttons = wrapper.querySelectorAll('.jdgm-write-rev-btn, .jdgm-submit-rev, .jdgm-btn');
+      buttons.forEach(btn => {
+        if (btn.style.backgroundColor !== 'rgb(251, 176, 61)' && btn.style.backgroundColor !== '#FBB03D') {
+          btn.style.setProperty('background-color', '#FBB03D', 'important');
+          btn.style.setProperty('background', '#FBB03D', 'important');
+          btn.style.setProperty('color', '#000', 'important');
+          btn.style.setProperty('border-radius', '9999px', 'important');
+          btn.style.setProperty('border', 'none', 'important');
         }
-      });
-
-      // 3. Fix star colors
-      const stars = wrapper.querySelectorAll('.jdgm-star');
-      stars.forEach(star => {
-        star.setAttribute('style', 'color: #FBB03D !important;');
-      });
-
-      // 4. Center header right container (usually contains the button in empty state)
-      const headerRight = wrapper.querySelectorAll('.jdgm-rev-widg__header-right');
-      headerRight.forEach(hr => {
-        hr.setAttribute('style', 'float: none !important; display: flex !important; justify-content: center !important; margin-top: 16px !important; width: 100% !important;');
       });
       
-      // 5. Center header text
-      const headers = wrapper.querySelectorAll('.jdgm-rev-widg__header');
-      headers.forEach(h => {
-        h.setAttribute('style', 'display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; border: none !important;');
+      // Fix Stars
+      const stars = wrapper.querySelectorAll('.jdgm-star');
+      stars.forEach(star => {
+        if (star.style.color !== 'rgb(251, 176, 61)' && star.style.color !== '#FBB03D') {
+          star.style.setProperty('color', '#FBB03D', 'important');
+        }
       });
     };
 
-    // Run immediately
-    applyDeepStyles();
-
-    // Use MutationObserver to watch for ANY DOM changes within the wrapper
-    const wrapper = document.getElementById('km-judgeme-wrapper');
-    if (wrapper) {
-      const observer = new MutationObserver(() => {
-        applyDeepStyles();
-      });
-      observer.observe(wrapper, { childList: true, subtree: true, attributes: true });
-    }
-
-    // Polling fallback
-    const interval = setInterval(applyDeepStyles, 100); // Very fast polling
+    // Run polling safely
+    const interval = setInterval(safeStyleJudgeMe, 500);
     setTimeout(() => clearInterval(interval), 15000); // Stop after 15s
 
-    // Listen for custom events
-    document.addEventListener('jdgm.doneSetup', applyDeepStyles);
+    // Run on Judge.me's native event
+    document.addEventListener('jdgm.doneSetup', safeStyleJudgeMe);
   })();
 </script>
 
