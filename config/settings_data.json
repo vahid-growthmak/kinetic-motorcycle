@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "favicon": "shopify://shop_images/KM_Logo_1.webp",
     "color_body_bg": "#EDEDED",
     "color_surface": "#FFFFFF",
     "color_text": "#4B5563",
