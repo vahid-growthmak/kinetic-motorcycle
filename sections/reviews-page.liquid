@@ -50,9 +50,21 @@
     </div>
   </div>
 
+  {%- assign all_product_ids = '' -%}
   <div class="km-container km-reviews-page__content">
-    {%- comment -%} All Reviews Panel (Now powered by API) {%- endcomment -%}
-    <div class="km-reviews-panel is-active" id="panel-all" data-loaded="false">
+    {%- comment -%} Panels loop to collect all IDs first {%- endcomment -%}
+    {%- for handle in model_handles -%}
+      {%- assign collection = collections[handle] -%}
+      {%- if collection -%}
+        {%- for product in collection.products limit: 250 -%}
+          {%- if all_product_ids != '' -%}{%- assign all_product_ids = all_product_ids | append: ',' -%}{%- endif -%}
+          {%- assign all_product_ids = all_product_ids | append: product.id -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- comment -%} All Reviews Panel {%- endcomment -%}
+    <div class="km-reviews-panel is-active" id="panel-all" data-product-ids="{{ all_product_ids }}" data-loaded="false">
       <div class="km-reviews-list">
         <div class="km-reviews-loading">Loading all builds...</div>
       </div>
@@ -105,13 +117,13 @@
         const BASE_URL = 'https://judge.me/reviews/reviews_for_widget';
         const params = `shop_domain=${SHOP_DOMAIN}&platform=shopify`;
         
-        // If no productIds (All Reviews tab), we aggregate from a list of key products
-        // I've included the 540 Laterals ID here to ensure we definitely get content
-        const targetIds = productIds ? 
-          productIds.split(',').filter(Boolean).slice(0, 10) : 
-          ['10652485157169', '10652484436273', '10652482339121']; // Fallback for All Reviews
+        if (!productIds) return [];
+
+        const targetIds = productIds.split(',').filter(Boolean);
+        // We can fetch many products, but let's be reasonable (e.g. top 50) to avoid browser overhead
+        const limitedIds = targetIds.slice(0, 50); 
         
-        const promises = targetIds.map(id =>
+        const promises = limitedIds.map(id =>
           fetch(`${BASE_URL}?${params}&product_id=${id}`)
             .then(r => r.json())
             .catch(e => ({ reviews: [] }))
