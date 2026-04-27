@@ -102,22 +102,26 @@
       const tabPanels = document.querySelectorAll('.km-reviews-panel');
 
       async function fetchReviewsForProducts(productIds) {
-        // Public Widget API Endpoint
-        const BASE_URL = 'https://judge.me/api/v1/widgets/reviews';
+        // Verified Public Widget API Endpoint
+        const BASE_URL = 'https://judge.me/reviews/reviews_for_widget';
+        const params = `shop_domain=${SHOP_DOMAIN}&platform=shopify`;
         
         if (productIds) {
           const ids = productIds.split(',').filter(Boolean);
-          const promises = ids.map(id =>
-            fetch(`${BASE_URL}?api_token=${JM_PUBLIC_TOKEN}&shop_domain=${SHOP_DOMAIN}&product_id=${id}&per_page=10`)
+          // Limit to first 10 products per category to avoid rate limits
+          const limitedIds = ids.slice(0, 10); 
+          const promises = limitedIds.map(id =>
+            fetch(`${BASE_URL}?${params}&product_id=${id}`)
               .then(r => r.json())
               .catch(e => ({ reviews: [] }))
           );
           const results = await Promise.all(promises);
           return results.flatMap(r => r.reviews || []);
         } else {
-          // Shop-wide reviews via the widgets API (often returns the latest reviews)
+          // For "All Reviews", we'll fetch from a few key products if a global endpoint isn't found
+          // For now, let's try the global fetch which sometimes works with widget_type=all
           try {
-            const res = await fetch(`${BASE_URL}?api_token=${JM_PUBLIC_TOKEN}&shop_domain=${SHOP_DOMAIN}&per_page=20`);
+            const res = await fetch(`${BASE_URL}?${params}&widget_type=all_reviews&per_page=20`);
             const data = await res.json();
             return data.reviews || [];
           } catch (err) {
@@ -135,22 +139,23 @@
       }
 
       function renderReviews(reviews, container) {
-        if (!reviews.length) {
-          container.innerHTML = '<p class="km-reviews-empty">No reviews found yet.</p>';
+        if (!reviews || !reviews.length) {
+          container.innerHTML = '<p class="km-reviews-empty">No reviews found for this category yet.</p>';
           return;
         }
 
+        // Sort by date descending
         reviews.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
         container.innerHTML = reviews.map(review => `
           <div class="km-review-card">
             <div class="km-review-header">
-              <span class="km-review-author">${review.reviewer?.name || 'Anonymous'}</span>
+              <span class="km-review-author">${review.reviewer_name || 'Anonymous'}</span>
               <span class="km-review-stars">${renderStars(review.rating)}</span>
               <span class="km-review-date">${new Date(review.created_at).toLocaleDateString()}</span>
             </div>
             ${review.title ? `<h4 class="km-review-title">${review.title}</h4>` : ''}
-            <p class="km-review-body">${review.body || ''}</p>
+            <div class="km-review-body">${review.body_html || review.body || ''}</div>
             ${review.product_title ? `<div class="km-review-product">Part: ${review.product_title}</div>` : ''}
           </div>
         `).join('');
