@@ -102,33 +102,23 @@
       const tabPanels = document.querySelectorAll('.km-reviews-panel');
 
       async function fetchReviewsForProducts(productIds) {
-        // Verified Public Widget API Endpoint
         const BASE_URL = 'https://judge.me/reviews/reviews_for_widget';
         const params = `shop_domain=${SHOP_DOMAIN}&platform=shopify`;
         
-        if (productIds) {
-          const ids = productIds.split(',').filter(Boolean);
-          // Limit to first 10 products per category to avoid rate limits
-          const limitedIds = ids.slice(0, 10); 
-          const promises = limitedIds.map(id =>
-            fetch(`${BASE_URL}?${params}&product_id=${id}`)
-              .then(r => r.json())
-              .catch(e => ({ reviews: [] }))
-          );
-          const results = await Promise.all(promises);
-          return results.flatMap(r => r.reviews || []);
-        } else {
-          // For "All Reviews", we'll fetch from a few key products if a global endpoint isn't found
-          // For now, let's try the global fetch which sometimes works with widget_type=all
-          try {
-            const res = await fetch(`${BASE_URL}?${params}&widget_type=all_reviews&per_page=20`);
-            const data = await res.json();
-            return data.reviews || [];
-          } catch (err) {
-            console.error('All reviews fetch failed:', err);
-            return [];
-          }
-        }
+        // If no productIds (All Reviews tab), we aggregate from a list of key products
+        // I've included the 540 Laterals ID here to ensure we definitely get content
+        const targetIds = productIds ? 
+          productIds.split(',').filter(Boolean).slice(0, 10) : 
+          ['10652485157169', '10652484436273', '10652482339121']; // Fallback for All Reviews
+        
+        const promises = targetIds.map(id =>
+          fetch(`${BASE_URL}?${params}&product_id=${id}`)
+            .then(r => r.json())
+            .catch(e => ({ reviews: [] }))
+        );
+        
+        const results = await Promise.all(promises);
+        return results.flatMap(r => r.reviews || []);
       }
 
       function renderStars(rating) {
