@@ -34,7 +34,7 @@
   </div>
 
   {%- comment -%} MODEL FILTER TABS {%- endcomment -%}
-  {% assign model_handles = 'harley-davidson-sportster-parts,harley-davidson-dyna-parts,harley-davidson-softail-parts,indian,triumph-motorcycle-parts-accessories,honda-cb-parts' | split: ',' %}
+  {% assign model_handles = 'best-sellers,harley-davidson-sportster-parts,harley-davidson-dyna-parts,harley-davidson-softail-parts,indian,triumph-motorcycle-parts-accessories,honda-cb-parts' | split: ',' %}
 
   <div class="km-container km-reviews-page__tabs-wrap">
     <div class="km-reviews-page__tabs" role="tablist">
@@ -43,7 +43,7 @@
         {% assign collection = collections[handle] %}
         {% if collection %}
           <button type="button" class="km-reviews-page__tab" data-tab="{{ handle }}">
-            {{ collection.title | remove: 'Harley-Davidson ' | remove: ' Parts' | remove: ' Motorcycle Parts & Accessories' | strip }}
+            {{ collection.title | remove: 'Harley-Davidson ' | remove: ' Parts' | remove: ' Motorcycle Parts & Accessories' | remove: 'Motorcycle Parts' | strip }}
           </button>
         {% endif %}
       {% endfor %}
