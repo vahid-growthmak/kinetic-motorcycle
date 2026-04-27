@@ -430,6 +430,11 @@
     const optionsCount = document.querySelectorAll('.km-pp__option').length;
     let selectedOptions = Array(optionsCount).fill(null);
 
+    const formatMoney = (cents) => {
+      const amount = (cents / 100).toFixed(2);
+      return `Rs ${amount}`; // Simple format for this store
+    };
+
     // Pre-select lowest price variant
     const lowestVariant = variants.reduce((min, curr) => (curr.price < min.price) ? curr : min, variants[0]);
     if (lowestVariant) {
@@ -468,10 +473,6 @@
 
     updateVariant();
 
-    const formatMoney = (cents) => {
-      const amount = (cents / 100).toFixed(2);
-      return `Rs ${amount}`; // Simple format for this store
-    };
 
     optionButtons.forEach(btn => {
       btn.addEventListener('click', () => {
