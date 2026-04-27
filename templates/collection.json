@@ -12,8 +12,7 @@
     "main": {
       "type": "main-collection",
       "settings": {
-        "products_per_page": 12,
-        "show_price_filter": true
+        "products_per_page": 12
       }
     }
   },
