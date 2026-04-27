@@ -428,6 +428,16 @@
     const optionsCount = document.querySelectorAll('.km-pp__option').length;
     let selectedOptions = Array(optionsCount).fill(null);
 
+    // Pre-select lowest price variant
+    const lowestVariant = variants.reduce((min, curr) => (curr.price < min.price) ? curr : min, variants[0]);
+    if (lowestVariant) {
+      selectedOptions = [...lowestVariant.options];
+      selectedOptions.forEach((val, idx) => {
+        const btn = document.querySelector(`.km-pp__option[data-km-option-row="${idx}"] .km-pp__option-value[data-option-value="${val}"]`);
+        if (btn) btn.classList.add('is-active');
+      });
+    }
+
     const updateVariant = () => {
       const allSelected = selectedOptions.every(val => val !== null);
       if (!allSelected) {
@@ -451,10 +461,10 @@
           }
         }
         if (errorMsg) errorMsg.style.display = 'none';
-      } else {
-        idInput.value = "";
       }
     };
+
+    updateVariant();
 
     const formatMoney = (cents) => {
       const amount = (cents / 100).toFixed(2);
