@@ -56,22 +56,6 @@
       <!-- End of Judge.me code -->
     </div>
   </div>
-
-  {%- comment -%} CTA STRIP {%- endcomment -%}
-  {%- if section.settings.show_cta -%}
-  <div class="km-container">
-    <div class="km-reviews-page__cta">
-      <div>
-        <h2>{{ section.settings.cta_title }}</h2>
-        <p>{{ section.settings.cta_text }}</p>
-      </div>
-      <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="km-btn km-btn-primary">
-        {{ section.settings.cta_label }}
-        {%- render 'icon', icon: 'arrow-right' -%}
-      </a>
-    </div>
-  </div>
-  {%- endif -%}
 </section>
 
 <style>
@@ -100,10 +84,6 @@
 
   .km-reviews-page__widget-wrap { margin-bottom: 64px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 48px; }
 
-  .km-reviews-page__cta { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; }
-  .km-reviews-page__cta h2 { font-size: 24px; font-weight: 700; color: #000; margin: 0 0 6px; letter-spacing: -.01em; }
-  .km-reviews-page__cta p { font-size: 14px; color: var(--km-text, #4B5563); margin: 0; max-width: 520px; }
-
   /* Judge.me Custom Styling */
   #km-judgeme-all-reviews-wrapper .jdgm-all-reviews-widget { font-family: inherit !important; border: 0 !important; padding: 0 !important; }
   #km-judgeme-all-reviews-wrapper .jdgm-all-reviews-widget__title { display: none !important; }
@@ -115,7 +95,6 @@
   }
   #km-judgeme-all-reviews-wrapper .jdgm-btn:hover { background: var(--km-accent, #FBB03D) !important; color: #000 !important; }
 
-  @media (max-width: 900px) { .km-reviews-page__cta { flex-direction: column; text-align: center; padding: 32px 24px; } }
   @media (max-width: 700px) { 
     .km-reviews-page__tabs { border-radius: 20px; padding: 6px; } 
     .km-reviews-page__tab { padding: 10px 16px; font-size: 11px; } 
@@ -184,13 +163,7 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real Rider Feedback" },
     { "type": "text", "id": "title", "label": "Title", "default": "Customer Reviews" },
     { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "The stories behind 12,000+ builds." },
-    { "type": "checkbox", "id": "show_stats", "label": "Show Stats", "default": true },
-    { "type": "checkbox", "id": "show_cta", "label": "Show CTA Strip", "default": true },
-    { "type": "header", "content": "CTA Strip" },
-    { "type": "text", "id": "cta_title", "label": "CTA Title", "default": "Bought something? Tell us how it went." },
-    { "type": "textarea", "id": "cta_text", "label": "CTA Text", "default": "Your review helps other riders pick the right parts." },
-    { "type": "text", "id": "cta_label", "label": "CTA Link Label", "default": "Leave a review" },
-    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+    { "type": "checkbox", "id": "show_stats", "label": "Show Stats", "default": true }
   ],
   "blocks": [
     {
