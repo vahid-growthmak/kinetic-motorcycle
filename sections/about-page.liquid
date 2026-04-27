@@ -20,7 +20,10 @@
             <img src="{{ 'hero-bg.webp' | asset_url }}" alt="Kinetic rider" loading="eager" class="km-about-page__img">
           {%- endif -%}
         </div>
-        <div class="km-about-page__hero-caption">About Kinetic Motorcycles</div>
+        <a href="{{ section.settings.card_link_url | default: '/collections' }}" class="km-about-page__hero-cta">
+          {{ section.settings.card_link_label | default: 'View Our Collection' }}
+          {%- render 'icon', icon: 'arrow-right' -%}
+        </a>
       </div>
 
       <div class="km-about-page__hero-right">
@@ -148,7 +151,10 @@
   .km-about-page__hero-left { display: flex; flex-direction: column; gap: 16px; }
   .km-about-page__hero-img { aspect-ratio: 1/1.2; border-radius: 4px; overflow: hidden; background: #000; }
   .km-about-page__img { width: 100%; height: 100%; object-fit: cover; }
-  .km-about-page__hero-caption { font-size: 13px; font-weight: 700; color: #000; letter-spacing: .02em; font-style: italic; }
+  .km-about-page__hero-cta { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; color: #000; text-decoration: none; text-transform: uppercase; letter-spacing: .12em; transition: color .2s ease; }
+  .km-about-page__hero-cta:hover { color: var(--km-accent, #FBB03D); }
+  .km-about-page__hero-cta svg { width: 14px; height: 14px; transition: transform .2s ease; }
+  .km-about-page__hero-cta:hover svg { transform: translateX(4px); }
 
   .km-about-page__hero-right { display: flex; flex-direction: column; gap: 32px; }
   .km-about-page__card-media { aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; background: #f3f4f6; }
