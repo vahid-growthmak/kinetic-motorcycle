@@ -34,26 +34,55 @@
   </div>
 
   {%- comment -%} MODEL FILTER TABS {%- endcomment -%}
+  {% assign model_handles = 'harley-davidson-sportster-parts,harley-davidson-dyna-parts,harley-davidson-softail-parts,indian,triumph-motorcycle-parts-accessories,honda-cb-parts' | split: ',' %}
+
   <div class="km-container km-reviews-page__tabs-wrap">
-    <div class="km-reviews-page__tabs" role="tablist" data-km-rev-tabs>
-      <button type="button" class="km-reviews-page__tab is-active" role="tab" aria-selected="true" data-filter="">All reviews</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Sportster">Sportster</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Dyna">Dyna</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Softail">Softail</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Indian">Indian</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Triumph">Triumph</button>
-      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Honda">Honda</button>
+    <div class="km-reviews-page__tabs" role="tablist">
+      <button type="button" class="km-reviews-page__tab is-active" data-tab="all">All reviews</button>
+      {% for handle in model_handles %}
+        {% assign collection = collections[handle] %}
+        {% if collection %}
+          <button type="button" class="km-reviews-page__tab" data-tab="{{ handle }}">
+            {{ collection.title | remove: 'Harley-Davidson ' | remove: ' Parts' | remove: ' Motorcycle Parts & Accessories' | strip }}
+          </button>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 
-  <div class="km-container km-reviews-page__widget-wrap">
-    <div id="km-judgeme-all-reviews-wrapper">
-      <div class='jdgm-widget jdgm-all-reviews-widget'></div>
+  <div class="km-container km-reviews-page__content">
+    {%- comment -%} All Reviews Panel {%- endcomment -%}
+    <div class="km-reviews-panel is-active" id="panel-all">
+       <div id="km-judgeme-all-reviews-wrapper">
+         <div class='jdgm-widget jdgm-all-reviews-widget'></div>
+       </div>
     </div>
+
+    {%- comment -%} Specific Model Panels {%- endcomment -%}
+    {% for handle in model_handles %}
+      {% assign collection = collections[handle] %}
+      {% if collection %}
+        {%- assign product_ids = '' -%}
+        {%- for product in collection.products limit: 50 -%}
+          {%- if forloop.last -%}
+            {%- assign product_ids = product_ids | append: product.id -%}
+          {%- else -%}
+            {%- assign product_ids = product_ids | append: product.id | append: ',' -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div class="km-reviews-panel" id="panel-{{ handle }}" data-product-ids="{{ product_ids }}" data-loaded="false">
+          <div class="km-reviews-list">
+            <div class="km-reviews-loading">Loading rider reviews...</div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Initialization for the main Judge.me widget (All Reviews tab)
       const initJdgm = () => {
         try {
           if (window.jdgm && typeof window.jdgm.initializeWidgets === 'function') {
@@ -64,6 +93,88 @@
         }
       };
       setTimeout(initJdgm, 2000);
+
+      // 2. Custom API Fetch Logic
+      const SHOP_DOMAIN = '{{ shop.permanent_domain }}';
+      let JM_PUBLIC_TOKEN = ''; // Will attempt to detect from jdgm settings
+
+      const tabButtons = document.querySelectorAll('.km-reviews-page__tab');
+      const tabPanels = document.querySelectorAll('.km-reviews-panel');
+
+      async function fetchReviewsForProducts(productIds) {
+        if (!JM_PUBLIC_TOKEN) {
+           JM_PUBLIC_TOKEN = window.jdgm?.settings?.api_token || '';
+           if (!JM_PUBLIC_TOKEN) throw new Error('Judge.me API Token not found.');
+        }
+        
+        const ids = productIds.split(',').filter(Boolean);
+        const promises = ids.map(id =>
+          fetch(`https://judge.me/api/v1/reviews?api_token=${JM_PUBLIC_TOKEN}&shop_domain=${SHOP_DOMAIN}&product_id=${id}&per_page=10`)
+            .then(r => r.json())
+        );
+        
+        const results = await Promise.all(promises);
+        return results.flatMap(r => r.reviews || []);
+      }
+
+      function renderStars(rating) {
+        let stars = '';
+        const r = Math.round(rating);
+        for(let i=0; i<5; i++) stars += i < r ? '★' : '☆';
+        return stars;
+      }
+
+      function renderReviews(reviews, container) {
+        if (!reviews.length) {
+          container.innerHTML = '<p class="km-reviews-empty">No reviews found for this category yet.</p>';
+          return;
+        }
+
+        reviews.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        container.innerHTML = reviews.map(review => `
+          <div class="km-review-card">
+            <div class="km-review-header">
+              <span class="km-review-author">${review.reviewer?.name || 'Anonymous'}</span>
+              <span class="km-review-stars">${renderStars(review.rating)}</span>
+              <span class="km-review-date">${new Date(review.created_at).toLocaleDateString()}</span>
+            </div>
+            ${review.title ? `<h4 class="km-review-title">${review.title}</h4>` : ''}
+            <p class="km-review-body">${review.body || ''}</p>
+            ${review.product_title ? `<div class="km-review-product">Part: ${review.product_title}</div>` : ''}
+          </div>
+        `).join('');
+      }
+
+      async function loadTabReviews(panel) {
+        if (panel.dataset.loaded === 'true') return;
+        
+        const productIds = panel.dataset.productIds;
+        const container = panel.querySelector('.km-reviews-list');
+        
+        try {
+          const reviews = await fetchReviewsForProducts(productIds);
+          renderReviews(reviews, container);
+          panel.dataset.loaded = 'true';
+        } catch (err) {
+          container.innerHTML = '<p class="km-reviews-error">Error syncing reviews. Please try again later.</p>';
+          console.error(err);
+        }
+      }
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+
+          tabButtons.forEach(b => b.classList.toggle('is-active', b === btn));
+          tabPanels.forEach(p => p.classList.toggle('is-active', p.id === `panel-${target}`));
+
+          const activePanel = document.getElementById(`panel-${target}`);
+          if (activePanel && target !== 'all') {
+             loadTabReviews(activePanel);
+          }
+        });
+      });
     });
   </script>
 </section>
@@ -88,13 +199,28 @@
   .km-reviews-page__tabs-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; margin: 48px auto 28px; }
   .km-reviews-page__tabs { display: flex; gap: 4px; padding: 8px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
   .km-reviews-page__tabs::-webkit-scrollbar { display: none; }
-  .km-reviews-page__tab { padding: 12px 24px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--km-text, #4B5563); background: transparent; border: 0; border-radius: 9999px; cursor: pointer; font-family: inherit; transition: background .25s ease, color .25s ease; white-space: nowrap; }
+  .km-reviews-page__tab { padding: 12px 24px; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--km-text, #4B5563); background: transparent; border: 0; border-radius: 9999px; cursor: pointer; font-family: inherit; transition: background .25s ease, color .25s ease; white-space: nowrap; }
   .km-reviews-page__tab:hover { color: #000; background: var(--km-body-bg, #EDEDED); }
   .km-reviews-page__tab.is-active { background: #000; color: #fff; }
 
-  .km-reviews-page__widget-wrap { margin-bottom: 64px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 48px; }
+  .km-reviews-panel { display: none; margin-bottom: 64px; }
+  .km-reviews-panel.is-active { display: block; }
+  
+  .km-reviews-list { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 48px; min-height: 400px; display: flex; flex-direction: column; gap: 24px; }
+  .km-review-card { border-bottom: 1px solid var(--km-border); padding-bottom: 32px; }
+  .km-review-card:last-child { border-bottom: 0; padding-bottom: 0; }
+  .km-review-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .km-review-author { font-weight: 800; font-size: 15px; color: var(--km-heading); }
+  .km-review-stars { color: var(--km-accent, #FBB03D); font-size: 18px; letter-spacing: 2px; }
+  .km-review-date { font-size: 13px; color: var(--km-text); margin-left: auto; }
+  .km-review-title { font-size: 18px; font-weight: 700; color: var(--km-heading); margin: 0 0 8px; }
+  .km-review-body { font-size: 15px; line-height: 1.6; color: var(--km-text); margin-bottom: 12px; }
+  .km-review-product { font-size: 12px; font-weight: 700; color: var(--km-accent); text-transform: uppercase; letter-spacing: .05em; }
+  
+  .km-reviews-loading, .km-reviews-empty, .km-reviews-error { text-align: center; padding: 80px 0; color: var(--km-text); font-weight: 600; font-size: 16px; }
 
-  /* Judge.me Custom Styling */
+  /* Judge.me Custom Styling (All Reviews Tab) */
+  .km-reviews-panel#panel-all { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 48px; }
   #km-judgeme-all-reviews-wrapper .jdgm-all-reviews-widget { font-family: inherit !important; border: 0 !important; padding: 0 !important; }
   #km-judgeme-all-reviews-wrapper .jdgm-all-reviews-widget__title { display: none !important; }
   #km-judgeme-all-reviews-wrapper .jdgm-star { color: var(--km-accent, #FBB03D) !important; }
@@ -107,45 +233,12 @@
 
   @media (max-width: 700px) { 
     .km-reviews-page__tabs { border-radius: 20px; padding: 6px; } 
-    .km-reviews-page__tab { padding: 10px 16px; font-size: 11px; } 
-    .km-reviews-page__widget-wrap { padding: 24px 16px; border-radius: 0; border-left: 0; border-right: 0; }
+    .km-reviews-page__tab { padding: 10px 16px; font-size: 10px; } 
+    .km-reviews-list, .km-reviews-panel#panel-all { padding: 24px 16px; border-radius: 0; border-left: 0; border-right: 0; }
+    .km-review-header { flex-wrap: wrap; gap: 8px; }
+    .km-review-date { width: 100%; margin-left: 0; order: 3; }
   }
 </style>
-
-<script>
-(() => {
-  const tabsRoot = document.querySelector('[data-km-rev-tabs]');
-  if (!tabsRoot) return;
-
-  const tabs = [...tabsRoot.querySelectorAll('[data-filter]')];
-
-  const applyJudgeMeFilter = (filterText) => {
-    const widget = document.querySelector('#judgeme_all_reviews');
-    if (!widget) return;
-
-    // APPROACH: Use Judge.me Product Tags filtering if possible
-    // Setting data-product-tag and re-rendering
-    if (filterText) {
-      widget.setAttribute('data-product-tag', filterText);
-    } else {
-      widget.removeAttribute('data-product-tag');
-    }
-
-    // Try to call Judge.me re-render
-    if (window.jdgm && window.jdgm.widget && typeof window.jdgm.widget.reRenderAll === 'function') {
-      window.jdgm.widget.reRenderAll();
-    } else {
-      // Fallback: Search bar approach if re-render isn't available
-      const jdgmSearchInput = document.querySelector('.jdgm-search-input');
-      if (jdgmSearchInput) {
-        jdgmSearchInput.value = filterText;
-        jdgmSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
-        jdgmSearchInput.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter' }));
-        const searchBtn = jdgmSearchInput.parentElement.querySelector('.jdgm-search-icon, .jdgm-search-btn');
-        if (searchBtn) searchBtn.click();
-      }
-    }
-  };
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
