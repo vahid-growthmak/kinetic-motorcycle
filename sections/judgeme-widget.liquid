@@ -9,7 +9,12 @@
     
     <!-- Start of Judge.me code -->
     <div style='clear:both'></div>
-    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'>
+    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' 
+         data-product-title='{{ product.title | escape }}' 
+         data-id='{{ product.id }}' 
+         data-product-id='{{ product.id }}' 
+         data-widget='review' 
+         data-auto-install='true'>
       {{ product.metafields.judgeme.widget }}
     </div>
     <!-- End of Judge.me code -->
