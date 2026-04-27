@@ -36,7 +36,9 @@
         {%- comment -%} 1. Look for Exact Structural Match {%- endcomment -%}
         {%- for col in product.collections -%}
           {%- assign ct = col.title | downcase | strip -%}
-          {%- if ct == m_down or ct == m_down | append: ' parts' or ct == 'harley-davidson ' | append: m_down -%}
+          {%- assign m_parts = m_down | append: ' parts' -%}
+          {%- assign hd_m = 'harley-davidson ' | append: m_down -%}
+          {%- if ct == m_down or ct == m_parts or ct == hd_m -%}
             {%- assign model_url = col.url -%}
             {%- break -%}
           {%- endif -%}
