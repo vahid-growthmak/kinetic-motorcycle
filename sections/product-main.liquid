@@ -216,7 +216,7 @@
               {{ product.vendor }}
             </span>
           {%- endif -%}
-          {%- if product.type != blank -%}
+          {%- if product.type != blank and product.type != 'Physical' -%}
             <span class="km-pp__meta-tag">
               {%- render 'icon', icon: 'arrow-up-right' -%}
               {{ product.type }}
