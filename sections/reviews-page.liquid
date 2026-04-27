@@ -96,21 +96,40 @@
 
       // 2. Custom API Fetch Logic
       const SHOP_DOMAIN = '{{ shop.permanent_domain }}';
-      let JM_PUBLIC_TOKEN = ''; // Will attempt to detect from jdgm settings
+      let JM_PUBLIC_TOKEN = '';
 
       const tabButtons = document.querySelectorAll('.km-reviews-page__tab');
       const tabPanels = document.querySelectorAll('.km-reviews-panel');
 
+      async function getPublicToken() {
+        return new Promise((resolve) => {
+          let attempts = 0;
+          const check = () => {
+            const token = window.jdgm?.settings?.api_token || window.jdgm?.public_token;
+            if (token) {
+              resolve(token);
+            } else if (attempts < 20) { // Retry for 10 seconds
+              attempts++;
+              setTimeout(check, 500);
+            } else {
+              resolve('');
+            }
+          };
+          check();
+        });
+      }
+
       async function fetchReviewsForProducts(productIds) {
         if (!JM_PUBLIC_TOKEN) {
-           JM_PUBLIC_TOKEN = window.jdgm?.settings?.api_token || '';
-           if (!JM_PUBLIC_TOKEN) throw new Error('Judge.me API Token not found.');
+           JM_PUBLIC_TOKEN = await getPublicToken();
+           if (!JM_PUBLIC_TOKEN) throw new Error('Judge.me API Token not found after retries.');
         }
         
         const ids = productIds.split(',').filter(Boolean);
         const promises = ids.map(id =>
           fetch(`https://judge.me/api/v1/reviews?api_token=${JM_PUBLIC_TOKEN}&shop_domain=${SHOP_DOMAIN}&product_id=${id}&per_page=10`)
             .then(r => r.json())
+            .catch(e => ({ reviews: [] }))
         );
         
         const results = await Promise.all(promises);
@@ -175,6 +194,17 @@
           }
         });
       });
+
+      // 3. Periodic UI Styling for Judge.me (All Reviews Tab)
+      const styleInterval = setInterval(() => {
+        const widget = document.querySelector('.jdgm-all-reviews-widget');
+        if (widget) {
+          const title = widget.querySelector('.jdgm-all-reviews-widget__title');
+          if (title) title.style.display = 'none';
+          widget.querySelectorAll('.jdgm-star').forEach(s => s.style.color = '#FBB03D');
+        }
+      }, 1000);
+      setTimeout(() => clearInterval(styleInterval), 15000);
     });
   </script>
 </section>
@@ -239,30 +269,6 @@
     .km-review-date { width: 100%; margin-left: 0; order: 3; }
   }
 </style>
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const filter = tab.getAttribute('data-filter') || '';
-      tabs.forEach((t) => {
-        t.classList.toggle('is-active', t === tab);
-        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
-      });
-      applyJudgeMeFilter(filter);
-    });
-  });
-
-  // Style Judge.me widget periodically as it loads
-  const styleInterval = setInterval(() => {
-    const widget = document.querySelector('.jdgm-all-reviews-widget');
-    if (widget) {
-      const title = widget.querySelector('.jdgm-all-reviews-widget__title');
-      if (title) title.style.display = 'none';
-      widget.querySelectorAll('.jdgm-star').forEach(s => s.style.color = '#FBB03D');
-    }
-  }, 1000);
-  setTimeout(() => clearInterval(styleInterval), 15000);
-})();
-</script>
 
 {% schema %}
 {
