@@ -30,8 +30,8 @@
                 {%- if item.featured_image or item.image -%}
                   {%- assign result_img = item.featured_image | default: item.image -%}
                   <div class="km-search__media">
-                    {{ result_img | image_url: width: 400 | image_tag:
-                       width: 200, height: 200, loading: 'lazy',
+                    {{ result_img | image_url: width: 800 | image_tag:
+                       loading: 'lazy',
                        alt: item.title, class: 'km-search__img' }}
                   </div>
                 {%- endif -%}
@@ -72,7 +72,7 @@
   .km-search__media { aspect-ratio: 1 / 1; border-radius: var(--km-radius-sm); overflow: hidden; background: var(--km-body-bg); }
   .km-search__img { width: 100%; height: 100%; object-fit: cover; }
   .km-search__kind { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--km-accent); }
-  .km-search__name { font-size: 13px; font-weight: 700; color: var(--km-heading); margin: 0; }
+  .km-search__name { font-size: 16px; font-weight: 700; color: var(--km-heading); margin: 0; line-height: 1.4; }
   @media (max-width: 900px) { .km-search__grid { grid-template-columns: repeat(2, 1fr) !important; } }
   @media (max-width: 500px) { .km-search__form { flex-direction: column; } }
 </style>
