@@ -17,7 +17,7 @@
           {%- if section.settings.hero_image != blank -%}
             {{ section.settings.hero_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'km-about-page__img' }}
           {%- else -%}
-            <img src="{{ 'hero-bg.webp' | asset_url }}" alt="Kinetic rider" loading="eager" class="km-about-page__img">
+            <img src="{{ 'hero-bg.webp' | asset_url }}" alt="Kinetic rider" loading="eager" class="km-about-page__img" width="800" height="1000">
           {%- endif -%}
         </div>
         <a href="{{ section.settings.card_link_url | default: '/collections' }}" class="km-about-page__hero-cta">
@@ -31,7 +31,7 @@
           {%- if section.settings.card_image != blank -%}
             {{ section.settings.card_image | image_url: width: 1200 | image_tag: loading: 'lazy' }}
           {%- else -%}
-            <img src="{{ 'cta-bike.avif' | asset_url }}" alt="Kinetic custom build" loading="lazy">
+            <img src="{{ 'cta-bike.avif' | asset_url }}" alt="Kinetic custom build" loading="lazy" width="800" height="450">
           {%- endif -%}
         </div>
         <div class="km-about-page__content-wrap">
@@ -95,7 +95,7 @@
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
                 {%- else -%}
-                  <img src="{{ 'cta-bike.avif' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  <img src="{{ 'cta-bike.avif' | asset_url }}" alt="{{ block.settings.title }}" loading="lazy" width="800" height="450">
                 {%- endif -%}
               </div>
               <article class="km-about-page__vmi-card">
@@ -127,7 +127,7 @@
                 {%- if block.settings.image != blank -%}
                   {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy' }}
                 {%- else -%}
-                  <img src="{{ block.settings.asset_name | asset_url }}" alt="{{ block.settings.title }}" loading="lazy">
+                  <img src="{{ block.settings.asset_name | asset_url }}" alt="{{ block.settings.title }}" loading="lazy" width="400" height="400">
                 {%- endif -%}
               </div>
               <h3>{{ block.settings.title }}</h3>
