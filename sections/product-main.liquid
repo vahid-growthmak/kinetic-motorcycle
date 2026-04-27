@@ -216,13 +216,6 @@
               {{ product.vendor }}
             </span>
           {%- endif -%}
-          {%- assign product_type_clean = product.type | downcase | strip -%}
-          {%- if product.type != blank and product_type_clean != 'physical' -%}
-            <span class="km-pp__meta-tag">
-              {%- render 'icon', icon: 'arrow-up-right' -%}
-              {{ product.type }}
-            </span>
-          {%- endif -%}
         </div>
 
         <form method="post" action="/cart/add" class="km-pp__form" data-km-product-form enctype="multipart/form-data">
