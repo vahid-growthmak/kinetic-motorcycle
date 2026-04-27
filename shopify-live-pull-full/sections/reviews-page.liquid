@@ -1,0 +1,231 @@
+{%- comment -%}
+  Customer Reviews page — hero, stats, FUNCTIONAL filter tabs, 3-col cards, CTA.
+  Migrated from snippet to Section for Theme Editor support.
+{%- endcomment -%}
+
+<section class="km-reviews-page" id="Section-{{ section.id }}">
+
+  {%- comment -%} HERO STRIP {%- endcomment -%}
+  <div class="km-reviews-page__hero">
+    <div class="km-container km-reviews-page__hero-inner">
+      <span class="km-reviews-page__eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1 class="km-reviews-page__h1">{{ section.settings.title }}</h1>
+      <p class="km-reviews-page__sub">{{ section.settings.subtext }}</p>
+      <div class="km-reviews-page__stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="km-reviews-page__stat" {{ block.shopify_attributes }}>
+              <div class="km-reviews-page__num-row">
+                <span class="km-reviews-page__num">{{ block.settings.number }}</span>
+                {%- if block.settings.show_stars -%}
+                  <span class="km-reviews-page__num-stars" aria-hidden="true">
+                    {%- for i in (1..5) -%}<span>{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
+                  </span>
+                {%- endif -%}
+              </div>
+              <div class="km-reviews-page__label">{{ block.settings.label }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} FUNCTIONAL FILTER TABS {%- endcomment -%}
+  <div class="km-container km-reviews-page__tabs-wrap">
+    <div class="km-reviews-page__tabs" role="tablist" data-km-rev-tabs>
+      <button type="button" class="km-reviews-page__tab is-active" role="tab" aria-selected="true" data-filter="all">All reviews</button>
+      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="exhausts">Exhausts</button>
+      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="handlebars">Handlebars</button>
+      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="accessories">Accessories</button>
+      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="service">Service</button>
+    </div>
+    <div class="km-reviews-page__result-count" data-km-rev-count>Showing 0 reviews</div>
+  </div>
+
+  {%- comment -%} REVIEW GRID {%- endcomment -%}
+  <div class="km-container km-reviews-page__grid-wrap">
+    <div class="km-reviews-page__grid" data-km-rev-grid>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <article class="km-reviews-page__card" data-category="{{ block.settings.category }}" {{ block.shopify_attributes }}>
+            <div class="km-reviews-page__verified">
+              <span class="km-reviews-page__verified-dot"></span>
+              Verified Purchase
+            </div>
+            <div class="km-reviews-page__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <span {% if i > block.settings.rating %}style="opacity:0.3;"{% endif %}>{%- render 'icon', icon: 'star' -%}</span>
+              {%- endfor -%}
+            </div>
+            <p class="km-reviews-page__quote">{{ block.settings.quote }}</p>
+            <div class="km-reviews-page__meta">
+              <div class="km-reviews-page__author">{{ block.settings.author }}</div>
+              <div class="km-reviews-page__product">{{ block.settings.product_name }}</div>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="km-reviews-page__empty" data-km-rev-empty hidden>
+      No reviews in this category yet.
+    </div>
+  </div>
+
+  {%- comment -%} CTA STRIP {%- endcomment -%}
+  <div class="km-container">
+    <div class="km-reviews-page__cta">
+      <div>
+        <h2>{{ section.settings.cta_title }}</h2>
+        <p>{{ section.settings.cta_text }}</p>
+      </div>
+      <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="km-btn km-btn-primary">
+        {{ section.settings.cta_label }}
+        {%- render 'icon', icon: 'arrow-right' -%}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .km-reviews-page { padding-bottom: 96px; background: var(--km-body-bg, #EDEDED); }
+  .km-reviews-page__hero { background: #000; color: #fff; padding: 80px 0 64px; position: relative; overflow: hidden; isolation: isolate; }
+  .km-reviews-page__hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(60% 80% at 80% 30%, rgba(251,176,61,.15), transparent 60%); }
+  .km-reviews-page__hero-inner { text-align: center; max-width: 760px; margin: 0 auto; }
+  .km-reviews-page__eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--km-accent, #FBB03D); margin-bottom: 14px; }
+  .km-reviews-page__h1 { font-size: clamp(40px, 5.4vw, 64px); font-weight: 700; letter-spacing: -.02em; color: #fff; margin: 0 0 16px; line-height: 1.05; }
+  .km-reviews-page__sub { font-size: 16px; line-height: 1.65; color: rgba(255,255,255,.8); margin: 0 auto 40px; max-width: 560px; }
+  .km-reviews-page__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.15); max-width: 640px; margin: 0 auto; }
+  .km-reviews-page__stat { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+  .km-reviews-page__num-row { min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .km-reviews-page__num { font-size: 36px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.01em; }
+  .km-reviews-page__num-stars { display: inline-flex; gap: 2px; color: var(--km-accent, #FBB03D); }
+  .km-reviews-page__num-stars svg { width: 12px; height: 12px; }
+  .km-reviews-page__label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 10px; }
+  .km-reviews-page__tabs-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; margin: 48px auto 28px; }
+  .km-reviews-page__tabs { display: flex; gap: 4px; padding: 8px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 9999px; }
+  .km-reviews-page__tab { padding: 12px 24px; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--km-text, #4B5563); background: transparent; border: 0; border-radius: 9999px; cursor: pointer; font-family: inherit; transition: background .25s ease, color .25s ease; white-space: nowrap; }
+  .km-reviews-page__tab:hover { color: #000; background: var(--km-body-bg, #EDEDED); }
+  .km-reviews-page__tab.is-active { background: #000; color: #fff; }
+  .km-reviews-page__result-count { font-size: 12px; color: var(--km-text, #4B5563); font-weight: 600; letter-spacing: .02em; }
+  .km-reviews-page__grid-wrap { margin-bottom: 64px; }
+  .km-reviews-page__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .km-reviews-page__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; transition: transform .25s ease, box-shadow .25s ease, opacity .3s ease, scale .3s ease; transform-origin: center; }
+  .km-reviews-page__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
+  .km-reviews-page__card[hidden] { display: none; }
+  .km-reviews-page__card.is-entering { animation: km-rev-fade .35s ease both; }
+  @keyframes km-rev-fade { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .km-reviews-page__verified { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #0a8453; background: rgba(10,132,83,.08); padding: 6px 12px; border-radius: 9999px; align-self: flex-start; }
+  .km-reviews-page__verified-dot { width: 6px; height: 6px; border-radius: 50%; background: #0a8453; }
+  .km-reviews-page__stars { display: inline-flex; gap: 2px; color: var(--km-accent, #FBB03D); }
+  .km-reviews-page__quote { font-size: 15px; line-height: 1.65; color: var(--km-text, #4B5563); margin: 0; font-weight: 500; flex: 1; }
+  .km-reviews-page__meta { padding-top: 14px; border-top: 1px solid var(--km-border, #DDDDDD); }
+  .km-reviews-page__author { font-weight: 700; font-size: 14px; color: #000; }
+  .km-reviews-page__product { font-size: 12px; color: var(--km-text, #4B5563); margin-top: 4px; line-height: 1.4; }
+  .km-reviews-page__empty { text-align: center; padding: 60px 20px; background: #fff; border: 1px dashed var(--km-border, #DDDDDD); border-radius: 20px; color: var(--km-text, #4B5563); font-size: 15px; }
+  .km-reviews-page__cta { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 24px; padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+  .km-reviews-page__cta h2 { font-size: 24px; font-weight: 700; color: #000; margin: 0 0 6px; letter-spacing: -.01em; }
+  .km-reviews-page__cta p { font-size: 14px; color: var(--km-text, #4B5563); margin: 0; max-width: 520px; }
+
+  @media (max-width: 900px) { .km-reviews-page__grid { grid-template-columns: 1fr; } .km-reviews-page__cta { flex-direction: column; text-align: center; padding: 32px 24px; } }
+  @media (max-width: 700px) { .km-reviews-page__tabs { flex-wrap: wrap; justify-content: center; gap: 6px; border-radius: 20px; } .km-reviews-page__tab { padding: 10px 16px; font-size: 11px; } }
+</style>
+
+<script>
+(() => {
+  const tabsRoot = document.querySelector('[data-km-rev-tabs]');
+  const grid = document.querySelector('[data-km-rev-grid]');
+  const count = document.querySelector('[data-km-rev-count]');
+  const empty = document.querySelector('[data-km-rev-empty]');
+  if (!tabsRoot || !grid) return;
+
+  const tabs = [...tabsRoot.querySelectorAll('[data-filter]')];
+  const cards = [...grid.querySelectorAll('[data-category]')];
+
+  const applyFilter = (filter) => {
+    let visible = 0;
+    cards.forEach((card) => {
+      const matches = filter === 'all' || card.getAttribute('data-category') === filter;
+      if (matches) {
+        card.hidden = false;
+        card.classList.remove('is-entering');
+        void card.offsetWidth;
+        card.classList.add('is-entering');
+        visible++;
+      } else {
+        card.hidden = true;
+        card.classList.remove('is-entering');
+      }
+    });
+    if (count) count.textContent = visible === 1 ? 'Showing 1 review' : 'Showing ' + visible + ' reviews';
+    if (empty) empty.hidden = visible > 0;
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const filter = tab.getAttribute('data-filter') || 'all';
+      tabs.forEach((t) => {
+        t.classList.toggle('is-active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+      applyFilter(filter);
+    });
+  });
+
+  applyFilter('all');
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real Rider Feedback" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Customer Reviews" },
+    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "The stories behind 12,000+ builds." },
+    { "type": "header", "content": "CTA Strip" },
+    { "type": "text", "id": "cta_title", "label": "CTA Title", "default": "Bought something? Tell us how it went." },
+    { "type": "textarea", "id": "cta_text", "label": "CTA Text", "default": "Your review helps other riders pick the right parts." },
+    { "type": "text", "id": "cta_label", "label": "CTA Link Label", "default": "Leave a review" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Hero Stat",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "4.9" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Average rating" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show star icons", "default": true }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review Card",
+      "settings": [
+        { "type": "select", "id": "category", "label": "Category", "options": [
+            { "value": "exhausts", "label": "Exhausts" },
+            { "value": "handlebars", "label": "Handlebars" },
+            { "value": "accessories", "label": "Accessories" },
+            { "value": "service", "label": "Service" }
+          ], "default": "accessories" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Great quality parts. Fast shipping." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Verified Buyer" },
+        { "type": "text", "id": "product_name", "label": "Product Name", "default": "Custom Parts" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "stat", "settings": { "number": "4.9", "label": "Average rating" } },
+      { "type": "stat", "settings": { "number": "12k+", "label": "Bikes built", "show_stars": false } },
+      { "type": "stat", "settings": { "number": "10 yrs", "label": "Houston-built", "show_stars": false } },
+      { "type": "review", "settings": { "category": "exhausts", "author": "Chad Ramsey", "product_name": "Full Custom Exhaust" } }
+    ]
+  }
+}
+{% endschema %}
+{% comment %} Sync: Wed Apr 22 14:49:52 IST 2026 {% endcomment %}

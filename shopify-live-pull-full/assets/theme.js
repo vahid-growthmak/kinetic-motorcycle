@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Kinetic Motorcycles — Base theme JS
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  // --------- Sticky header shadow on scroll ---------
+  const header = document.querySelector('[data-km-header]');
+  if (header) {
+    const onScroll = () => {
+      if (window.scrollY > 20) header.classList.add('is-scrolled');
+      else header.classList.remove('is-scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // --------- Mobile menu toggle (drawer + backdrop + mega menu) ---------
+  const menuToggle = document.querySelector('[data-km-menu-toggle]');
+  const menuPanel = document.querySelector('[data-km-menu]');
+  if (menuToggle && menuPanel) {
+    const closeMenu = () => {
+      menuPanel.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('km-menu-open');
+      document.body.style.overflow = '';
+    };
+    const openMenu = () => {
+      menuPanel.classList.add('is-open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('km-menu-open');
+      document.body.style.overflow = 'hidden';
+    };
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('is-open')) closeMenu();
+      else openMenu();
+    });
+    // Click the close ✕ in top-right of drawer (rendered via ::before)
+    menuPanel.addEventListener('click', (e) => {
+      if (!menuPanel.classList.contains('is-open')) return;
+      const rect = menuPanel.getBoundingClientRect();
+      if (e.clientY < rect.top + 56 && e.clientX > rect.right - 60) closeMenu();
+    });
+    // Click backdrop (outside drawer) closes too
+    document.addEventListener('click', (e) => {
+      if (!menuPanel.classList.contains('is-open')) return;
+      if (menuPanel.contains(e.target) || menuToggle.contains(e.target)) return;
+      closeMenu();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuPanel.classList.contains('is-open')) closeMenu();
+    });
+    // Close when any regular link inside the drawer is clicked — EXCEPT:
+    //   - the COLLECTIONS link (toggles accordion instead of navigating, on mobile)
+    //   - links inside the mobile mega-menu accordion (navigate normally)
+    //   - <summary> elements inside <details> accordion
+    const megaItem = menuPanel.querySelector('.km-header__menu-item--mega');
+    const megaLink = megaItem ? megaItem.querySelector('.km-header__menu-link--has-dropdown') : null;
+
+    menuPanel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        // If it's the COLLECTIONS link and we're on mobile (drawer-open), toggle accordion instead of navigating
+        if (link === megaLink && menuPanel.classList.contains('is-open')) {
+          e.preventDefault();
+          e.stopPropagation();
+          const open = megaItem.classList.toggle('is-mega-open');
+          megaLink.setAttribute('aria-expanded', open ? 'true' : 'false');
+          return;
+        }
+        // Normal link inside drawer — close the drawer as it navigates
+        if (menuPanel.classList.contains('is-open')) closeMenu();
+      });
+    });
+  }
+
+  // --------- Model chooser tabs ---------
+  document.querySelectorAll('[data-km-tabs]').forEach((container) => {
+    const tabs = container.querySelectorAll('[data-km-tab]');
+    const panels = container.querySelectorAll('[data-km-panel]');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.kmTab;
+        tabs.forEach((t) => t.classList.toggle('is-active', t.dataset.kmTab === id));
+        panels.forEach((p) => p.classList.toggle('is-active', p.dataset.kmPanel === id));
+      });
+    });
+  });
+
+  // --------- Before/After slider ---------
+  document.querySelectorAll('[data-km-compare]').forEach((el) => {
+    const handle = el.querySelector('[data-km-compare-handle]');
+    const after = el.querySelector('[data-km-compare-after]');
+    if (!handle || !after) return;
+
+    let rect;
+    let dragging = false;
+    const setPos = (x) => {
+      const r = el.getBoundingClientRect();
+      let pct = ((x - r.left) / r.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      after.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      handle.style.left = pct + '%';
+    };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      setPos(x);
+    };
+    const onDown = (e) => {
+      dragging = true;
+      rect = el.getBoundingClientRect();
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      setPos(x);
+    };
+    const onUp = () => { dragging = false; };
+
+    handle.addEventListener('mousedown', onDown);
+    handle.addEventListener('touchstart', onDown, { passive: true });
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('touchmove', onMove, { passive: true });
+    document.addEventListener('mouseup', onUp);
+    document.addEventListener('touchend', onUp);
+
+    // Allow click anywhere on the image to move the slider
+    el.addEventListener('click', (e) => {
+      if (e.target === handle) return;
+      const x = e.clientX;
+      setPos(x);
+    });
+
+    // Initial position at 50%
+    after.style.clipPath = 'inset(0 50% 0 0)';
+    handle.style.left = '50%';
+  });
+
+  // --------- FAQ accordion ---------
+  document.querySelectorAll('[data-km-faq]').forEach((item) => {
+    const trigger = item.querySelector('[data-km-faq-trigger]');
+    const panel = item.querySelector('[data-km-faq-panel]');
+    if (!trigger || !panel) return;
+    trigger.addEventListener('click', () => {
+      const open = item.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // --------- Reveal on scroll ---------
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('km-in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    document.querySelectorAll('[data-km-reveal]').forEach((el) => io.observe(el));
+  }
+
+  // --------- Horizontal carousel controls ---------
+  document.querySelectorAll('[data-km-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-km-track]');
+    const prev = carousel.querySelector('[data-km-prev]');
+    const next = carousel.querySelector('[data-km-next]');
+    if (!track) return;
+    const scrollBy = (dir) => {
+      const card = track.firstElementChild;
+      const step = card ? card.getBoundingClientRect().width + 24 : 300;
+      track.scrollBy({ left: dir * step, behavior: 'smooth' });
+    };
+    if (prev) prev.addEventListener('click', () => scrollBy(-1));
+    if (next) next.addEventListener('click', () => scrollBy(1));
+  });
+  // ---------- Product variant picker (color/size) ----------
+  document.querySelectorAll('[data-km-product-form]').forEach((form) => {
+    const dataEl = form.querySelector('[data-km-variants]');
+    if (!dataEl) return;
+    let variants;
+    try { variants = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    const idInput = form.querySelector('input[name="id"]');
+    const addBtn = form.querySelector('.km-pp__add');
+    const priceEl = document.querySelector('.km-pp__price');
+    const compareEl = document.querySelector('.km-pp__compare');
+    const selected = [];
+    form.querySelectorAll('.km-pp__option-values').forEach((group, i) => {
+      const active = group.querySelector('.km-pp__option-value.is-active') || group.querySelector('.km-pp__option-value');
+      selected[i] = active ? active.getAttribute('data-option-value') : null;
+    });
+    const formatMoney = (cents) => '$' + (cents / 100).toFixed(2);
+    const update = () => {
+      const match = variants.find(v => v.options.every((o, i) => o === selected[i]));
+      if (match) {
+        if (idInput) idInput.value = match.id;
+        if (priceEl) priceEl.textContent = formatMoney(match.price);
+        if (compareEl && match.compare_at_price && match.compare_at_price > match.price) {
+          compareEl.textContent = formatMoney(match.compare_at_price);
+          compareEl.style.display = '';
+        } else if (compareEl) {
+          compareEl.style.display = 'none';
+        }
+        if (addBtn) {
+          addBtn.disabled = !match.available;
+          addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
+        }
+        if (match.featured_image && match.featured_image.src) {
+          const mainImg = document.querySelector('.km-pp__media img, [data-km-product-image]');
+          if (mainImg) mainImg.src = match.featured_image.src;
+        }
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('variant', match.id);
+          window.history.replaceState({}, '', url);
+        } catch (e) {}
+      }
+    };
+    form.querySelectorAll('.km-pp__option-value').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pos = parseInt(btn.getAttribute('data-option-position'), 10) || 0;
+        const val = btn.getAttribute('data-option-value');
+        selected[pos] = val;
+        const group = btn.closest('.km-pp__option-values');
+        if (group) {
+          group.querySelectorAll('.km-pp__option-value').forEach(b => { b.classList.remove('is-active'); b.removeAttribute('aria-current'); });
+          btn.classList.add('is-active');
+          btn.setAttribute('aria-current', 'true');
+        }
+        update();
+      });
+    });
+  });
+
+})();

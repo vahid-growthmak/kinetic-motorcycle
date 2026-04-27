@@ -1,0 +1,71 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "ticker": {
+      "type": "ticker",
+      "settings": {}
+    },
+    "model-chooser": {
+      "type": "model-chooser",
+      "settings": {}
+    },
+    "carousel-1": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Sellers"
+      }
+    },
+    "carousel-2": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Selling Exhausts"
+      }
+    },
+    "carousel-3": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Best Selling Handlebars"
+      }
+    },
+    "features": {
+      "type": "features",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {}
+    },
+    "blogs": {
+      "type": "blogs",
+      "settings": {}
+    },
+    "cta": {
+      "type": "cta",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "model-chooser",
+    "carousel-1",
+    "carousel-2",
+    "carousel-3",
+    "features",
+    "reviews",
+    "blogs",
+    "cta"
+  ]
+}

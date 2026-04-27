@@ -29,9 +29,13 @@
           <article class="km-blogs__card">
             <a href="{{ article.url }}" class="km-blogs__media">
               {%- if article.image != blank -%}
-                {{ article.image | image_url: width: 800 | image_tag: width: 400, height: 260, loading: 'lazy', alt: article.title, class: 'km-blogs__img' }}
+                {{ article.image | image_url: width: 1200 | image_tag: 
+                   loading: 'lazy', 
+                   sizes: '(min-width: 1200px) 450px, (min-width: 768px) 50vw, 100vw',
+                   widths: '400, 600, 800, 1200',
+                   alt: article.title, class: 'km-blogs__img' }}
               {%- else -%}
-                <img src="{{ 'blog-1.png' | asset_url }}" width="400" height="260" loading="lazy" alt="{{ article.title }}" class="km-blogs__img">
+                <img src="{{ 'blog-1.png' | asset_url }}" width="800" height="520" loading="lazy" alt="{{ article.title }}" class="km-blogs__img">
               {%- endif -%}
               {%- if article.tags.size > 0 -%}<span class="km-blogs__category">{{ article.tags.first }}</span>{%- endif -%}
             </a>
@@ -50,9 +54,13 @@
             <article class="km-blogs__card" {{ block.shopify_attributes }}>
               <a href="{{ block.settings.url | default: '/blogs/news' }}" class="km-blogs__media">
                 {%- if block.settings.image != blank -%}
-                  {{ block.settings.image | image_url: width: 800 | image_tag: width: 400, height: 260, loading: 'lazy', alt: block.settings.title, class: 'km-blogs__img' }}
+                  {{ block.settings.image | image_url: width: 1200 | image_tag: 
+                     loading: 'lazy', 
+                     sizes: '(min-width: 1200px) 450px, (min-width: 768px) 50vw, 100vw',
+                     widths: '400, 600, 800, 1200',
+                     alt: block.settings.title, class: 'km-blogs__img' }}
                 {%- elsif block.settings.asset_name != blank -%}
-                  <img src="{{ block.settings.asset_name | asset_url }}" width="400" height="260" loading="lazy" alt="{{ block.settings.title }}" class="km-blogs__img">
+                  <img src="{{ block.settings.asset_name | asset_url }}" width="800" height="520" loading="lazy" alt="{{ block.settings.title }}" class="km-blogs__img">
                 {%- endif -%}
                 {%- if block.settings.category != blank -%}<span class="km-blogs__category">{{ block.settings.category }}</span>{%- endif -%}
               </a>

@@ -1,0 +1,223 @@
+{%- comment -%}
+  Collection — sidebar filter + breadcrumb + 3-col grid (matches Kinetic collection layout).
+{%- endcomment -%}
+<section class="km-coll-page">
+  <div class="km-container">
+
+    {%- comment -%} Breadcrumb {%- endcomment -%}
+    <nav class="km-coll__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ routes.collections_url }}">Collections</a>
+      <span aria-hidden="true">/</span>
+      <span class="km-coll__crumb-current">{{ collection.title }}</span>
+    </nav>
+
+    <header class="km-coll__header">
+      <h1 class="km-coll__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="km-coll__desc">{{ collection.description }}</div>
+      {%- endif -%}
+      <div class="km-coll__count">
+        {%- if collection.products_count > 0 -%}
+          {{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}
+        {%- else -%}
+          Browse the collection
+        {%- endif -%}
+      </div>
+    </header>
+
+    <div class="km-coll__layout">
+      {%- comment -%} Sidebar — filters + related collections {%- endcomment -%}
+      <aside class="km-coll__side" aria-label="Filters">
+        <div class="km-coll__side-group">
+          <h3 class="km-coll__side-h">Shop by model</h3>
+          <ul class="km-coll__side-list">
+            {%- assign brands = 'Sportster|harley-davidson-sportster-parts,Softail|harley-davidson-softail-parts,Dyna|harley-davidson-dyna-parts,Triumph|triumph-motorcycle-parts-accessories,Honda CB|honda-cb-parts,Indian|indian' | split: ',' -%}
+            {%- for b in brands -%}
+              {%- assign p = b | split: '|' -%}
+              <li><a href="/collections/{{ p[1] }}" class="{% if collection.handle == p[1] %}is-active{% endif %}">{{ p[0] }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        {%- comment -%} DYNAMIC CATEGORY LOGIC {%- endcomment -%}
+        {%- assign model_handles = "Sportster,harley-davidson-sportster-parts|Softail,harley-davidson-softail-parts|Dyna,harley-davidson-dyna-parts|Indian,indian|Triumph,triumph-motorcycle-parts-accessories|Honda,honda-cb-parts" | split: "|" -%}
+        {%- assign current_model_name = "" -%}
+        {%- assign current_model_base = "" -%}
+
+        {%- for m in model_handles -%}
+          {%- assign mp = m | split: "," -%}
+          {%- if collection.handle contains mp[1] or collection.handle contains mp[0] | downcase -%}
+            {%- assign current_model_name = mp[0] -%}
+            {%- assign current_model_base = mp[1] -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- capture model_cats_data -%}
+          Sportster:Accessories^harley-davidson-sportster-accessories|Footpegs and Shifters^harley-davidson-sportster-footpegs-shifters|Exhausts^harley-davidson-sportster-exhaust-systems|Covers-Decals-Armor^harley-davidson-sportster-covers-decals-armor|Handlebars^harley-davidson-sportster-handlebars|Lighting^harley-davidson-sportster-lighting|Services^harley-davidson-sportster-services|Intake Systems^harley-davidson-sportster-intake-systems|Grips^harley-davidson-sportster-grips
+          ||Softail:Accessories^harley-davidson-softail-accessories|Exhausts^harley-davidson-softail-exhaust-systems|Covers-Decals-Armor^harley-davidson-softail-covers-decals-armor|Intake Systems^harley-davidson-softail-intake-systems
+          ||Dyna:Exhausts^harley-davidson-dyna-exhaust-systems|Intake Systems^harley-davidson-dyna-intake-systems
+          ||Indian:Exhausts^indian-exhausts
+          ||Honda:Accessories^honda-cb-accessories|Exhausts^honda-cb-exhaust-systems|Suspension and Chassis^honda-cb-suspension-chassis
+          ||Triumph:Exhausts^triumph-exhaust-systems|Grips^triumph-motorcycle-grips|Accessories^triumph-motorcycle-accessories|Faceplates^triumph-faceplates
+        {%- endcapture -%}
+        {%- assign model_cat_rows = model_cats_data | strip | split: '||' -%}
+
+        <div class="km-coll__side-group">
+          <h3 class="km-coll__side-h">Shop by category</h3>
+          <ul class="km-coll__side-list">
+            {%- assign found_cats = false -%}
+            {%- if current_model_name != blank -%}
+              {%- for row in model_cat_rows -%}
+                {%- assign rp = row | split: ':' -%}
+                {%- if rp[0] contains current_model_name -%}
+                  {%- assign cat_items = rp[1] | split: '|' -%}
+                  {%- for item in cat_items -%}
+                    {%- assign ip = item | split: '^' -%}
+                    <li><a href="/collections/{{ ip[1] }}" class="{% if collection.handle == ip[1] %}is-active{% endif %}">{{ ip[0] }}</a></li>
+                  {%- endfor -%}
+                  {%- assign found_cats = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- unless found_cats -%}
+              {%- assign cats = 'Accessories,Exhausts,Handlebars,Footpegs &amp; Shifters,Covers-Decals-Armor,Grips,Lighting,Intake Systems,Services,Seats' | split: ',' -%}
+              {%- for c in cats -%}
+                <li><a href="/collections/{{ c | downcase | replace: ' ', '-' | replace: '&amp;', 'and' }}">{{ c }}</a></li>
+              {%- endfor -%}
+            {%- endunless -%}
+          </ul>
+        </div>
+
+        <div class="km-coll__side-group">
+          <h3 class="km-coll__side-h">Price</h3>
+          <ul class="km-coll__side-list">
+            <li><a href="?price=0-100">Under $100</a></li>
+            <li><a href="?price=100-250">$100 – $250</a></li>
+            <li><a href="?price=250-500">$250 – $500</a></li>
+            <li><a href="?price=500-1000">$500 – $1,000</a></li>
+            <li><a href="?price=1000+">$1,000+</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="km-coll__main">
+        <div class="km-coll__toolbar">
+          <div class="km-coll__sort-label">Sort by</div>
+          <form method="get" class="km-coll__sort">
+            <select name="sort_by" onchange="this.form.submit()">
+              <option value="manual">Featured</option>
+              <option value="best-selling">Best selling</option>
+              <option value="title-ascending">Alphabetical, A–Z</option>
+              <option value="price-ascending">Price, low to high</option>
+              <option value="price-descending">Price, high to low</option>
+              <option value="created-descending">Newest first</option>
+            </select>
+          </form>
+        </div>
+
+        {%- paginate collection.products by 12 -%}
+          {%- if collection.products.size > 0 -%}
+            <div class="km-coll__grid">
+              {%- for product in collection.products -%}
+                <a href="{{ product.url }}" class="km-coll__card">
+                  <div class="km-coll__media">
+                    {%- if product.featured_image != blank -%}
+                      {{ product.featured_image | image_url: width: 600 | image_tag:
+                         width: 300, height: 300, loading: 'lazy',
+                         alt: product.title, class: 'km-coll__img' }}
+                    {%- endif -%}
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="km-coll__sale">Sale</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="km-coll__info">
+                    <h3 class="km-coll__name">{{ product.title }}</h3>
+                    {%- if product.vendor != blank -%}
+                      <div class="km-coll__vendor">
+                        <img src="{{ 'icon-motor.png' | asset_url }}" width="14" height="14" alt="" loading="lazy">
+                        <span>{{ product.vendor }}</span>
+                      </div>
+                    {%- endif -%}
+                    <div class="km-coll__pricerow">
+                      <span class="km-coll__price">{{ product.price | money }}</span>
+                      {%- if product.compare_at_price > product.price -%}
+                        <span class="km-coll__compare">{{ product.compare_at_price | money }}</span>
+                      {%- endif -%}
+                    </div>
+                    <div class="km-coll__rating" aria-hidden="true">
+                      {%- for i in (1..5) -%}<span class="{% if i > 4 %}is-off{% endif %}">{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
+                    </div>
+                  </div>
+                </a>
+              {%- endfor -%}
+            </div>
+
+            {%- if paginate.pages > 1 -%}
+              <nav class="km-coll__pagination">{{ paginate | default_pagination }}</nav>
+            {%- endif -%}
+          {%- else -%}
+            <div class="km-coll__empty">
+              <p>No products in this collection yet.</p>
+              <a href="{{ routes.all_products_collection_url }}" class="km-btn km-btn-primary">Browse all products {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .km-coll-page { padding: 48px 0 80px; background: var(--km-body-bg, #EDEDED); }
+  .km-coll__crumbs { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--km-text, #4B5563); margin-bottom: 28px; }
+  .km-coll__crumbs a { color: var(--km-text, #4B5563); text-decoration: none; transition: color .2s ease; }
+  .km-coll__crumbs a:hover { color: var(--km-accent, #FBB03D); }
+  .km-coll__crumb-current { color: #000; font-weight: 700; }
+
+  .km-coll__header { max-width: 880px; margin-bottom: 40px; }
+  .km-coll__title { font-size: clamp(32px, 4.4vw, 52px); font-weight: 700; letter-spacing: -.02em; color: #000; margin: 0 0 14px; }
+  .km-coll__desc { font-size: 15px; line-height: 1.7; color: var(--km-text, #4B5563); margin-bottom: 12px; }
+  .km-coll__count { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--km-accent, #FBB03D); }
+
+  .km-coll__layout { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: flex-start; }
+  .km-coll__side { position: sticky; top: 24px; }
+  .km-coll__side-group { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 16px; padding: 22px; margin-bottom: 16px; }
+  .km-coll__side-h { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #000; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--km-border, #DDDDDD); }
+  .km-coll__side-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .km-coll__side-list a { color: var(--km-text, #4B5563); text-decoration: none; font-size: 13px; line-height: 1.5; transition: color .2s ease; }
+  .km-coll__side-list a:hover { color: #000; }
+  .km-coll__side-list a.is-active { color: #000; font-weight: 700; }
+
+  .km-coll__toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-bottom: 20px; padding: 12px 16px; background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 12px; }
+  .km-coll__sort-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--km-text, #4B5563); }
+  .km-coll__sort select { padding: 6px 10px; border: 1px solid var(--km-border, #DDDDDD); border-radius: 6px; background: #fff; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; }
+
+  .km-coll__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .km-coll__card { background: #fff; border: 1px solid var(--km-border, #DDDDDD); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform .25s ease, box-shadow .25s ease; }
+  .km-coll__card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.06); }
+  .km-coll__media { aspect-ratio: 1 / 1; overflow: hidden; background: #f9fafb; position: relative; }
+  .km-coll__img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .km-coll__card:hover .km-coll__img { transform: scale(1.04); }
+  .km-coll__sale { position: absolute; top: 12px; left: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; background: #FFDEDE; color: #b91c1c; border-radius: 9999px; }
+  .km-coll__info { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .km-coll__name { font-size: 14px; font-weight: 600; line-height: 1.4; color: #000; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .km-coll__vendor { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--km-text, #4B5563); }
+  .km-coll__pricerow { display: flex; align-items: baseline; gap: 8px; margin-top: auto; }
+  .km-coll__price { font-size: 15px; font-weight: 700; color: #000; }
+  .km-coll__compare { font-size: 12px; color: #9ca3af; text-decoration: line-through; }
+  .km-coll__rating { display: inline-flex; gap: 1px; color: var(--km-accent, #FBB03D); }
+  .km-coll__rating svg { width: 12px; height: 12px; }
+  .km-coll__rating .is-off { color: #d1d5db; }
+
+  .km-coll__empty { padding: 80px 20px; text-align: center; background: #fff; border-radius: 16px; }
+  .km-coll__pagination { margin-top: 48px; display: flex; justify-content: center; gap: 8px; }
+
+  @media (max-width: 1000px) { .km-coll__layout { grid-template-columns: 1fr; } .km-coll__side { position: static; } .km-coll__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px)  { .km-coll__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px)  { .km-coll__grid { grid-template-columns: 1fr; } }
+</style>

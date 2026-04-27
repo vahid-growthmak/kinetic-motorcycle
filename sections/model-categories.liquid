@@ -26,9 +26,13 @@
           <div class="km-model-cats__card">
             <div class="km-model-cats__card-image">
               {%- if cat.image != blank -%}
-                {{ cat.image | image_url: width: 800 | image_tag: width: 400, height: 260, loading: 'lazy', alt: cat.title, class: 'km-model-cats__img' }}
+                {{ cat.image | image_url: width: 1200 | image_tag: 
+                   loading: 'lazy', 
+                   sizes: '(min-width: 1200px) 600px, (min-width: 768px) 50vw, 100vw',
+                   widths: '400, 600, 800, 1200',
+                   alt: cat.title, class: 'km-model-cats__img' }}
               {%- else -%}
-                <img src="{{ 'category_illustration_vintage.png' | asset_url }}" width="400" height="260" loading="lazy" alt="{{ cat.title }}" class="km-model-cats__img">
+                <img src="{{ 'category_illustration_vintage.png' | asset_url }}" width="800" height="520" loading="lazy" alt="{{ cat.title }}" class="km-model-cats__img">
               {%- endif -%}
             </div>
             <div class="km-model-cats__card-content">
@@ -50,9 +54,13 @@
           <div class="km-model-cats__card" {{ block.shopify_attributes }}>
             <div class="km-model-cats__card-image">
               {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 800 | image_tag: width: 400, height: 260, loading: 'lazy', alt: block.settings.title, class: 'km-model-cats__img' }}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: 
+                   loading: 'lazy', 
+                   sizes: '(min-width: 1200px) 600px, (min-width: 768px) 50vw, 100vw',
+                   widths: '400, 600, 800, 1200',
+                   alt: block.settings.title, class: 'km-model-cats__img' }}
               {%- else -%}
-                <img src="{{ 'category_illustration_vintage.png' | asset_url }}" width="400" height="260" loading="lazy" alt="{{ block.settings.title }}" class="km-model-cats__img">
+                <img src="{{ 'category_illustration_vintage.png' | asset_url }}" width="800" height="520" loading="lazy" alt="{{ block.settings.title }}" class="km-model-cats__img">
               {%- endif -%}
             </div>
             <div class="km-model-cats__card-content">

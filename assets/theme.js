@@ -186,11 +186,9 @@
     
     const selected = [];
     form.querySelectorAll('.km-pp__option-values').forEach((group, i) => {
-      const active = group.querySelector('.km-pp__option-value.is-active');
+      const active = group.querySelector('.km-pp__option-value.is-active') || group.querySelector('.km-pp__option-value');
       if (active) {
         selected[i] = active.getAttribute('data-option-value');
-      } else {
-        selected[i] = null;
       }
     });
 
@@ -217,7 +215,7 @@
         });
       });
 
-      if (match && selected.every(s => s !== null)) {
+      if (match) {
         if (idInput) idInput.value = match.id;
         if (priceEl) priceEl.textContent = formatMoney(match.price);
         
@@ -229,10 +227,7 @@
             compareEl.style.display = 'none';
           }
         }
-      } else {
-        if (idInput) idInput.value = "";
-      }
-      if (match) {
+        
         if (addBtn) {
           addBtn.disabled = !match.available;
           addBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
@@ -247,11 +242,6 @@
           url.searchParams.set('variant', match.id);
           window.history.replaceState({}, '', url);
         } catch (e) {}
-      } else {
-        if (addBtn) {
-          addBtn.disabled = true;
-          addBtn.textContent = 'Select Options';
-        }
       }
     };
 

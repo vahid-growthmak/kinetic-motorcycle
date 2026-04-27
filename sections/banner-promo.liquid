@@ -65,9 +65,9 @@
                 </div>
                 <div class="km-banner-promo__offer-media">
                   {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 500 | image_tag: width: 200, height: 180, loading: 'lazy', alt: block.settings.heading, class: 'km-banner-promo__offer-img' }}
+                    {{ block.settings.image | image_url: width: 800 | image_tag: width: 400, height: 360, loading: 'lazy', alt: block.settings.heading, class: 'km-banner-promo__offer-img' }}
                   {%- elsif block.settings.asset_name != blank -%}
-                    <img src="{{ block.settings.asset_name | asset_url }}" alt="{{ block.settings.heading }}" width="200" height="180" loading="lazy" class="km-banner-promo__offer-img">
+                    <img src="{{ block.settings.asset_name | asset_url }}" alt="{{ block.settings.heading }}" width="400" height="360" loading="lazy" class="km-banner-promo__offer-img">
                   {%- endif -%}
                 </div>
               </a>

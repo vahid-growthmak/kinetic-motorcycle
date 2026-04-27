@@ -20,9 +20,13 @@
           <a href="{{ block.settings.url | default: '#' }}" class="km-categories__card" {{ block.shopify_attributes }}>
             <div class="km-categories__image-wrap">
               {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 600 | image_tag: width: 300, height: 300, loading: 'lazy', alt: block.settings.label, class: 'km-categories__image' }}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: 
+                   loading: 'lazy', 
+                   sizes: '(min-width: 1200px) 300px, (min-width: 768px) 50vw, 100vw',
+                   widths: '400, 600, 800, 1200',
+                   alt: block.settings.label, class: 'km-categories__image' }}
               {%- elsif block.settings.asset_name != blank -%}
-                <img src="{{ block.settings.asset_name | asset_url }}" width="300" height="300" loading="lazy" alt="{{ block.settings.label }}" class="km-categories__image">
+                <img src="{{ block.settings.asset_name | asset_url }}" width="800" height="800" loading="lazy" alt="{{ block.settings.label }}" class="km-categories__image">
               {%- else -%}
                 <div class="km-categories__placeholder"></div>
               {%- endif -%}

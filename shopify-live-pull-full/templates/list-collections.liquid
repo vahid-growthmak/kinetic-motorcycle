@@ -1,0 +1,398 @@
+{%- comment -%}
+  Shop Motorcycle Parts by Model — `/collections` route.
+  6 stacked rows with alternating left/right layout. Each row has:
+    • Before/After image pair with a draggable vertical slider handle
+    • Model name + description
+    • "Choose category :" label + category pills linking to per-category collections
+{%- endcomment -%}
+
+<section class="km-shop-models">
+  <div class="km-container">
+    <header class="km-shop-models__header">
+      <h1 class="km-shop-models__h1">Shop Motorcycle Parts by Model</h1>
+    </header>
+
+    <div class="km-shop-models__list">
+
+      {%- comment -%} ROW 1 — Sportster (image left) {%- endcomment -%}
+      <article class="km-shop-models__row">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-sportster-before.png' | asset_url }}" alt="Harley Davidson Sportster before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-sportster-after.png' | asset_url }}" alt="Harley Davidson Sportster after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Harley Davidson Sportster</h2>
+          <p class="km-shop-models__desc">The Harley-Davidson Sportster has been a symbol of versatility and style since 1957, beloved by riders for its adaptability and iconic look. Our Harley-Davidson Sportster collections bring together premium <strong>exhausts, handlebars, grips, lighting, intake systems, footpegs, shifters, accessories, and services</strong>, selected for precise fitment and dependable performance. You save time, avoid compatibility issues, and upgrade with confidence using proven parts that enhance power, comfort, and overall appearance.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/harley-davidson-sportster-accessories" class="km-shop-models__pill">Accessories {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-footpegs-shifters" class="km-shop-models__pill">Footpegs and Shifters {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-exhaust-systems" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-covers-decals-armor" class="km-shop-models__pill">Covers-Decals-Armor {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-handlebars" class="km-shop-models__pill">Handlebars {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-lighting" class="km-shop-models__pill">Lighting {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-grips" class="km-shop-models__pill">Grips {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-services" class="km-shop-models__pill">Services {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-sportster-intake-systems" class="km-shop-models__pill">Intake Systems {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {%- comment -%} ROW 2 — Softail (image right) {%- endcomment -%}
+      <article class="km-shop-models__row is-reverse">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-softail-before.png' | asset_url }}" alt="Harley Davidson Softail before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-softail-after.webp' | asset_url }}" alt="Harley Davidson Softail after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Harley Davidson Softail</h2>
+          <p class="km-shop-models__desc">The Harley-Davidson Softail combines classic styling with modern performance. Our Softail collections bring together premium <strong>exhausts, intake systems, accessories, covers, decals, and armor</strong>, carefully selected to enhance performance, comfort, and visual appeal. Each product is chosen for precise fitment and dependable performance, helping you upgrade with confidence and build a cohesive setup without unnecessary trial and error.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/harley-davidson-softail-accessories" class="km-shop-models__pill">Accessories {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-softail-exhaust-systems" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-softail-covers-decals-armor" class="km-shop-models__pill">Covers-Decals-Armor {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-softail-intake-systems" class="km-shop-models__pill">Intake Systems {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {%- comment -%} ROW 3 — Dyna (image left) {%- endcomment -%}
+      <article class="km-shop-models__row">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-dyna-before.png' | asset_url }}" alt="Harley Davidson Dyna before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-dyna-after.webp' | asset_url }}" alt="Harley Davidson Dyna after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Harley Davidson Dyna</h2>
+          <p class="km-shop-models__desc">The Harley-Davidson Dyna is built for riders who value raw power and precise handling. Our Dyna collections focus on premium <strong>exhausts and intake systems</strong> designed to enhance performance, throttle response, and sound. Each product is selected for proper fitment and long-term reliability, making it easy to upgrade without unnecessary trial and error.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/harley-davidson-dyna-exhaust-systems" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/harley-davidson-dyna-intake-systems" class="km-shop-models__pill">Intake Systems {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {%- comment -%} ROW 4 — Triumph (image right) {%- endcomment -%}
+      <article class="km-shop-models__row is-reverse">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-triumph-before.png' | asset_url }}" alt="Triumph motorcycle before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-triumph-after.webp' | asset_url }}" alt="Triumph motorcycle after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Triumph ( Bonneville / Thruxton / Scrambler )</h2>
+          <p class="km-shop-models__desc">Triumph motorcycles are known for timeless design and refined performance. Our collections for the <strong>Bonneville, Thruxton, and Scrambler</strong> bring together premium <strong>exhausts, grips, faceplates, and accessories</strong>, carefully selected to enhance performance while preserving classic character. Each product is chosen for precise fitment and dependable quality, making it easy to upgrade with confidence and maintain a clean, cohesive build. Thoughtfully engineered upgrades that respect your Triumph’s heritage while improving ride feel, control, and style.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/triumph-motorcycle-accessories" class="km-shop-models__pill">Accessories {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/triumph-faceplates" class="km-shop-models__pill">Faceplates {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/triumph-exhaust-systems" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/triumph-motorcycle-grips" class="km-shop-models__pill">Grips {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {%- comment -%} ROW 5 — Honda CB (image left) {%- endcomment -%}
+      <article class="km-shop-models__row">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-honda-before.png' | asset_url }}" alt="Honda CB before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-honda-after.webp' | asset_url }}" alt="Honda CB after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Honda CB Series</h2>
+          <p class="km-shop-models__desc">The Honda CB Series is known for balanced performance and proven reliability. Our CB collections feature premium <strong>exhausts, suspension, chassis components, and accessories</strong>, carefully selected to improve power delivery, handling, and overall ride quality. Each product is chosen for precise fitment and long-term durability, making it easy to upgrade with confidence and build a cohesive setup.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/honda-cb-accessories" class="km-shop-models__pill">Accessories {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/honda-cb-exhaust-systems" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+              <a href="/collections/honda-cb-suspension-chassis" class="km-shop-models__pill">Suspension and Chassis {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {%- comment -%} ROW 6 — Indian (image right) {%- endcomment -%}
+      <article class="km-shop-models__row is-reverse">
+        <div class="km-shop-models__compare" data-km-compare>
+          <img src="{{ 'model-sportster-before.png' | asset_url }}" alt="Indian motorcycle before upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--before">
+          <img src="{{ 'model-sportster-after.png' | asset_url }}" alt="Indian motorcycle after upgrade" loading="lazy" class="km-shop-models__img km-shop-models__img--after">
+          <span class="km-shop-models__label km-shop-models__label--before">Before</span>
+          <span class="km-shop-models__label km-shop-models__label--after">After</span>
+          <div class="km-shop-models__handle" aria-hidden="true">
+            <span class="km-shop-models__knob">
+              {%- render 'icon', icon: 'chevron-left' -%}
+              {%- render 'icon', icon: 'chevron-right' -%}
+            </span>
+          </div>
+        </div>
+        <div class="km-shop-models__info">
+          <h2 class="km-shop-models__name">Indian Motorcycle</h2>
+          <p class="km-shop-models__desc">The Indian Motorcycle, America’s oldest motorcycle brand since 1901, is a timeless icon of power and open-road freedom. At Kinetic Motorcycles, we celebrate this legacy with premium handcrafted parts — from custom <strong>exhausts</strong> to heritage-inspired handlebars — designed to elevate your ride. Transform your Indian into a personalized masterpiece that’s unmistakably yours.</p>
+          <div class="km-shop-models__cats">
+            <span class="km-shop-models__cats-label">Choose category :</span>
+            <div class="km-shop-models__cats-list">
+              <a href="/collections/indian-exhausts" class="km-shop-models__pill">Exhausts {%- render 'icon', icon: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .km-shop-models { padding: 56px 0 96px; background: var(--km-body-bg, #EDEDED); }
+  .km-shop-models__header { margin-bottom: 56px; }
+  .km-shop-models__h1 {
+    font-size: clamp(32px, 4.4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: #000;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .km-shop-models__list {
+    display: flex;
+    flex-direction: column;
+    gap: 96px;
+  }
+  .km-shop-models__row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .km-shop-models__row.is-reverse {
+    grid-template-columns: 1fr 1.1fr;
+  }
+  .km-shop-models__row.is-reverse .km-shop-models__compare { order: 2; }
+  .km-shop-models__row.is-reverse .km-shop-models__info { order: 1; }
+
+  .km-shop-models__compare {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 20px;
+    overflow: hidden;
+    user-select: none;
+    background: #fff;
+    cursor: ew-resize;
+    touch-action: none;
+  }
+  .km-shop-models__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+  .km-shop-models__img--after {
+    clip-path: inset(0 50% 0 0);
+    will-change: clip-path;
+  }
+  .km-shop-models__label {
+    position: absolute;
+    top: 16px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    background: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .km-shop-models__label--before { left: 16px; }
+  .km-shop-models__label--after {
+    right: 16px;
+    background: rgba(251,176,61,.95);
+    color: #000;
+  }
+  .km-shop-models__handle {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: #fff;
+    transform: translateX(-50%);
+    z-index: 2;
+    pointer-events: none;
+    will-change: left;
+  }
+  .km-shop-models__knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    pointer-events: auto;
+  }
+  .km-shop-models__knob svg:first-child { margin-right: -4px; }
+  .km-shop-models__knob svg:last-child { margin-left: -4px; }
+
+  .km-shop-models__name {
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: #000;
+    margin: 0 0 18px;
+    line-height: 1.15;
+  }
+  .km-shop-models__desc {
+    color: var(--km-text, #4B5563);
+    line-height: 1.7;
+    font-size: 15px;
+    margin: 0 0 28px;
+  }
+  .km-shop-models__desc strong { color: var(--km-heading, #000); font-weight: 700; }
+
+  .km-shop-models__cats-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #000;
+    margin-bottom: 14px;
+  }
+  .km-shop-models__cats-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .km-shop-models__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: #000;
+    color: #fff;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .km-shop-models__pill:hover {
+    background: var(--km-accent, #FBB03D);
+    color: #000;
+    transform: translateY(-1px);
+  }
+  .km-shop-models__pill svg { width: 12px; height: 12px; }
+
+  @media (max-width: 900px) {
+    .km-shop-models__list { gap: 56px; }
+    .km-shop-models__row,
+    .km-shop-models__row.is-reverse {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .km-shop-models__row.is-reverse .km-shop-models__compare,
+    .km-shop-models__row.is-reverse .km-shop-models__info {
+      order: initial;
+    }
+  }
+</style>
+
+<script>
+(() => {
+  document.querySelectorAll('[data-km-compare]').forEach((root) => {
+    const after = root.querySelector('.km-shop-models__img--after');
+    const handle = root.querySelector('.km-shop-models__handle');
+    if (!after || !handle) return;
+    let dragging = false;
+
+    const setTo = (clientX) => {
+      const rect = root.getBoundingClientRect();
+      let pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      after.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      handle.style.left = pct + '%';
+    };
+
+    const onDown = (e) => {
+      dragging = true;
+      root.setPointerCapture?.(e.pointerId);
+      setTo(e.clientX);
+    };
+    const onMove = (e) => {
+      if (!dragging) return;
+      setTo(e.clientX);
+    };
+    const onUp = (e) => {
+      dragging = false;
+      try { root.releasePointerCapture?.(e.pointerId); } catch (_) {}
+    };
+
+    root.addEventListener('pointerdown', onDown);
+    root.addEventListener('pointermove', onMove);
+    root.addEventListener('pointerup', onUp);
+    root.addEventListener('pointercancel', onUp);
+    root.addEventListener('pointerleave', onUp);
+  });
+})();
+</script>
