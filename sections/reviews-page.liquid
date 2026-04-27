@@ -43,6 +43,7 @@
       <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Touring">Touring</button>
       <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Indian">Indian</button>
       <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Triumph">Triumph</button>
+      <button type="button" class="km-reviews-page__tab" role="tab" aria-selected="false" data-filter="Honda">Honda</button>
     </div>
   </div>
 
@@ -110,23 +111,31 @@
   const tabs = [...tabsRoot.querySelectorAll('[data-filter]')];
 
   const applyJudgeMeFilter = (filterText) => {
-    // Look for Judge.me search input
-    const jdgmSearchInput = document.querySelector('.jdgm-search-input');
-    if (!jdgmSearchInput) {
-      console.warn('Judge.me search input not found yet.');
-      return;
+    const widget = document.querySelector('#judgeme_all_reviews');
+    if (!widget) return;
+
+    // APPROACH: Use Judge.me Product Tags filtering if possible
+    // Setting data-product-tag and re-rendering
+    if (filterText) {
+      widget.setAttribute('data-product-tag', filterText);
+    } else {
+      widget.removeAttribute('data-product-tag');
     }
 
-    // Set value and trigger search
-    jdgmSearchInput.value = filterText;
-    
-    // Judge.me usually listens for 'keyup' or 'input'
-    jdgmSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
-    jdgmSearchInput.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter' }));
-
-    // Sometimes we need to click the search icon/button if it exists
-    const searchBtn = jdgmSearchInput.parentElement.querySelector('.jdgm-search-icon, .jdgm-search-btn');
-    if (searchBtn) searchBtn.click();
+    // Try to call Judge.me re-render
+    if (window.jdgm && window.jdgm.widget && typeof window.jdgm.widget.reRenderAll === 'function') {
+      window.jdgm.widget.reRenderAll();
+    } else {
+      // Fallback: Search bar approach if re-render isn't available
+      const jdgmSearchInput = document.querySelector('.jdgm-search-input');
+      if (jdgmSearchInput) {
+        jdgmSearchInput.value = filterText;
+        jdgmSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        jdgmSearchInput.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, key: 'Enter' }));
+        const searchBtn = jdgmSearchInput.parentElement.querySelector('.jdgm-search-icon, .jdgm-search-btn');
+        if (searchBtn) searchBtn.click();
+      }
+    }
   };
 
   tabs.forEach((tab) => {
@@ -144,15 +153,12 @@
   const styleInterval = setInterval(() => {
     const widget = document.querySelector('.jdgm-all-reviews-widget');
     if (widget) {
-      // Hide title if still showing
       const title = widget.querySelector('.jdgm-all-reviews-widget__title');
       if (title) title.style.display = 'none';
-      
-      // Fix stars
       widget.querySelectorAll('.jdgm-star').forEach(s => s.style.color = '#FBB03D');
     }
   }, 1000);
-  setTimeout(() => clearInterval(styleInterval), 10000);
+  setTimeout(() => clearInterval(styleInterval), 15000);
 })();
 </script>
 
