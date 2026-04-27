@@ -233,7 +233,14 @@
               <div class="km-pp__option" data-km-option-row="{{ forloop.index0 }}">
                 <label class="km-pp__option-label">{{ option.name }}</label>
                 <div class="km-pp__option-values">
-                  {%- for value in option.values -%}
+                  {%- assign values_to_render = option.values -%}
+                  {%- if option.values contains 'Yes' and option.values contains 'No' -%}
+                    {%- assign values_to_render = "Yes,No" | split: ',' -%}
+                  {%- elsif option.values contains 'yes' and option.values contains 'no' -%}
+                    {%- assign values_to_render = "yes,no" | split: ',' -%}
+                  {%- endif -%}
+
+                  {%- for value in values_to_render -%}
                     <button type="button" class="km-pp__option-value" 
                       data-option-index="{{ forloop.parentloop.index0 }}" 
                       data-option-value="{{ value | escape }}">
