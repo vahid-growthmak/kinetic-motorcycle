@@ -4,20 +4,13 @@
 {%- endcomment -%}
 
 <div class="km-container judgeme-section" style="margin-top: 64px; margin-bottom: 64px;">
-  <div class="km-pp__review-wrapper" id="km-judgeme-wrapper">
+  <div class="km-pp__review-wrapper">
     <h2 class="km-section-title" style="margin-bottom: 40px; text-align: center;">Customer Reviews</h2>
     
-    <!-- Start of Judge.me code -->
     <div style='clear:both'></div>
-    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' 
-         data-product-title='{{ product.title | escape }}' 
-         data-id='{{ product.id }}' 
-         data-product-id='{{ product.id }}' 
-         data-widget='review' 
-         data-auto-install='true'>
+    <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'>
       {{ product.metafields.judgeme.widget }}
     </div>
-    <!-- End of Judge.me code -->
   </div>
 </div>
 
@@ -42,165 +35,6 @@
     text-align: center;
   }
   
-  /* =========================================
-     Kinetic Styled Judge.me Widget
-     ========================================= */
-  
-  #km-judgeme-wrapper .jdgm-widget.jdgm-review-widget {
-    font-family: var(--km-font-body) !important;
-    color: var(--km-text, #4B5563) !important;
-    border: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: 1000px !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Hide Judge.me's native headers */
-  #km-judgeme-wrapper .jdgm-rev-widg__title,
-  #km-judgeme-wrapper .jdgm-widget-title,
-  #km-judgeme-wrapper h2.jdgm-rev-widg__title {
-    display: none !important;
-  }
-  
-  /* Custom Header Layout */
-  #km-judgeme-wrapper .jdgm-rev-widg__header {
-    border-bottom: 0 !important;
-    margin-bottom: 48px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* Stars Styling */
-  #km-judgeme-wrapper .jdgm-widget .jdgm-star {
-    color: var(--km-accent, #FBB03D) !important;
-    font-size: 18px !important;
-    margin: 0 2px !important;
-  }
-  
-  /* Kinetic CTA Buttons */
-  #km-judgeme-wrapper .jdgm-write-rev-btn, 
-  #km-judgeme-wrapper .jdgm-submit-rev,
-  #km-judgeme-wrapper .jdgm-rev-widg .jdgm-btn,
-  #km-judgeme-wrapper .jdgm-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 16px 40px !important;
-    background-color: var(--km-accent, #FBB03D) !important;
-    background: var(--km-accent, #FBB03D) !important;
-    color: #000000 !important;
-    border: 1px solid var(--km-accent, #FBB03D) !important;
-    border-radius: var(--km-radius-pill, 9999px) !important;
-    font-family: var(--km-font-heading) !important;
-    font-weight: 800 !important;
-    font-size: 13px !important;
-    letter-spacing: .12em !important;
-    text-transform: uppercase !important;
-    cursor: pointer !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    height: auto !important;
-    line-height: 1 !important;
-    box-shadow: none !important;
-    margin: 8px !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-write-rev-btn:hover,
-  #km-judgeme-wrapper .jdgm-submit-rev:hover,
-  #km-judgeme-wrapper .jdgm-btn:hover {
-    background-color: #000000 !important;
-    background: #000000 !important;
-    color: #FFFFFF !important;
-    border-color: #000000 !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-  }
-  
-  /* Review Summary Text */
-  #km-judgeme-wrapper .jdgm-rev-widg__summary-text {
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    font-size: 14px !important;
-    letter-spacing: 0.06em !important;
-    color: #000 !important;
-    margin-top: 16px !important;
-    display: block !important;
-  }
-  
-  /* Individual Review Cards */
-  #km-judgeme-wrapper .jdgm-rev {
-    border-top: 1px solid var(--km-border, #DDDDDD) !important;
-    padding: 48px 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-rev:last-child {
-    border-bottom: 0 !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-rev__author {
-    font-weight: 800 !important;
-    color: #000 !important;
-    text-transform: uppercase !important;
-    font-size: 14px !important;
-    letter-spacing: 0.04em !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-rev__timestamp {
-    color: #9CA3AF !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-rev__title {
-    font-family: var(--km-font-heading) !important;
-    font-weight: 700 !important;
-    color: #000 !important;
-    font-size: 20px !important;
-    margin: 12px 0 !important;
-    letter-spacing: -0.01em !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-rev__body p {
-    line-height: 1.7 !important;
-    font-size: 16px !important;
-    color: var(--km-text, #4B5563) !important;
-  }
-
-  /* Form & Pagination Centering */
-  #km-judgeme-wrapper .jdgm-rev-widg__header-right {
-    float: none !important;
-    display: flex !important;
-    justify-content: center !important;
-    margin-top: 24px !important;
-    width: 100% !important;
-  }
-  
-  #km-judgeme-wrapper .jdgm-paginate {
-    margin-top: 48px !important;
-    border-top: 1px solid var(--km-border, #DDDDDD) !important;
-    padding-top: 32px !important;
-    text-align: center !important;
-  }
-  
-  @media (max-width: 768px) {
-    .km-pp__review-wrapper {
-      padding: 48px 20px;
-      border-radius: 0;
-      border-left: 0;
-      border-right: 0;
-    }
-    .km-section-title {
-      font-size: 28px;
-    }
-    #km-judgeme-wrapper .jdgm-write-rev-btn {
-      width: 100% !important;
-    }
-  }
 </style>
 
 
