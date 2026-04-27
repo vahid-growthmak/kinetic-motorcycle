@@ -46,16 +46,28 @@
     </div>
   </div>
 
-  {%- comment -%} JUDGE.ME ALL REVIEWS WIDGET {%- endcomment -%}
   <div class="km-container km-reviews-page__widget-wrap">
     <div id="km-judgeme-all-reviews-wrapper">
-      <!-- Start of Judge.me code -->
-      <div id='judgeme_all_reviews' class='jdgm-widget jdgm-all-reviews-widget'>
+      <div class='jdgm-widget jdgm-all-reviews-widget' data-hub-id='{{ shop.metafields.judgeme.hub_id }}'>
         {{ shop.metafields.judgeme.all_reviews_widget }}
       </div>
-      <!-- End of Judge.me code -->
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const initJdgm = () => {
+        try {
+          if (window.jdgm && typeof window.jdgm.initializeWidgets === 'function') {
+            window.jdgm.initializeWidgets();
+          }
+        } catch (e) {
+          console.warn('Judge.me init failed:', e);
+        }
+      };
+      setTimeout(initJdgm, 2000);
+    });
+  </script>
 </section>
 
 <style>
