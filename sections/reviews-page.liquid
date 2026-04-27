@@ -63,7 +63,7 @@
       {% assign collection = collections[handle] %}
       {% if collection %}
         {%- assign product_ids = '' -%}
-        {%- for product in collection.products limit: 50 -%}
+        {%- for product in collection.products limit: 250 -%}
           {%- if forloop.last -%}
             {%- assign product_ids = product_ids | append: product.id -%}
           {%- else -%}
@@ -71,9 +71,9 @@
           {%- endif -%}
         {%- endfor -%}
 
-        <div class="km-reviews-panel" id="panel-{{ handle }}" data-product-ids="{{ product_ids }}" data-loaded="false">
+        <div class="km-reviews-panel" id="panel-{{ handle }}" data-product-ids="{{ product_ids }}" data-filter-tag="{{ collection.title | remove: 'Harley-Davidson ' | remove: ' Parts' | remove: ' Motorcycle Parts & Accessories' | strip }}" data-loaded="false">
           <div class="km-reviews-list">
-            <div class="km-reviews-loading">Loading rider reviews...</div>
+            <div class="km-reviews-loading">Loading {{ collection.title | remove: 'Harley-Davidson ' | remove: ' Parts' | strip }} reviews...</div>
           </div>
         </div>
       {% endif %}
