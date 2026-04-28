@@ -17,8 +17,10 @@
             <article class="km-blog-index__card">
               <a href="{{ article.url }}" class="km-blog-index__media">
                 {%- if article.image != blank -%}
-                  {{ article.image | image_url: width: 800 | image_tag:
-                     width: 400, height: 260, loading: 'lazy',
+                  {{ article.image | image_url: width: 1200 | image_tag:
+                     loading: 'lazy',
+                     sizes: '(min-width: 1200px) 450px, (min-width: 768px) 50vw, 100vw',
+                     widths: '400, 600, 800, 1200',
                      alt: article.title, class: 'km-blog-index__img' }}
                 {%- endif -%}
               </a>
