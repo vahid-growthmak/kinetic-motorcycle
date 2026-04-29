@@ -170,10 +170,10 @@
 
   @media (max-width: 1000px) {
     .km-hero {
-      align-items: flex-end; /* Move content towards the bottom */
+      align-items: flex-end; /* Align content to bottom */
     }
     .km-hero__inner {
-      padding: 120px 20px 80px; /* Large top padding to bring whitespace on top */
+      padding: 100px 20px 160px; /* Large top gap, and specific bottom space */
       text-align: left;
     }
     .km-hero__content {
@@ -183,10 +183,10 @@
 
   @media (max-width: 640px) {
     .km-hero {
-      min-height: clamp(500px, 90vh, 750px) !important;
+      min-height: clamp(600px, 95vh, 850px) !important;
     }
     .km-hero__inner { 
-      padding: 160px 20px 100px; /* Even more space at top for mobile */
+      padding: 120px 20px 180px; /* Bottom padding to sit above chips */
     }
     .km-hero__heading {
       font-size: 32px;
