@@ -170,14 +170,23 @@
 
   @media (max-width: 1000px) {
     .km-hero {
-      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Vertical alignment to bottom */
+      align-items: flex-start; /* Horizontal alignment to left */
+      text-align: left;
     }
     .km-hero__inner {
-      padding: 100px 20px 100px; /* Reduced bottom padding */
-      text-align: left;
+      padding: 60px 20px 120px; /* Space at top, and enough at bottom to sit above chips */
+      width: 100%;
     }
     .km-hero__content {
       max-width: 100%;
+      margin: 0;
+    }
+    .km-hero__subtext {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 
@@ -186,10 +195,11 @@
       min-height: clamp(540px, 85vh, 750px) !important;
     }
     .km-hero__inner { 
-      padding: 100px 20px 110px; /* Reduced bottom padding for mobile */
+      padding: 60px 20px 140px; 
     }
     .km-hero__heading {
       font-size: 32px;
+      text-align: left;
     }
     .km-hero__chip { padding: 8px 14px; font-size: 11px; }
   }
