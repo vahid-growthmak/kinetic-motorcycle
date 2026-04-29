@@ -170,38 +170,36 @@
 
   @media (max-width: 1000px) {
     .km-hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end; /* Vertical alignment to bottom */
-      align-items: flex-start; /* Horizontal alignment to left */
-      text-align: left;
-    }
-    .km-hero__inner {
-      padding: 60px 20px 120px; /* Space at top, and enough at bottom to sit above chips */
-      width: 100%;
-    }
-    .km-hero__content {
-      max-width: 100%;
-      margin: 0;
-    }
-    .km-hero__subtext {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .km-hero {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+      align-items: flex-start !important;
       min-height: clamp(540px, 85vh, 750px) !important;
     }
-    .km-hero__inner { 
-      padding: 60px 20px 140px; 
+    .km-hero__inner {
+      margin-top: auto !important; /* Force content to bottom of flex container */
+      padding: 40px 20px 150px !important; /* Bottom padding to clear chips */
+      width: 100% !important;
+      text-align: left !important;
+    }
+    .km-hero__content {
+      max-width: 100% !important;
+      margin: 0 !important;
+      text-align: left !important;
     }
     .km-hero__heading {
-      font-size: 32px;
-      text-align: left;
+      font-size: clamp(32px, 8vw, 48px) !important;
+      text-align: left !important;
     }
-    .km-hero__chip { padding: 8px 14px; font-size: 11px; }
+    .km-hero__subtext {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      text-align: left !important;
+    }
+    .km-hero__chip { 
+      padding: 8px 14px; 
+      font-size: 11px; 
+    }
   }
 </style>
 
