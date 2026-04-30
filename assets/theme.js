@@ -193,15 +193,15 @@
     });
 
     // Improved currency detection
-    let currencySymbol = 'Rs. ';
+    let currencySymbol = '$ ';
     if (priceEl) {
       const text = priceEl.textContent.trim();
-      const match = text.match(/^[^\d\s,.]+/);
+      const match = text.match(/^[^0-9\s,.]+/);
       if (match) currencySymbol = match[0].trim() + ' ';
     }
 
     const formatMoney = (cents) => {
-      const amount = (cents / 100).toLocaleString('en-IN', { 
+      const amount = (cents / 100).toLocaleString('en-US', { 
         minimumFractionDigits: 2, 
         maximumFractionDigits: 2 
       });

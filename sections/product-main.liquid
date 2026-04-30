@@ -562,7 +562,11 @@
 
     const formatMoney = (cents) => {
       const amount = (cents / 100).toFixed(2);
-      return `Rs ${amount}`; // Simple format for this store
+      // Use liquid to get the correct currency symbol and format
+      const moneyFormat = "{{ 0 | money }}";
+      if (moneyFormat.includes('0.00')) return moneyFormat.replace('0.00', amount);
+      if (moneyFormat.includes('0,00')) return moneyFormat.replace('0,00', amount);
+      return moneyFormat.replace('0', amount);
     };
 
     // Pre-select lowest price variant
