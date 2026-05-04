@@ -74,7 +74,7 @@
           "type": "brand_menu",
           "settings": {
             "title": "Indian",
-            "url": "shopify://collections/indian",
+            "url": "shopify://collections/indian-parts",
             "menu": "indian"
           }
         },

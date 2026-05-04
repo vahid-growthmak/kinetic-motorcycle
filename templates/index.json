@@ -186,7 +186,7 @@
           "type": "category",
           "settings": {
             "title": "Accessories",
-            "url": "shopify://collections/triumph-accessories"
+            "url": "shopify://collections/triumph-motorcycle-accessories"
           }
         },
         "category_DjTrCh": {
@@ -240,7 +240,7 @@
           "type": "category",
           "settings": {
             "title": "Suspension and Chassis",
-            "url": "shopify://collections/honda-suspension-and-chassis"
+            "url": "shopify://collections/honda-cb-suspension-chassis"
           }
         },
         "model_3GFHYK": {
