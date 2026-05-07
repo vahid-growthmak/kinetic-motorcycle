@@ -2640,16 +2640,61 @@ video {
   box-shadow: 0 0 0 3px rgba(245,166,35,.15) !important;
 }
 
-/* ---- Preview Badge (mini star badge on PDP) ---- */
+/* ---- Preview Badge (mini star badge on PDP) — matches .km-pp__rating-row ---- */
+
+/* Container: mirror .km-pp__rating-row layout */
 .jdgm-prev-badge,
-.jdgm-prev-badge__stars {
-  color: #F5A623 !important;
+.km-pp__info .jdgm-prev-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.jdgm-prev-badge__text {
-  font-size: 12px !important;
-  color: #6B7280 !important;
+/* Stars wrapper: mirror .km-pp__stars */
+.jdgm-prev-badge .jdgm-prev-badge__stars,
+.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__stars {
+  display: inline-flex !important;
+  gap: 2px !important;
+  color: var(--km-accent, #FBB03D) !important;
+  line-height: 1 !important;
 }
+
+/* Individual stars: mirror .km-pp__stars svg (14px) */
+.jdgm-prev-badge .jdgm-prev-badge__stars .jdgm-star,
+.jdgm-prev-badge .jdgm-prev-badge__stars i,
+.km-pp__info .jdgm-prev-badge .jdgm-star {
+  color: var(--km-accent, #FBB03D) !important;
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  line-height: 1 !important;
+}
+
+/* Text: mirror .km-pp__review-count */
+.jdgm-prev-badge .jdgm-prev-badge__text,
+.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__text {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--km-text, #4B5563) !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+}
+
+/* Remove any default Judge.me spacing/borders */
+.jdgm-prev-badge *,
+.km-pp__info .jdgm-prev-badge * {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
 
 /* ---- Hide the App Block Version (keep only our custom section) ---- */
 .shopify-section--apps .jdgm-widget {
