@@ -15,7 +15,7 @@
   <div class="km-container">
     <div class="km-reviews__top">
       <h2 class="km-reviews__heading">{{ section.settings.heading | default: 'What Our Customers Say' }}</h2>
-      {%- if section.settings.show_arrows -%}
+      {%- if section.settings.show_arrows and section.blocks.size > 0 -%}
         <div class="km-reviews__nav" aria-hidden="true">
           <button type="button" class="km-reviews__arrow" data-km-prev aria-label="Previous review">
             {%- render 'icon', icon: 'arrow-right' -%}
@@ -27,8 +27,8 @@
       {%- endif -%}
     </div>
 
-    <div class="km-reviews__grid" data-km-reviews>
-      {%- if section.blocks.size > 0 -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="km-reviews__grid" data-km-reviews>
         {%- for block in section.blocks -%}
           {%- if block.type == 'review' -%}
             <article class="km-reviews__card" {{ block.shopify_attributes }}>
@@ -44,23 +44,12 @@
             </article>
           {%- endif -%}
         {%- endfor -%}
-      {%- else -%}
-        {%- assign fallback_reviews = 'Little hiccup in the delivery, but as usual Kinetic made haste to correct the missing brake line from my order.|Christopher Cook|Composite Wide Grip for Harley Sportster||Very high quality, excellent fit. Look great.|Steven Harrold|Heavy Knurl Shifter Peg for Sportster||Bolt-on fit was flawless. Throttle response is night-and-day better. Would buy again.|Jordan M.|Slip-On Exhaust for Harley Sportster||Shipped fast and packed well. The finish matches the photos exactly.|Priya S.|Moto-style Handlebars for Triumph Street Twin' | split: '||' -%}
-        {%- for entry in fallback_reviews -%}
-          {%- assign p = entry | split: '|' -%}
-          <article class="km-reviews__card">
-            <div class="km-reviews__stars" aria-label="5 out of 5 stars">
-              {%- for i in (1..5) -%}<span class="km-reviews__star">{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
-            </div>
-            <p class="km-reviews__quote">{{ p[0] }}</p>
-            <div class="km-reviews__meta">
-              <div class="km-reviews__author">{{ p[1] }}</div>
-              <div class="km-reviews__product">{{ p[2] }}</div>
-            </div>
-          </article>
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- else -%}
+      <div class="km-reviews__judgeme" data-jdgm-limit="{{ section.settings.judgeme_limit | default: 4 }}">
+        <div class='jdgm-all-reviews-widget'></div>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -146,12 +135,35 @@
   }
 </style>
 
+{%- if section.blocks.size == 0 -%}
+<script>
+(() => {
+  const root = document.querySelector('#Section-{{ section.id }} .km-reviews__judgeme');
+  if (!root) return;
+  const limit = parseInt(root.dataset.jdgmLimit || '4', 10);
+  const apply = () => {
+    const reviews = root.querySelectorAll('.jdgm-rev');
+    if (!reviews.length) return false;
+    reviews.forEach((r, i) => { r.style.display = i < limit ? '' : 'none'; });
+    return true;
+  };
+  if (apply()) return;
+  const obs = new MutationObserver(() => { if (apply()) obs.disconnect(); });
+  obs.observe(root, { childList: true, subtree: true });
+  setTimeout(() => obs.disconnect(), 15000);
+})();
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Reviews",
   "settings": [
     { "type": "text",     "id": "heading",     "label": "Heading", "default": "What Our Customers Say" },
-    { "type": "checkbox", "id": "show_arrows", "label": "Show prev/next arrows", "default": true }
+    { "type": "checkbox", "id": "show_arrows", "label": "Show prev/next arrows (only when manual review blocks are added below)", "default": true },
+    { "type": "header",   "content": "Dynamic reviews" },
+    { "type": "paragraph","content": "When no manual review blocks are added below, this section pulls live reviews from Judge.me automatically." },
+    { "type": "range",    "id": "judgeme_limit", "label": "Judge.me reviews to show", "min": 2, "max": 8, "step": 2, "default": 4 }
   ],
   "blocks": [
     {
@@ -167,15 +179,7 @@
   ],
   "max_blocks": 8,
   "presets": [
-    {
-      "name": "Reviews",
-      "blocks": [
-        { "type": "review", "settings": { "quote": "Little hiccup in the delivery, but as usual Kinetic made haste to correct the missing brake line from my order.", "author": "Christopher Cook", "product": "Composite Wide Grip for Harley Sportster", "rating": 5 } },
-        { "type": "review", "settings": { "quote": "Very high quality, excellent fit. Look great.", "author": "Steven Harrold", "product": "Heavy Knurl Shifter Peg — Carbon Fiber Composite for Sportster", "rating": 5 } },
-        { "type": "review", "settings": { "quote": "Bolt-on fit was flawless. Throttle response is night-and-day better. Would buy again.", "author": "Jordan M.", "product": "Slip-On Exhaust — Harley Sportster", "rating": 5 } },
-        { "type": "review", "settings": { "quote": "Shipped fast and packed well. The finish matches the photos exactly.", "author": "Priya S.", "product": "Moto-style Handlebars for Triumph Street Twin", "rating": 5 } }
-      ]
-    }
+    { "name": "Reviews" }
   ]
 }
 {% endschema %}

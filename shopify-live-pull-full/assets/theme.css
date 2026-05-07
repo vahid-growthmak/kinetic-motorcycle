@@ -1177,6 +1177,76 @@ img, video { max-width: 100%; height: auto; }
   border: 0;
 }
 
+/* ---------- JUDGE.ME ALL REVIEWS (homepage "What Our Customers Say" — dynamic) ---------- */
+.km-reviews__judgeme { margin: 0; }
+.km-reviews__judgeme .jdgm-all-reviews-widget,
+.km-reviews__judgeme .jdgm-rev-widg {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  font-family: inherit;
+}
+.km-reviews__judgeme .jdgm-rev-widg__title,
+.km-reviews__judgeme .jdgm-rev-widg__header,
+.km-reviews__judgeme .jdgm-rev-widg__summary,
+.km-reviews__judgeme .jdgm-rev-widg__sort-wrapper,
+.km-reviews__judgeme .jdgm-paginate,
+.km-reviews__judgeme .jdgm-rev-widg__paginate-controls,
+.km-reviews__judgeme .jdgm-rev-widg__summary-text,
+.km-reviews__judgeme .jdgm-rev-widg__summary-stars { display: none !important; }
+.km-reviews__judgeme .jdgm-rev-widg__reviews,
+.km-reviews__judgeme .jdgm-all-reviews-widget__body {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 48px 60px !important;
+}
+.km-reviews__judgeme .jdgm-rev {
+  background: #fff;
+  border: 1px solid var(--km-border, #DDDDDD) !important;
+  border-radius: 16px;
+  padding: 28px !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.km-reviews__judgeme .jdgm-rev__header { padding: 0 !important; border: none !important; }
+.km-reviews__judgeme .jdgm-rev__rating,
+.km-reviews__judgeme .jdgm-rev .jdgm-star { color: var(--km-accent, #FBB03D) !important; }
+.km-reviews__judgeme .jdgm-rev__body,
+.km-reviews__judgeme .jdgm-rev__body p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--km-text, #4B5563);
+  margin: 0;
+  font-weight: 500;
+}
+.km-reviews__judgeme .jdgm-rev__author {
+  font-weight: 700;
+  color: #000;
+  font-size: 15px;
+  line-height: 1.2;
+}
+.km-reviews__judgeme .jdgm-rev__product-info,
+.km-reviews__judgeme .jdgm-rev__product-title,
+.km-reviews__judgeme .jdgm-rev__title {
+  font-size: 13px;
+  color: var(--km-text, #4B5563);
+  margin-top: 4px;
+}
+.km-reviews__judgeme .jdgm-rev__timestamp,
+.km-reviews__judgeme .jdgm-rev__location,
+.km-reviews__judgeme .jdgm-rev__icon { display: none !important; }
+@media (max-width: 700px) {
+  .km-reviews__judgeme .jdgm-rev-widg__reviews,
+  .km-reviews__judgeme .jdgm-all-reviews-widget__body {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+}
+
 /* ---------- JUDGE.ME REVIEW WIDGET (matches km-pp-reviews look) ---------- */
 .jdgm-widget,
 .jdgm-rev-widg {
