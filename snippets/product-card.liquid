@@ -44,7 +44,16 @@
       {%- endif -%}
     </div>
     
-    {%- assign stars = product.metafields.reviews.rating.value | default: 5 -%}
+    {%- comment -%} Try to get Judge.me rating first, then standard Shopify rating, default to 5 {%- endcomment -%}
+    {%- assign jm_avg = product.metafields.judgeme.avg_rating | plus: 0 -%}
+    {%- assign jm_count = product.metafields.judgeme.number_of_reviews | plus: 0 -%}
+    
+    {%- if jm_count > 0 -%}
+      {%- assign stars = jm_avg -%}
+    {%- else -%}
+      {%- assign stars = product.metafields.reviews.rating.value.rating | default: 5 -%}
+    {%- endif -%}
+
     {%- assign stars_int = stars | round -%}
     <div class="km-pcarousel__rating" aria-label="{{ stars_int }} out of 5 stars">
       {%- for i in (1..5) -%}
