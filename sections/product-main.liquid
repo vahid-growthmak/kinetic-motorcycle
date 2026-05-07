@@ -185,20 +185,14 @@
 
       {%- comment -%} RIGHT: info {%- endcomment -%}
       <div class="km-pp__info">
-        <div class="km-pp__rating-row">
-          <div class="km-pp__stars" aria-label="5 out of 5 stars">
-            {%- for i in (1..5) -%}<span>{%- render 'icon', icon: 'star' -%}</span>{%- endfor -%}
-          </div>
-          <span class="km-pp__review-count">5.0 · {{ product.metafields.reviews.count | default: 24 }} reviews</span>
-        </div>
+        <!-- Start of Judge.me code --> 
+        <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'> 
+          {{ product.metafields.judgeme.badge }} 
+        </div> 
+        <!-- End of Judge.me code -->
 
         <h1 class="km-pp__title">{{ product.title | default: 'Product Title' }}</h1>
 
-        <!-- Start of Judge.me code --> 
-          <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'> 
-         {{ product.metafields.judgeme.badge }} 
-         </div> 
-        <!-- End of Judge.me code -->
 
         {%- if product.tags.size > 0 -%}
           <div class="km-pp__sub">{{ product.tags | first | upcase }}</div>
