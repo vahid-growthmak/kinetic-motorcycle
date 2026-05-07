@@ -2645,7 +2645,8 @@ video {
 /* Container: mirror .km-pp__rating-row layout */
 .jdgm-prev-badge,
 .km-pp__info .jdgm-prev-badge {
-  display: inline-flex !important;
+  display: inline-flex !important; /* Force show if hidden by app settings */
+  visibility: visible !important; /* Force show if hidden by app settings */
   align-items: center !important;
   gap: 10px !important;
   color: inherit !important;
@@ -2659,6 +2660,7 @@ video {
 .jdgm-prev-badge .jdgm-prev-badge__stars,
 .km-pp__info .jdgm-prev-badge .jdgm-prev-badge__stars {
   display: inline-flex !important;
+  visibility: visible !important;
   gap: 2px !important;
   color: var(--km-accent, #FBB03D) !important;
   line-height: 1 !important;
@@ -2673,11 +2675,15 @@ video {
   width: 14px !important;
   height: 14px !important;
   line-height: 1 !important;
+  display: inline-block !important;
+  visibility: visible !important;
 }
 
 /* Text: mirror .km-pp__review-count */
 .jdgm-prev-badge .jdgm-prev-badge__text,
 .km-pp__info .jdgm-prev-badge .jdgm-prev-badge__text {
+  display: inline-block !important; /* Force show if hidden by app settings */
+  visibility: visible !important; /* Force show if hidden by app settings */
   font-size: 12px !important;
   font-weight: 700 !important;
   color: var(--km-text, #4B5563) !important;
