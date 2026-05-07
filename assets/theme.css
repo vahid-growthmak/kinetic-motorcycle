@@ -2643,10 +2643,15 @@ video {
 /* ---- Preview Badge (mini star badge on PDP) — matches .km-pp__rating-row ---- */
 
 /* Container: mirror .km-pp__rating-row layout */
+/* High specificity to override Judge.me settings like .jdgm-preview-badge[data-template="product"] { display: none !important } */
 .jdgm-prev-badge,
-.km-pp__info .jdgm-prev-badge {
+.jdgm-preview-badge,
+.km-pp__info .jdgm-prev-badge,
+body .jdgm-prev-badge[data-template="product"],
+body .jdgm-preview-badge[data-template="product"] {
   display: inline-flex !important; /* Force show if hidden by app settings */
   visibility: visible !important; /* Force show if hidden by app settings */
+  opacity: 1 !important;
   align-items: center !important;
   gap: 10px !important;
   color: inherit !important;
@@ -2658,9 +2663,11 @@ video {
 
 /* Stars wrapper: mirror .km-pp__stars */
 .jdgm-prev-badge .jdgm-prev-badge__stars,
-.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__stars {
+.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__stars,
+.jdgm-preview-badge .jdgm-prev-badge__stars {
   display: inline-flex !important;
   visibility: visible !important;
+  opacity: 1 !important;
   gap: 2px !important;
   color: var(--km-accent, #FBB03D) !important;
   line-height: 1 !important;
@@ -2669,7 +2676,8 @@ video {
 /* Individual stars: mirror .km-pp__stars svg (14px) */
 .jdgm-prev-badge .jdgm-prev-badge__stars .jdgm-star,
 .jdgm-prev-badge .jdgm-prev-badge__stars i,
-.km-pp__info .jdgm-prev-badge .jdgm-star {
+.km-pp__info .jdgm-prev-badge .jdgm-star,
+.jdgm-preview-badge .jdgm-star {
   color: var(--km-accent, #FBB03D) !important;
   font-size: 14px !important;
   width: 14px !important;
@@ -2677,13 +2685,16 @@ video {
   line-height: 1 !important;
   display: inline-block !important;
   visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Text: mirror .km-pp__review-count */
 .jdgm-prev-badge .jdgm-prev-badge__text,
-.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__text {
+.km-pp__info .jdgm-prev-badge .jdgm-prev-badge__text,
+.jdgm-preview-badge .jdgm-prev-badge__text {
   display: inline-block !important; /* Force show if hidden by app settings */
   visibility: visible !important; /* Force show if hidden by app settings */
+  opacity: 1 !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   color: var(--km-text, #4B5563) !important;
