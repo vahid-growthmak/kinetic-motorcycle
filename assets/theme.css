@@ -2335,3 +2335,359 @@ video {
   font-size: 11px;
 }
 
+/* ============================================================
+   JUDGE.ME REVIEW WIDGET — Product Page Override
+   Matches the white-card "Customer Reviews" design
+   ============================================================ */
+
+/* ---- Container & Section Wrapper ---- */
+.judgeme-section .km-pp__review-wrapper {
+  background: #fff;
+  border: 1px solid var(--km-border, #DDDDDD);
+  border-radius: 20px;
+  padding: 60px 48px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+
+/* ---- Section Heading ---- */
+.judgeme-section .km-section-title {
+  font-family: var(--km-font-heading, 'Georgia', serif);
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin: 0 0 40px;
+  letter-spacing: -.02em;
+}
+
+/* ---- Widget Root Reset ---- */
+.judgeme-section .jdgm-widget,
+.judgeme-section .jdgm-review-widget,
+.judgeme-section .jdgm-rev-widg,
+.judgeme-section #judgeme_product_reviews {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  font-family: var(--km-font-body, 'Inter', -apple-system, sans-serif) !important;
+}
+
+/* ---- Summary Bar (rating number + count + CTA row) ---- */
+.judgeme-section .jdgm-rev-widg__summary,
+.judgeme-section .jdgm-rev-widg__summary-content {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 0 20px !important;
+  margin: 0 0 24px !important;
+  border-bottom: 1px solid #EBEBEB !important;
+}
+
+.judgeme-section .jdgm-rev-widg__summary-text {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+.judgeme-section .jdgm-rev-widg__summary-average,
+.judgeme-section .jdgm-rev-widg__average {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+.judgeme-section .jdgm-rev-widg__summary-count {
+  font-size: 13px !important;
+  color: #6B7280 !important;
+}
+
+/* ---- "Customer Reviews" inner title (Judge.me adds its own — hide duplicate) ---- */
+.judgeme-section .jdgm-rev-widg__title {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #000 !important;
+  text-align: left !important;
+  margin: 0 0 4px !important;
+  letter-spacing: 0 !important;
+}
+
+.judgeme-section .jdgm-rev-widg__header,
+.judgeme-section .jdgm-widget-header {
+  margin: 0 0 4px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #000 !important;
+}
+
+/* ---- Stars (amber/orange) ---- */
+.judgeme-section .jdgm-star,
+.judgeme-section .jdgm-rev__rating .jdgm-star,
+.judgeme-section .jdgm-rev-widg__summary-stars .jdgm-star,
+.judgeme-section .jdgm-star.jdgm--on,
+.judgeme-section .jdgm-rev__rating,
+.judgeme-section .jdgm-prev-badge__stars .jdgm-star {
+  color: #F5A623 !important;
+}
+
+/* ---- "Write a review" Button ---- */
+.judgeme-section .jdgm-write-rev-link,
+.judgeme-section .jdgm-btn--solid,
+.judgeme-section .jdgm-btn-primary,
+.judgeme-section button.jdgm-write-rev-link {
+  background: #F5A623 !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  padding: 10px 24px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  cursor: pointer;
+  transition: background .2s ease, transform .15s ease;
+  box-shadow: none !important;
+}
+
+.judgeme-section .jdgm-write-rev-link:hover,
+.judgeme-section .jdgm-btn--solid:hover,
+.judgeme-section .jdgm-btn-primary:hover,
+.judgeme-section button.jdgm-write-rev-link:hover {
+  background: #E6951A !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* ---- Filter & Sort Icons ---- */
+.judgeme-section .jdgm-sort-btn,
+.judgeme-section .jdgm-filter-btn,
+.judgeme-section .jdgm-sort,
+.judgeme-section .jdgm-sort select {
+  border: 1px solid #DDD !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  color: #333 !important;
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+}
+
+/* ---- Reviews List ---- */
+.judgeme-section .jdgm-rev-widg__reviews {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
+
+/* ---- Individual Review Card ---- */
+.judgeme-section .jdgm-rev {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #EBEBEB !important;
+  border-radius: 0 !important;
+  padding: 24px 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.judgeme-section .jdgm-rev:last-child {
+  border-bottom: none !important;
+}
+
+/* ---- Review Header ---- */
+.judgeme-section .jdgm-rev__header {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---- Author Avatar (circle initial) ---- */
+.judgeme-section .jdgm-rev__icon,
+.judgeme-section .jdgm-rev__buyer-badge {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: #E5E7EB !important;
+  color: #374151 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* ---- Author Name ---- */
+.judgeme-section .jdgm-rev__author {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  color: #000 !important;
+  line-height: 1.3 !important;
+}
+
+/* ---- Timestamp / Date ---- */
+.judgeme-section .jdgm-rev__timestamp,
+.judgeme-section .jdgm-rev__location {
+  font-size: 12px !important;
+  color: #9CA3AF !important;
+}
+
+/* ---- Review Stars ---- */
+.judgeme-section .jdgm-rev__rating {
+  margin: 0 !important;
+}
+
+/* ---- Review Title ---- */
+.judgeme-section .jdgm-rev__title {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  color: #000 !important;
+  margin: 0 !important;
+}
+
+/* ---- Review Body Text ---- */
+.judgeme-section .jdgm-rev__body,
+.judgeme-section .jdgm-rev__body p {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: #4B5563 !important;
+  margin: 0 !important;
+}
+
+/* ---- Product Info in Review ---- */
+.judgeme-section .jdgm-rev__product-info {
+  padding-top: 12px !important;
+  border-top: 1px solid #F3F4F6 !important;
+  margin-top: auto !important;
+  font-size: 12px !important;
+  color: #9CA3AF !important;
+}
+
+/* ---- Verified Badge ---- */
+.judgeme-section .jdgm-rev__verified-badge {
+  font-size: 11px !important;
+  color: #059669 !important;
+}
+
+/* ---- "No Reviews" State ---- */
+.judgeme-section .jdgm-no-reviews-msg,
+.judgeme-section .jdgm-rev-widg__no-reviews {
+  font-size: 14px !important;
+  color: #6B7280 !important;
+  text-align: center !important;
+  padding: 32px 0 !important;
+}
+
+/* ---- Pagination ---- */
+.judgeme-section .jdgm-paginate-bottom {
+  margin-top: 24px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid #EBEBEB !important;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.judgeme-section .jdgm-paginate-bottom .jdgm-paginate__page {
+  background: #fff !important;
+  color: #000 !important;
+  border: 1px solid #DDD !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.judgeme-section .jdgm-paginate-bottom .jdgm-paginate__page.jdgm-curt {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+
+/* ---- Review Form Overlay ---- */
+.judgeme-section .jdgm-form-wrapper,
+.judgeme-section .jdgm-rev-widg__form {
+  background: #fff !important;
+  border: 1px solid #EBEBEB !important;
+  border-radius: 16px !important;
+  padding: 32px !important;
+  margin-top: 24px !important;
+}
+
+.judgeme-section .jdgm-form-wrapper input,
+.judgeme-section .jdgm-form-wrapper textarea,
+.judgeme-section .jdgm-rev-widg__form input,
+.judgeme-section .jdgm-rev-widg__form textarea {
+  border: 1px solid #DDD !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  font-family: inherit !important;
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.judgeme-section .jdgm-form-wrapper input:focus,
+.judgeme-section .jdgm-form-wrapper textarea:focus,
+.judgeme-section .jdgm-rev-widg__form input:focus,
+.judgeme-section .jdgm-rev-widg__form textarea:focus {
+  border-color: #F5A623 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(245,166,35,.15) !important;
+}
+
+/* ---- Preview Badge (mini star badge on PDP) ---- */
+.jdgm-prev-badge,
+.jdgm-prev-badge__stars {
+  color: #F5A623 !important;
+}
+
+.jdgm-prev-badge__text {
+  font-size: 12px !important;
+  color: #6B7280 !important;
+}
+
+/* ---- Hide the App Block Version (keep only our custom section) ---- */
+.shopify-section--apps .jdgm-widget {
+  display: none !important;
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 768px) {
+  .judgeme-section .km-pp__review-wrapper {
+    padding: 36px 20px;
+    border-radius: 16px;
+  }
+
+  .judgeme-section .km-section-title {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .judgeme-section .jdgm-rev {
+    padding: 18px 0 !important;
+  }
+
+  .judgeme-section .jdgm-write-rev-link,
+  .judgeme-section button.jdgm-write-rev-link {
+    padding: 8px 18px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .judgeme-section .km-pp__review-wrapper {
+    padding: 28px 16px;
+    border-radius: 14px;
+  }
+
+  .judgeme-section .km-section-title {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+}
+
