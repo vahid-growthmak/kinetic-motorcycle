@@ -49,6 +49,19 @@
           "api_base_url": "https://ai-agent.chizy.io",
           "app_url": "https://chatbot.chizy.io"
         }
+      },
+      "2052971791791720078": {
+        "type": "shopify://apps/birse-visual-search/blocks/img-search-float/58f4683c-4614-4dbe-9f86-c0463f4b579c",
+        "disabled": false,
+        "settings": {
+          "icon_size": 20,
+          "icon_color": "#000000",
+          "position": "right",
+          "margin_top_desktop": 150,
+          "margin_top_mobile": 150,
+          "background_color": "#fff",
+          "initially_open_popover": false
+        }
       }
     }
   },
