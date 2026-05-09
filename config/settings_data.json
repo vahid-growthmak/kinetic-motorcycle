@@ -42,10 +42,13 @@
         "disabled": false,
         "settings": {}
       },
-      "3720565183479497137": {
-        "type": "shopify://apps/globo-product-options/blocks/app-embed-block/fdc9fad5-1a0f-4bd4-9c8a-1af6a6eef6b8",
+      "14717942367183170102": {
+        "type": "shopify://apps/chizy-ai-chatbot/blocks/chat-bubble/fd61935c-4053-4b60-9385-bcbc00e2b2be",
         "disabled": false,
-        "settings": {}
+        "settings": {
+          "api_base_url": "https://ai-agent.chizy.io",
+          "app_url": "https://chatbot.chizy.io"
+        }
       }
     }
   },
